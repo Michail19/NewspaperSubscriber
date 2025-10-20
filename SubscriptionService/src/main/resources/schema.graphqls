@@ -1,0 +1,17 @@
+type Subscription {
+  id: ID!
+  userId: ID!
+  magazineId: ID!
+  startDate: String!
+  endDate: String
+  active: Boolean!
+}
+
+type Query {
+  getUserSubscriptions(userId: ID!): [Subscription]
+}
+
+type Mutation {
+  createSubscription(userId: ID!, magazineId: ID!): Subscription
+  cancelSubscription(subscriptionId: ID!): Boolean
+}
