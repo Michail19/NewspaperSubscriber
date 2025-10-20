@@ -1,10 +1,17 @@
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELLED
+  EXPIRED
+}
+
 type Subscription {
   id: ID!
   userId: ID!
   magazineId: ID!
   startDate: String!
   endDate: String
-  active: Boolean!
+  durationMonths: Int!
+  status: SubscriptionStatus!
 }
 
 type Query {
@@ -12,6 +19,19 @@ type Query {
 }
 
 type Mutation {
-  createSubscription(userId: ID!, magazineId: ID!): Subscription
-  cancelSubscription(subscriptionId: ID!): Boolean
+  createSubscription(input: CreateSubscriptionInput!): Subscription!
+  cancelSubscription(subscriptionId: ID!): Boolean!
+  updateSubscription(id: ID!, input: UpdateSubscriptionInput!): Subscription!
+  extendSubscription(id: ID!, extraMonths: Int!): Subscription!
+}
+
+input CreateSubscriptionInput {
+  userId: ID!
+  magazineId: ID!
+  durationMonths: Int!
+}
+
+input UpdateSubscriptionInput {
+  durationMonths: Int
+  status: SubscriptionStatus
 }
