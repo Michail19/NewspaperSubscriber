@@ -1,30 +1,57 @@
 package com.ms.subscriptionservice.model;
 
+import jakarta.persistence.*;
+
 import java.sql.Date;
 
+@Entity
+@Table(name = "subscription")
 public class Subscription {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int user_id;
-    private int magazine_id;
+
+    @Column(name = "userId")
+    private int userId;
+
+    @Column(name = "magazineId")
+    private int magazineId;
+
+    @Column(name = "start_date")
     private Date start_date;
+
+    @Column(name = "end_date")
     private Date end_date;
+
+    @Column(name = "duration_months")
     private double duration_months;
+
+    @Column(name = "status")
     private SubscriptionStatus status;
+
+    @Column(name = "created_at")
     private Date created_at;
+
+    @Column(name = "updated_at")
     private Date updated_at;
 
-    public Subscription(int id, int user_id, int magazine_id,
+    public Subscription(int id, int userId, int magazineId,
                         Date start_date, Date end_date, double duration_months,
                         SubscriptionStatus status, Date created_at, Date updated_at) {
         this.id = id;
-        this.user_id = user_id;
-        this.magazine_id = magazine_id;
+        this.userId = userId;
+        this.magazineId = magazineId;
         this.start_date = start_date;
         this.end_date = end_date;
         this.duration_months = duration_months;
         this.status = status;
         this.created_at = created_at;
         this.updated_at = updated_at;
+    }
+
+    public Subscription() {
+
     }
 
     public int getId() {
@@ -35,20 +62,20 @@ public class Subscription {
         this.id = id;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public int getMagazine_id() {
-        return magazine_id;
+    public int getMagazineId() {
+        return magazineId;
     }
 
-    public void setMagazine_id(int magazine_id) {
-        this.magazine_id = magazine_id;
+    public void setMagazineId(int magazineId) {
+        this.magazineId = magazineId;
     }
 
     public Date getStart_date() {
