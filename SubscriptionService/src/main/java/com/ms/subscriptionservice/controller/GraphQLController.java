@@ -1,4 +1,59 @@
 package com.ms.subscriptionservice.controller;
 
-public class GraphQLController {
+import com.ms.subscriptionservice.dto.SubscriptionInputDTO;
+import com.ms.subscriptionservice.model.Subscription;
+import com.ms.subscriptionservice.service.MessagePublisher;
+import com.ms.subscriptionservice.service.SubscriptionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.stereotype.Controller;
+
+import java.util.List;
+
+@Controller
+public class SubscriptionGraphQLController {
+
+    private final SubscriptionService subscriptionService;
+    private final MessagePublisher messagePublisher;
+
+    @Autowired
+    public SubscriptionGraphQLController(SubscriptionService subscriptionService, MessagePublisher messagePublisher) {
+        this.subscriptionService = subscriptionService;
+        this.messagePublisher = messagePublisher;
+    }
+
+    @QueryMapping
+    public List<Subscription> getUserSubscriptions(@Argument int userId) {
+        return subscriptionService.getByUserId(userId);
+    }
+
+    @MutationMapping
+    public Subscription createSubscription(@Argument SubscriptionInputDTO input) {
+        Subscription subscription = subscriptionService.create(input);
+        messagePublisher.sendSubscriptionCreatedMessage("Subscription created for userId=" + input.getUserId());
+        return subscription;
+    }
+
+    @MutationMapping
+    public Subscription updateSubscription(@Argument int id, @Argument SubscriptionInputDTO input) {
+        Subscription subscription = subscriptionService.update(id, input);
+        messagePublisher.sendSubscriptionCreatedMessage("Subscription updated id=" + id);
+        return subscription;
+    }
+
+    @MutationMapping
+    public Boolean cancelSubscription(@Argument int subscriptionId) {
+        boolean result = subscriptionService.cancel(subscriptionId);
+        messagePublisher.sendSubscriptionCreatedMessage("Subscription cancelled id=" + subscriptionId);
+        return result;
+    }
+
+    @MutationMapping
+    public Subscription extendSubscription(@Argument int id, @Argument int extraMonths) {
+        Subscription subscription = subscriptionService.extend(id, extraMonths);
+        messagePublisher.sendSubscriptionCreatedMessage("Subscription extended id=" + id);
+        return subscription;
+    }
 }
