@@ -1,8 +1,8 @@
 CREATE TABLE subscriptions
 (
     id              SERIAL PRIMARY KEY,
-    user_id         BIGINT      NOT NULL,
-    magazine_id     BIGINT      NOT NULL,
+    userId          BIGINT      NOT NULL,
+    magazineId      BIGINT      NOT NULL,
     start_date      DATE        NOT NULL,
     end_date        DATE,
     duration_months INT         NOT NULL,
