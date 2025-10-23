@@ -1,6 +1,7 @@
 package com.ms.subscriptionservice.controller;
 
 import com.ms.subscriptionservice.dto.SubscriptionRequestDTO;
+import com.ms.subscriptionservice.dto.SubscriptionRequestDeleteDTO;
 import com.ms.subscriptionservice.model.Subscription;
 import com.ms.subscriptionservice.service.MessagePublisher;
 import com.ms.subscriptionservice.service.SubscriptionService;
@@ -17,6 +18,24 @@ public class SubscriptionController {
         Subscription subscription = subscriptionService.create(dto);
         messagePublisher.sendSubscriptionCreatedMessage(
                 "Subscription created: userId=" + dto.getUserId() + ", magazineId=" + dto.getMagazineId()
+        );
+        return ResponseEntity.ok(subscription);
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity<Subscription> updateSubscription(@RequestBody SubscriptionRequestDTO dto) {
+        Subscription subscription = subscriptionService.update(dto);
+        messagePublisher.sendSubscriptionCreatedMessage(
+                "Subscription updated: userId=" + dto.getUserId() + ", magazineId=" + dto.getMagazineId()
+        );
+        return ResponseEntity.ok(subscription);
+    }
+
+    @PostMapping("/delete")
+    public ResponseEntity<Subscription> deleteSubscription(@RequestBody SubscriptionRequestDeleteDTO dto) {
+        Subscription subscription = subscriptionService.delete(dto);
+        messagePublisher.sendSubscriptionCreatedMessage(
+                "Subscription deleted: userId=" + dto.getUserId() + ", magazineId=" + dto.getMagazineId()
         );
         return ResponseEntity.ok(subscription);
     }
