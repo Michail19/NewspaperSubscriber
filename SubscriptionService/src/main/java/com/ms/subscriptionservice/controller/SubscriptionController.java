@@ -5,13 +5,20 @@ import com.ms.subscriptionservice.dto.SubscriptionRequestDeleteDTO;
 import com.ms.subscriptionservice.model.Subscription;
 import com.ms.subscriptionservice.service.MessagePublisher;
 import com.ms.subscriptionservice.service.SubscriptionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 public class SubscriptionController {
-    MessagePublisher messagePublisher;
-    SubscriptionService subscriptionService;
+    private final SubscriptionService subscriptionService;
+    private final MessagePublisher messagePublisher;
+
+    @Autowired
+    public SubscriptionController(SubscriptionService subscriptionService, MessagePublisher messagePublisher) {
+        this.subscriptionService = subscriptionService;
+        this.messagePublisher = messagePublisher;
+    }
 
     @PostMapping("/create")
     public ResponseEntity<Subscription> createSubscription(@RequestBody SubscriptionRequestDTO dto) {

@@ -13,13 +13,13 @@ import org.springframework.stereotype.Controller;
 import java.util.List;
 
 @Controller
-public class SubscriptionGraphQLController {
+public class GraphQLController {
 
     private final SubscriptionService subscriptionService;
     private final MessagePublisher messagePublisher;
 
     @Autowired
-    public SubscriptionGraphQLController(SubscriptionService subscriptionService, MessagePublisher messagePublisher) {
+    public GraphQLController(SubscriptionService subscriptionService, MessagePublisher messagePublisher) {
         this.subscriptionService = subscriptionService;
         this.messagePublisher = messagePublisher;
     }

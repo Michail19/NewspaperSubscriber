@@ -1,5 +1,6 @@
 package com.ms.subscriptionservice.service;
 
+import com.ms.subscriptionservice.dto.SubscriptionInputDTO;
 import com.ms.subscriptionservice.dto.SubscriptionRequestDTO;
 import com.ms.subscriptionservice.dto.SubscriptionRequestDeleteDTO;
 import com.ms.subscriptionservice.model.Subscription;
@@ -14,7 +15,15 @@ public class SubscriptionService {
         return null;
     }
 
+    public Subscription create(SubscriptionInputDTO dto) {
+        return null;
+    }
+
     public Subscription update(SubscriptionRequestDTO dto) {
+        return null;
+    }
+
+    public Subscription update(int id, SubscriptionInputDTO dto) {
         return null;
     }
 
