@@ -1,4 +1,4 @@
 package com.ms.subscriptionservice.dto;
 
-public class SubscriptionResponse {
+public class SubscriptionResponseDTO {
 }
