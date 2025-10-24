@@ -9,9 +9,9 @@ import java.sql.Timestamp;
 @Setter
 @Getter
 public class SubscriptionResponseDTO {
-    private int id;
-    private int userId;
-    private int magazineId;
+    private long id;
+    private long userId;
+    private long magazineId;
     private Timestamp startDate;
     private Timestamp endDate;
     private int durationMonths;
@@ -19,7 +19,7 @@ public class SubscriptionResponseDTO {
 
     public SubscriptionResponseDTO() {}
 
-    public SubscriptionResponseDTO(int id, int userId, int magazineId, Timestamp startDate, Timestamp endDate,
+    public SubscriptionResponseDTO(long id, long userId, long magazineId, Timestamp startDate, Timestamp endDate,
                                    int durationMonths, SubscriptionStatus status) {
         this.id = id;
         this.userId = userId;
