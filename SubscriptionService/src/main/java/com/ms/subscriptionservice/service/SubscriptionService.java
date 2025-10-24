@@ -1,7 +1,6 @@
 package com.ms.subscriptionservice.service;
 
 import com.ms.subscriptionservice.dto.SubscriptionRequestDTO;
-import com.ms.subscriptionservice.dto.SubscriptionRequestDeleteDTO;
 import com.ms.subscriptionservice.model.Subscription;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +17,6 @@ public class SubscriptionService {
         return null;
     }
 
-    public Subscription delete(SubscriptionRequestDeleteDTO dto) {
-        return null;
-    }
-
     public List<Subscription> getByUserId(int userId) {
         return null;
     }
@@ -30,7 +25,4 @@ public class SubscriptionService {
         return false;
     }
 
-    public Subscription extend(int id, int extraMonths) {
-        return null;
-    }
 }
