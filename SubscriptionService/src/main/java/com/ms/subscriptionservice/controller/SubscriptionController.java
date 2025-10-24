@@ -50,11 +50,4 @@ public class SubscriptionController {
         messagePublisher.sendSubscriptionCreatedMessage("Subscription cancelled id=" + subscriptionId);
         return result;
     }
-
-    @MutationMapping
-    public Subscription extendSubscription(@Argument int id, @Argument int extraMonths) {
-        Subscription subscription = subscriptionService.extend(id, extraMonths);
-        messagePublisher.sendSubscriptionCreatedMessage("Subscription extended id=" + id);
-        return subscription;
-    }
 }
