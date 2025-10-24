@@ -35,15 +35,9 @@ public class Subscription {
     @Column(name = "status")
     private SubscriptionStatus status;
 
-    @Column(name = "created_at")
-    private Timestamp created_at;
-
-    @Column(name = "updated_at")
-    private Timestamp updated_at;
-
     public Subscription(long id, long userId, long magazineId,
                         Timestamp start_date, Timestamp end_date, int duration_months,
-                        SubscriptionStatus status, Timestamp created_at, Timestamp updated_at) {
+                        SubscriptionStatus status) {
         this.id = id;
         this.userId = userId;
         this.magazineId = magazineId;
@@ -51,8 +45,6 @@ public class Subscription {
         this.end_date = end_date;
         this.duration_months = duration_months;
         this.status = status;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
     }
 
     public Subscription() {}
