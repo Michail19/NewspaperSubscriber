@@ -1,19 +1,21 @@
 package com.ms.subscriptionservice.controller;
 
-import com.ms.subscriptionservice.dto.SubscriptionRequestDTO;
-import com.ms.subscriptionservice.dto.SubscriptionRequestDeleteDTO;
+import com.ms.subscriptionservice.dto.SubscriptionInputDTO;
 import com.ms.subscriptionservice.model.Subscription;
 import com.ms.subscriptionservice.service.MessagePublisher;
 import com.ms.subscriptionservice.service.SubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
+
 
 @Controller
 public class SubscriptionController {
+
     private final SubscriptionService subscriptionService;
     private final MessagePublisher messagePublisher;
 
@@ -23,36 +25,36 @@ public class SubscriptionController {
         this.messagePublisher = messagePublisher;
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<Subscription> createSubscription(@RequestBody SubscriptionRequestDTO dto) {
-        Subscription subscription = subscriptionService.create(dto);
-        messagePublisher.sendSubscriptionCreatedMessage(
-                "Subscription created: userId=" + dto.getUserId() + ", magazineId=" + dto.getMagazineId()
-        );
-        return ResponseEntity.ok(subscription);
+    @QueryMapping
+    public List<Subscription> getUserSubscriptions(@Argument int userId) {
+        return subscriptionService.getByUserId(userId);
     }
 
-    @PostMapping("/update")
-    public ResponseEntity<Subscription> updateSubscription(@RequestBody SubscriptionRequestDTO dto) {
-        Subscription subscription = subscriptionService.update(dto);
-        messagePublisher.sendSubscriptionCreatedMessage(
-                "Subscription updated: userId=" + dto.getUserId() + ", magazineId=" + dto.getMagazineId()
-        );
-        return ResponseEntity.ok(subscription);
+    @MutationMapping
+    public Subscription createSubscription(@Argument SubscriptionInputDTO input) {
+        Subscription subscription = subscriptionService.create(input);
+        messagePublisher.sendSubscriptionCreatedMessage("Subscription created for userId=" + input.getUserId());
+        return subscription;
     }
 
-    @PostMapping("/delete")
-    public ResponseEntity<Subscription> deleteSubscription(@RequestBody SubscriptionRequestDeleteDTO dto) {
-        Subscription subscription = subscriptionService.delete(dto);
-        messagePublisher.sendSubscriptionCreatedMessage(
-                "Subscription deleted: userId=" + dto.getUserId() + ", magazineId=" + dto.getMagazineId()
-        );
-        return ResponseEntity.ok(subscription);
+    @MutationMapping
+    public Subscription updateSubscription(@Argument int id, @Argument SubscriptionInputDTO input) {
+        Subscription subscription = subscriptionService.update(id, input);
+        messagePublisher.sendSubscriptionCreatedMessage("Subscription updated id=" + id);
+        return subscription;
     }
 
-    @GetMapping("/get")
-    public ResponseEntity<Subscription> createSubscription(int id) {
-        Subscription subscription = (Subscription) subscriptionService.getByUserId(id);
-        return ResponseEntity.ok(subscription);
+    @MutationMapping
+    public Boolean cancelSubscription(@Argument int subscriptionId) {
+        boolean result = subscriptionService.cancel(subscriptionId);
+        messagePublisher.sendSubscriptionCreatedMessage("Subscription cancelled id=" + subscriptionId);
+        return result;
+    }
+
+    @MutationMapping
+    public Subscription extendSubscription(@Argument int id, @Argument int extraMonths) {
+        Subscription subscription = subscriptionService.extend(id, extraMonths);
+        messagePublisher.sendSubscriptionCreatedMessage("Subscription extended id=" + id);
+        return subscription;
     }
 }
