@@ -45,9 +45,8 @@ public class SubscriptionController {
     }
 
     @MutationMapping
-    public Boolean cancelSubscription(@Argument int subscriptionId) {
-        boolean result = subscriptionService.cancel(subscriptionId);
+    public void cancelSubscription(@Argument int subscriptionId) {
+        subscriptionService.cancel(subscriptionId);
         messagePublisher.sendSubscriptionCreatedMessage("Subscription cancelled id=" + subscriptionId);
-        return result;
     }
 }
