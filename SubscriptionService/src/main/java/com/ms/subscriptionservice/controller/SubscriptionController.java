@@ -1,6 +1,6 @@
 package com.ms.subscriptionservice.controller;
 
-import com.ms.subscriptionservice.dto.SubscriptionInputDTO;
+import com.ms.subscriptionservice.dto.SubscriptionRequestDTO;
 import com.ms.subscriptionservice.model.Subscription;
 import com.ms.subscriptionservice.service.MessagePublisher;
 import com.ms.subscriptionservice.service.SubscriptionService;
@@ -31,14 +31,14 @@ public class SubscriptionController {
     }
 
     @MutationMapping
-    public Subscription createSubscription(@Argument SubscriptionInputDTO input) {
+    public Subscription createSubscription(@Argument SubscriptionRequestDTO input) {
         Subscription subscription = subscriptionService.create(input);
         messagePublisher.sendSubscriptionCreatedMessage("Subscription created for userId=" + input.getUserId());
         return subscription;
     }
 
     @MutationMapping
-    public Subscription updateSubscription(@Argument int id, @Argument SubscriptionInputDTO input) {
+    public Subscription updateSubscription(@Argument int id, @Argument SubscriptionRequestDTO input) {
         Subscription subscription = subscriptionService.update(id, input);
         messagePublisher.sendSubscriptionCreatedMessage("Subscription updated id=" + id);
         return subscription;
