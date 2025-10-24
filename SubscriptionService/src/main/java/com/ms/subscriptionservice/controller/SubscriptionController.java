@@ -7,9 +7,12 @@ import com.ms.subscriptionservice.service.MessagePublisher;
 import com.ms.subscriptionservice.service.SubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+@Controller
 public class SubscriptionController {
     private final SubscriptionService subscriptionService;
     private final MessagePublisher messagePublisher;
@@ -44,6 +47,12 @@ public class SubscriptionController {
         messagePublisher.sendSubscriptionCreatedMessage(
                 "Subscription deleted: userId=" + dto.getUserId() + ", magazineId=" + dto.getMagazineId()
         );
+        return ResponseEntity.ok(subscription);
+    }
+
+    @GetMapping("/get")
+    public ResponseEntity<Subscription> createSubscription(int id) {
+        Subscription subscription = (Subscription) subscriptionService.getByUserId(id);
         return ResponseEntity.ok(subscription);
     }
 }
