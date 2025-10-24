@@ -1,6 +1,7 @@
 package com.ms.subscriptionservice.controller;
 
 import com.ms.subscriptionservice.dto.SubscriptionRequestDTO;
+import com.ms.subscriptionservice.dto.SubscriptionRequestDeleteDTO;
 import com.ms.subscriptionservice.model.Subscription;
 import com.ms.subscriptionservice.service.MessagePublisher;
 import com.ms.subscriptionservice.service.SubscriptionService;
@@ -26,27 +27,39 @@ public class SubscriptionController {
     }
 
     @QueryMapping
-    public List<Subscription> getUserSubscriptions(@Argument int userId) {
+    public List<Subscription> getUserSubscriptions(@Argument long userId) {
         return subscriptionService.getByUserId(userId);
     }
 
     @MutationMapping
     public Subscription createSubscription(@Argument SubscriptionRequestDTO input) {
         Subscription subscription = subscriptionService.create(input);
-        messagePublisher.sendSubscriptionCreatedMessage("Subscription created for userId=" + input.getUserId());
+        messagePublisher.sendSubscriptionCreatedMessage(
+                "Subscription created id=" + subscription.getId() + ", " +
+                "for user id=" + input.getUserId() + ", " +
+                "for magazine id=" + input.getMagazineId()
+        );
         return subscription;
     }
 
     @MutationMapping
-    public Subscription updateSubscription(@Argument int id, @Argument SubscriptionRequestDTO input) {
+    public Subscription updateSubscription(@Argument long id, @Argument SubscriptionRequestDTO input) {
         Subscription subscription = subscriptionService.update(id, input);
-        messagePublisher.sendSubscriptionCreatedMessage("Subscription updated id=" + id);
+        messagePublisher.sendSubscriptionCreatedMessage(
+                "Subscription updated id=" + id + ", " +
+                "for user id=" + input.getUserId() + ", " +
+                "for magazine id=" + input.getMagazineId()
+        );
         return subscription;
     }
 
     @MutationMapping
-    public void cancelSubscription(@Argument int subscriptionId) {
-        subscriptionService.cancel(subscriptionId);
-        messagePublisher.sendSubscriptionCreatedMessage("Subscription cancelled id=" + subscriptionId);
+    public void cancelSubscription(@Argument SubscriptionRequestDeleteDTO delete) {
+        subscriptionService.cancel(delete);
+        messagePublisher.sendSubscriptionCreatedMessage(
+                "Subscription cancelled id=" + delete.getSubscriptionId() + ", " +
+                "for user id=" + delete.getUserId() + ", " +
+                "for magazine id=" + delete.getMagazineId()
+        );
     }
 }

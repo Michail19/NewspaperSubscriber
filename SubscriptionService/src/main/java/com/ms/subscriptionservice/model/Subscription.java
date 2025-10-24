@@ -1,22 +1,26 @@
 package com.ms.subscriptionservice.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.Timestamp;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "subscription")
 public class Subscription {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @Column(name = "userId")
-    private int userId;
+    private long userId;
 
     @Column(name = "magazineId")
-    private int magazineId;
+    private long magazineId;
 
     @Column(name = "start_date")
     private Timestamp start_date;
@@ -37,7 +41,7 @@ public class Subscription {
     @Column(name = "updated_at")
     private Timestamp updated_at;
 
-    public Subscription(int id, int userId, int magazineId,
+    public Subscription(long id, long userId, long magazineId,
                         Timestamp start_date, Timestamp end_date, int duration_months,
                         SubscriptionStatus status, Timestamp created_at, Timestamp updated_at) {
         this.id = id;
@@ -51,79 +55,5 @@ public class Subscription {
         this.updated_at = updated_at;
     }
 
-    public Subscription() {
-
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public int getMagazineId() {
-        return magazineId;
-    }
-
-    public void setMagazineId(int magazineId) {
-        this.magazineId = magazineId;
-    }
-
-    public Timestamp getStart_date() {
-        return start_date;
-    }
-
-    public void setStart_date(Timestamp start_date) {
-        this.start_date = start_date;
-    }
-
-    public Timestamp getEnd_date() {
-        return end_date;
-    }
-
-    public void setEnd_date(Timestamp end_date) {
-        this.end_date = end_date;
-    }
-
-    public int getDuration_months() {
-        return duration_months;
-    }
-
-    public void setDuration_months(int duration_months) {
-        this.duration_months = duration_months;
-    }
-
-    public SubscriptionStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(SubscriptionStatus status) {
-        this.status = status;
-    }
-
-    public Timestamp getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(Timestamp created_at) {
-        this.created_at = created_at;
-    }
-
-    public Timestamp getUpdated_at() {
-        return updated_at;
-    }
-
-    public void setUpdated_at(Timestamp updated_at) {
-        this.updated_at = updated_at;
-    }
+    public Subscription() {}
 }
