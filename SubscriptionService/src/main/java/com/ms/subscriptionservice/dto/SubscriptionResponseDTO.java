@@ -9,18 +9,18 @@ import java.sql.Timestamp;
 @Setter
 @Getter
 public class SubscriptionResponseDTO {
-    private long id;
-    private long userId;
-    private long magazineId;
+    private Long id;
+    private Long userId;
+    private Long magazineId;
     private Timestamp startDate;
     private Timestamp endDate;
-    private int durationMonths;
+    private Integer durationMonths;
     private SubscriptionStatus status;
 
     public SubscriptionResponseDTO() {}
 
-    public SubscriptionResponseDTO(long id, long userId, long magazineId, Timestamp startDate, Timestamp endDate,
-                                   int durationMonths, SubscriptionStatus status) {
+    public SubscriptionResponseDTO(Long id, Long userId, Long magazineId, Timestamp startDate, Timestamp endDate,
+                                   Integer durationMonths, SubscriptionStatus status) {
         this.id = id;
         this.userId = userId;
         this.magazineId = magazineId;

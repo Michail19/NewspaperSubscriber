@@ -25,7 +25,7 @@ public class SubscriptionController {
     }
 
     @QueryMapping
-    public Subscription getUserSubscriptions(@Argument long id) {
+    public Subscription getUserSubscriptions(@Argument Long id) {
         return subscriptionService.getById(id);
     }
 
@@ -41,7 +41,7 @@ public class SubscriptionController {
     }
 
     @MutationMapping
-    public Subscription updateSubscription(@Argument long id, @Argument SubscriptionRequestDTO input) {
+    public Subscription updateSubscription(@Argument Long id, @Argument SubscriptionRequestDTO input) {
         Subscription subscription = subscriptionService.update(id, input);
         messagePublisher.sendSubscriptionCreatedMessage(
                 "Subscription updated id=" + id + ", " +

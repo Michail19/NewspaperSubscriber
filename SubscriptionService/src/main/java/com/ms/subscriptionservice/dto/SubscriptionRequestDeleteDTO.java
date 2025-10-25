@@ -6,14 +6,14 @@ import lombok.Setter;
 @Setter
 @Getter
 public class SubscriptionRequestDeleteDTO {
-    private long subscriptionId;
-    private long userId;
-    private long magazineId;
+    private Long subscriptionId;
+    private Long userId;
+    private Long magazineId;
 
     public SubscriptionRequestDeleteDTO() {
     }
 
-    public SubscriptionRequestDeleteDTO(long userId, long magazineId, long subscriptionId) {
+    public SubscriptionRequestDeleteDTO(Long userId, Long magazineId, Long subscriptionId) {
         this.userId = userId;
         this.magazineId = magazineId;
         this.subscriptionId = subscriptionId;

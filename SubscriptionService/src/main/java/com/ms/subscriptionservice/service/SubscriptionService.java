@@ -48,7 +48,7 @@ public class SubscriptionService {
         return subscriptionRepository.save(subscription);
     }
 
-    public Subscription update(long id, SubscriptionRequestDTO dto) {
+    public Subscription update(Long id, SubscriptionRequestDTO dto) {
         Subscription subscription = subscriptionRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Подписка не найдена"));
 
@@ -65,7 +65,7 @@ public class SubscriptionService {
         return subscriptionRepository.save(subscription);
     }
 
-    public Subscription getById(long id) {
+    public Subscription getById(Long id) {
         return subscriptionRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Подписка не найдена"));
     }

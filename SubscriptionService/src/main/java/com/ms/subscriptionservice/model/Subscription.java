@@ -14,13 +14,13 @@ public class Subscription {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "userId")
-    private long userId;
+    private Long userId;
 
     @Column(name = "magazineId")
-    private long magazineId;
+    private Long magazineId;
 
     @Column(name = "start_date")
     private Timestamp start_date;
@@ -29,7 +29,7 @@ public class Subscription {
     private Timestamp end_date;
 
     @Column(name = "duration_months")
-    private int duration_months;
+    private Integer duration_months;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
@@ -41,8 +41,8 @@ public class Subscription {
     @Column(name = "updated_at")
     private Timestamp updated_at;
 
-    public Subscription(long id, long userId, long magazineId,
-                        Timestamp start_date, Timestamp end_date, int duration_months,
+    public Subscription(Long id, Long userId, Long magazineId,
+                        Timestamp start_date, Timestamp end_date, Integer duration_months,
                         SubscriptionStatus status, Timestamp created_at, Timestamp updated_at) {
         this.id = id;
         this.userId = userId;
