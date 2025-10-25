@@ -27,8 +27,8 @@ public class SubscriptionController {
     }
 
     @QueryMapping
-    public List<Subscription> getUserSubscriptions(@Argument long userId) {
-        return subscriptionService.getByUserId(userId);
+    public Subscription getUserSubscriptions(@Argument long id) {
+        return subscriptionService.getById(id);
     }
 
     @MutationMapping
