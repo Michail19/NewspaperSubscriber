@@ -6,6 +6,8 @@ CREATE TABLE IF NOT EXISTS subscriptions
     start_date      TIMESTAMP DEFAULT NOW() NOT NULL,
     end_date        TIMESTAMP DEFAULT NULL,
     duration_months INT,
-    status          VARCHAR(20) NOT NULL CHECK (status IN ('ACTIVE', 'CANCELLED', 'EXPIRED'))
+    status          VARCHAR(20) NOT NULL CHECK (status IN ('ACTIVE', 'CANCELLED', 'EXPIRED')),
+    created_at      TIMESTAMP DEFAULT NOW(),
+    updated_at      TIMESTAMP DEFAULT NOW()
 );
 
