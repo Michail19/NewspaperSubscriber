@@ -32,11 +32,13 @@ jobs:
           ./gradlew test --no-daemon
 
       - name: Auto-merge review into main
-        if: success()  # только если тесты прошли
+        if: success()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git stash push -u
           git fetch origin main
           git checkout main
           git merge --ff-only review || (echo "Merge failed, manual intervention required" && exit 1)
           git push origin main
+          git stash pop || true
