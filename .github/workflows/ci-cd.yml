@@ -42,7 +42,6 @@ jobs:
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.PAT_TOKEN }}
-          branch: review
           base: main
           title: "Auto PR: Review → Main"
           body: |
