@@ -18,6 +18,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: review
+          token: ${{ secrets.PAT_TOKEN }}
           clean: true
 
       - name: Set up JDK
