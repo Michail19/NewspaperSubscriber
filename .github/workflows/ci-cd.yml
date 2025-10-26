@@ -1,18 +1,15 @@
-name: Review Branch Tests
+name: CI/CD Pipeline
 
 on:
   push:
     branches: [ review ]
-  pull_request:
 
 jobs:
   test:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         service: [ "SubscriptionService" ]
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -33,8 +30,18 @@ jobs:
           chmod +x gradlew
           ./gradlew test --no-daemon
 
+  publish:
+    runs-on: ubuntu-latest
+    needs: test  # выполняется только если тесты прошли
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: review
+          token: ${{ secrets.PAT_TOKEN }}
+          clean: true
+
       - name: Push changes to main
-        if: success()
         run: |
           set -e
           git config user.name "github-actions[bot]"
@@ -47,3 +54,11 @@ jobs:
           git merge review --squash --allow-unrelated-histories
           git commit -m "Squash merge from review branch"
           git push origin main
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: publish  # выполняется только после публикации в main
+    steps:
+      - name: Deploy to server
+        run: |
+          echo "TODO: сюда ваш деплой-скрипт"
