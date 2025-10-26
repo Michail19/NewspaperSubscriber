@@ -44,5 +44,5 @@ jobs:
           git clean -fd
           git fetch origin main
           git checkout main
-          git reset --hard review
+          git merge review --no-ff -m "Auto-merge from review branch"
           git push origin main
