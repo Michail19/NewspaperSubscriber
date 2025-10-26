@@ -54,8 +54,12 @@ jobs:
           git merge review --squash --allow-unrelated-histories || true
           git checkout --ours .
           git add .
-          git commit -m "Squash merge from review branch"
-          git push origin main
+          if ! git diff --cached --quiet; then
+             git commit -m "Squash merge from review branch"
+             git push origin main
+          else
+             echo "No changes to commit. Main is up-to-date with review."
+          fi
 
   deploy:
     runs-on: ubuntu-latest
