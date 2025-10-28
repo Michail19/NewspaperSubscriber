@@ -34,6 +34,20 @@ public class UserService {
         return user;
     }
 
+    public Users updateUser(long id, UserRequestDTO dto) {
+        Users user = userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь не найден"));
+
+        user.setFirstName(dto.getFirstName());
+        user.setSecondName(dto.getSecondName());
+        user.setThirdName(dto.getThirdName());
+        user.setAge(dto.getAge());
+
+        userRepository.save(user);
+
+        return user;
+    }
+
     public void removeUser(long id) {
         Users user = userRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь не найден"));
