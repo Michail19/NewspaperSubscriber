@@ -17,27 +17,27 @@ public class Users {
     private long id;
 
     @Column(name = "f_name")
-    private String first_name;
+    private String firstName;
 
     @Column(name = "s_name")
-    private String second_name;
+    private String secondName;
 
     @Column(name = "t_name")
-    private String third_name;
+    private String thirdName;
 
     @Column(name = "age")
     private int age;
 
     @Column(name = "registration_date")
-    private Timestamp registration_date;
+    private Timestamp registrationDate;
 
-    public Users(long id, String first_name, String second_name, String third_name, int age, Timestamp registration_date) {
+    public Users(long id, String firstName, String secondName, String thirdName, int age, Timestamp registrationDate) {
         this.id = id;
-        this.first_name = first_name;
-        this.second_name = second_name;
-        this.third_name = third_name;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.thirdName = thirdName;
         this.age = age;
-        this.registration_date = registration_date;
+        this.registrationDate = registrationDate;
     }
 
     public Users() {}
