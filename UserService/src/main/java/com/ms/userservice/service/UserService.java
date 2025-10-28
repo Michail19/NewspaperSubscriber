@@ -4,14 +4,16 @@ import com.ms.userservice.dto.UserRequestDTO;
 import com.ms.userservice.model.Users;
 import com.ms.userservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Service
 public class UserService {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public UserService(UserRepository userRepository) {
@@ -27,7 +29,16 @@ public class UserService {
         user.setAge(dto.getAge());
         user.setRegistrationDate(Timestamp.valueOf(LocalDateTime.now()));
 
+        userRepository.save(user);
+
         return user;
+    }
+
+    public void removeUser(long id) {
+        Users user = userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь не найден"));
+
+        userRepository.delete(user);
     }
 
 }
