@@ -35,7 +35,6 @@ public class UserService {
 
         userRepository.save(user);
 
-        // 📤 Отправляем уведомление в RabbitMQ
         messagePublisher.sendSubscriptionCreatedMessage(
                 "User created: id=" + user.getId() + ", name=" + user.getFirstName()
         );
