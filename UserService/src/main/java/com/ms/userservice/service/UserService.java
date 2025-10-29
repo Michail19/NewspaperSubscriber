@@ -14,11 +14,14 @@ import java.time.LocalDateTime;
 
 @Service
 public class UserService {
+
     private final UserRepository userRepository;
+    private final MessagePublisher messagePublisher;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, MessagePublisher messagePublisher) {
         this.userRepository = userRepository;
+        this.messagePublisher = messagePublisher;
     }
 
     public Users addUser(UserRequestDTO dto) {
@@ -31,6 +34,11 @@ public class UserService {
         user.setRegistrationDate(Timestamp.valueOf(LocalDateTime.now()));
 
         userRepository.save(user);
+
+        // 📤 Отправляем уведомление в RabbitMQ
+        messagePublisher.sendSubscriptionCreatedMessage(
+                "User created: id=" + user.getId() + ", name=" + user.getFirstName()
+        );
 
         return user;
     }
@@ -46,6 +54,10 @@ public class UserService {
 
         userRepository.save(user);
 
+        messagePublisher.sendSubscriptionCreatedMessage(
+                "User updated: id=" + user.getId()
+        );
+
         return user;
     }
 
@@ -54,14 +66,22 @@ public class UserService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь не найден"));
 
         userRepository.delete(user);
+
+        messagePublisher.sendSubscriptionCreatedMessage(
+                "User deleted: id=" + id
+        );
     }
 
     public UserResponseDTO getUser(long id) {
         Users user = userRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь не найден"));
 
-        return new UserResponseDTO(user.getFirstName(), user.getSecondName(), user.getThirdName(),
-                user.getAge(), user.getRegistrationDate());
+        return new UserResponseDTO(
+                user.getFirstName(),
+                user.getSecondName(),
+                user.getThirdName(),
+                user.getAge(),
+                user.getRegistrationDate()
+        );
     }
-
 }
