@@ -47,19 +47,16 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git remote set-url origin https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}.git
-          git reset --hard HEAD
-          git clean -fd -x
+
+          # Получаем основную ветку
           git fetch origin main
           git checkout main
-          git merge review --squash --allow-unrelated-histories || true
-          git checkout --ours .
-          git add .
-          if ! git diff --cached --quiet; then
-             git commit -m "Squash merge from review branch"
-             git push origin main
-          else
-             echo "No changes to commit. Main is up-to-date with review."
-          fi
+
+          # Сливаем review (без squash)
+          git merge origin/review --allow-unrelated-histories --no-edit
+
+          # Отправляем в main
+          git push origin main
 
   deploy:
     runs-on: ubuntu-latest
