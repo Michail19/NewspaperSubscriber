@@ -1,7 +1,12 @@
 package com.ms.userservice.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.sql.Timestamp;
 
+@Setter
+@Getter
 public class UserResponseDTO {
     private String firstName;
     private String secondName;
