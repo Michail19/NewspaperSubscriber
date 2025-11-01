@@ -1,0 +1,41 @@
+type Catalog {
+  id: ID!
+  title: String!
+  description: String
+  price: Float!
+  link: String
+  category: Category
+  series: Series
+}
+
+type Category {
+  id: ID!
+  name: String!
+}
+
+type Series {
+  id: ID!
+  name: String!
+}
+
+type Query {
+  getCatalogs: [Catalog]
+  getCatalogById(id: ID!): Catalog
+  getCategories: [Category]
+  getSeries: [Series]
+}
+
+input CatalogInput {
+  title: String!
+  description: String
+  price: Float!
+  link: String
+  categoryId: ID
+  seriesId: ID
+}
+
+type Mutation {
+  addCatalog(input: CatalogInput!): Catalog
+  updateCatalog(id: ID!, input: CatalogInput!): Catalog
+  deleteCatalog(id: ID!): Boolean
+}
