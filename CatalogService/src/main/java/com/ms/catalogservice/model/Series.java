@@ -21,7 +21,6 @@ public class Series {
         this.name = name;
     }
 
-    public Series() {
-    }
+    public Series() {}
 }
 

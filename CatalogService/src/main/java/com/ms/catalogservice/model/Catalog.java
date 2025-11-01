@@ -44,6 +44,5 @@ public class Catalog {
         this.series = series;
     }
 
-    public Catalog() {
-    }
+    public Catalog() {}
 }
