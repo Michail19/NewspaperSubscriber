@@ -11,20 +11,31 @@ type Catalog {
 type Category {
   id: ID!
   name: String!
+  catalogs: [Catalog]
 }
 
 type Series {
   id: ID!
   name: String!
+  catalogs: [Catalog]
 }
 
+# --- Запросы ---
 type Query {
+  # Каталог
   getCatalogs: [Catalog]
   getCatalogById(id: ID!): Catalog
+
+  # Категории
   getCategories: [Category]
+  getCategoryById(id: ID!): Category
+
+  # Серии
   getSeries: [Series]
+  getSeriesById(id: ID!): Series
 }
 
+# --- Вводные типы ---
 input CatalogInput {
   title: String!
   description: String
@@ -34,8 +45,28 @@ input CatalogInput {
   seriesId: ID
 }
 
+input CategoryInput {
+  name: String!
+}
+
+input SeriesInput {
+  name: String!
+}
+
+# --- Мутации ---
 type Mutation {
+  # --- Каталог ---
   addCatalog(input: CatalogInput!): Catalog
   updateCatalog(id: ID!, input: CatalogInput!): Catalog
   deleteCatalog(id: ID!): Boolean
+
+  # --- Категории ---
+  addCategory(input: CategoryInput!): Category
+  updateCategory(id: ID!, input: CategoryInput!): Category
+  deleteCategory(id: ID!): Boolean
+
+  # --- Серии ---
+  addSeries(input: SeriesInput!): Series
+  updateSeries(id: ID!, input: SeriesInput!): Series
+  deleteSeries(id: ID!): Boolean
 }

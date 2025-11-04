@@ -103,4 +103,4 @@ public class CatalogController {
     public boolean deleteSeries(@Argument Long id) {
         return catalogService.deleteSeries(id);
     }
-
+}
