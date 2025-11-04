@@ -23,6 +23,8 @@ public class CatalogController {
         this.catalogService = catalogService;
     }
 
+    /* ---------- Catalog ---------- */
+
     @QueryMapping
     public List<Catalog> getCatalogs() {
         return catalogService.getAllCatalogs();
@@ -33,16 +35,6 @@ public class CatalogController {
         return catalogService.getCatalogById(id);
     }
 
-    @QueryMapping
-    public List<Category> getCategories() {
-        return catalogService.getAllCategories();
-    }
-
-    @QueryMapping
-    public List<Series> getSeries() {
-        return catalogService.getAllSeries();
-    }
-
     @MutationMapping
     public Catalog addCatalog(@Argument CatalogInputDTO input) {
         Catalog catalog = new Catalog();
@@ -50,7 +42,6 @@ public class CatalogController {
         catalog.setDescription(input.getDescription());
         catalog.setPrice(input.getPrice());
         catalog.setLink(input.getLink());
-
         return catalogService.addCatalog(catalog, input.getCategoryId(), input.getSeriesId());
     }
 
@@ -61,7 +52,6 @@ public class CatalogController {
         updated.setDescription(input.getDescription());
         updated.setPrice(input.getPrice());
         updated.setLink(input.getLink());
-
         return catalogService.updateCatalog(id, updated, input.getCategoryId(), input.getSeriesId());
     }
 
@@ -69,4 +59,48 @@ public class CatalogController {
     public boolean deleteCatalog(@Argument Long id) {
         return catalogService.deleteCatalog(id);
     }
-}
+
+    /* ---------- Category ---------- */
+
+    @QueryMapping
+    public List<Category> getCategories() {
+        return catalogService.getAllCategories();
+    }
+
+    @MutationMapping
+    public Category addCategory(@Argument String name) {
+        return catalogService.addCategory(name);
+    }
+
+    @MutationMapping
+    public Category updateCategory(@Argument Long id, @Argument String newName) {
+        return catalogService.updateCategory(id, newName);
+    }
+
+    @MutationMapping
+    public boolean deleteCategory(@Argument Long id) {
+        return catalogService.deleteCategory(id);
+    }
+
+    /* ---------- Series ---------- */
+
+    @QueryMapping
+    public List<Series> getSeries() {
+        return catalogService.getAllSeries();
+    }
+
+    @MutationMapping
+    public Series addSeries(@Argument String name) {
+        return catalogService.addSeries(name);
+    }
+
+    @MutationMapping
+    public Series updateSeries(@Argument Long id, @Argument String newName) {
+        return catalogService.updateSeries(id, newName);
+    }
+
+    @MutationMapping
+    public boolean deleteSeries(@Argument Long id) {
+        return catalogService.deleteSeries(id);
+    }
+
