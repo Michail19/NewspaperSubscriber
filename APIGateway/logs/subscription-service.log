@@ -240,3 +240,120 @@ java.lang.IllegalStateException: Parameter [0] in public java.lang.Object com.ms
 2025-11-05T18:42:56.466+03:00  INFO 388 --- [APIGateway] [http-nio-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
 2025-11-05T18:42:56.723+03:00  INFO 388 --- [APIGateway] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
 2025-11-05T18:42:56.739+03:00  INFO 388 --- [APIGateway] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-05T19:42:17.606+03:00  INFO 21924 --- [APIGateway] [Test worker] c.m.a.SubscriptionControllerTest         : Starting SubscriptionControllerTest using Java 21.0.5 with PID 21924 (started by DOMDOM in D:\Java\NewspaperSubscriber\APIGateway)
+2025-11-05T19:42:17.621+03:00  INFO 21924 --- [APIGateway] [Test worker] c.m.a.SubscriptionControllerTest         : No active profile set, falling back to 1 default profile: "default"
+2025-11-05T19:42:19.049+03:00  INFO 21924 --- [APIGateway] [Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 0 (http)
+2025-11-05T19:42:19.081+03:00  INFO 21924 --- [APIGateway] [Test worker] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-05T19:42:19.081+03:00  INFO 21924 --- [APIGateway] [Test worker] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-11-05T19:42:19.145+03:00  INFO 21924 --- [APIGateway] [Test worker] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-11-05T19:42:19.145+03:00  INFO 21924 --- [APIGateway] [Test worker] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1509 ms
+2025-11-05T19:42:20.009+03:00  INFO 21924 --- [APIGateway] [Test worker] efaultSchemaResourceGraphQlSourceBuilder : Loaded 1 resource(s) in the GraphQL schema.
+2025-11-05T19:42:20.269+03:00  INFO 21924 --- [APIGateway] [Test worker] o.s.b.a.g.GraphQlAutoConfiguration       : GraphQL schema inspection:
+	Unmapped fields: {Subscription=[id, userId, magazineId, status]}
+	Unmapped registrations: {}
+	Unmapped arguments: {}
+	Skipped types: [User, Catalog, Subscription, User, Catalog, Subscription]
+2025-11-05T19:42:20.284+03:00  INFO 21924 --- [APIGateway] [Test worker] s.b.a.g.s.GraphQlWebMvcAutoConfiguration : GraphQL endpoint HTTP POST /graphql
+2025-11-05T19:42:20.586+03:00  INFO 21924 --- [APIGateway] [Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2025-11-05T19:42:20.649+03:00  INFO 21924 --- [APIGateway] [Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 58986 (http) with context path '/'
+2025-11-05T19:42:20.665+03:00  INFO 21924 --- [APIGateway] [Test worker] c.m.a.SubscriptionControllerTest         : Started SubscriptionControllerTest in 3.425 seconds (process running for 4.782)
+2025-11-05T19:42:22.113+03:00  INFO 21924 --- [APIGateway] [http-nio-auto-1-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-05T19:42:22.114+03:00  INFO 21924 --- [APIGateway] [http-nio-auto-1-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-11-05T19:42:22.116+03:00  INFO 21924 --- [APIGateway] [http-nio-auto-1-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2025-11-05T19:42:22.406+03:00  INFO 21924 --- [APIGateway] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-05T19:42:22.425+03:00  INFO 21924 --- [APIGateway] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-05T19:44:03.927+03:00  INFO 13300 --- [APIGateway] [Test worker] c.m.a.SubscriptionControllerTest         : Starting SubscriptionControllerTest using Java 21.0.5 with PID 13300 (started by DOMDOM in D:\Java\NewspaperSubscriber\APIGateway)
+2025-11-05T19:44:03.927+03:00  INFO 13300 --- [APIGateway] [Test worker] c.m.a.SubscriptionControllerTest         : No active profile set, falling back to 1 default profile: "default"
+2025-11-05T19:44:05.140+03:00  INFO 13300 --- [APIGateway] [Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 0 (http)
+2025-11-05T19:44:05.156+03:00  INFO 13300 --- [APIGateway] [Test worker] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-05T19:44:05.156+03:00  INFO 13300 --- [APIGateway] [Test worker] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-11-05T19:44:05.219+03:00  INFO 13300 --- [APIGateway] [Test worker] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-11-05T19:44:05.219+03:00  INFO 13300 --- [APIGateway] [Test worker] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1260 ms
+2025-11-05T19:44:05.934+03:00  INFO 13300 --- [APIGateway] [Test worker] efaultSchemaResourceGraphQlSourceBuilder : Loaded 1 resource(s) in the GraphQL schema.
+2025-11-05T19:44:06.146+03:00  INFO 13300 --- [APIGateway] [Test worker] o.s.b.a.g.GraphQlAutoConfiguration       : GraphQL schema inspection:
+	Unmapped fields: {Subscription=[id, userId, magazineId, status]}
+	Unmapped registrations: {}
+	Unmapped arguments: {}
+	Skipped types: [User, Catalog, Subscription, User, Catalog, Subscription]
+2025-11-05T19:44:06.172+03:00  INFO 13300 --- [APIGateway] [Test worker] s.b.a.g.s.GraphQlWebMvcAutoConfiguration : GraphQL endpoint HTTP POST /graphql
+2025-11-05T19:44:06.425+03:00  INFO 13300 --- [APIGateway] [Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2025-11-05T19:44:06.520+03:00  INFO 13300 --- [APIGateway] [Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 52209 (http) with context path '/'
+2025-11-05T19:44:06.532+03:00  INFO 13300 --- [APIGateway] [Test worker] c.m.a.SubscriptionControllerTest         : Started SubscriptionControllerTest in 2.916 seconds (process running for 4.063)
+2025-11-05T19:44:07.661+03:00  INFO 13300 --- [APIGateway] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-05T19:44:07.663+03:00  INFO 13300 --- [APIGateway] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-05T19:45:01.402+03:00  INFO 16340 --- [APIGateway] [Test worker] c.m.a.SubscriptionControllerTest         : Starting SubscriptionControllerTest using Java 21.0.5 with PID 16340 (started by DOMDOM in D:\Java\NewspaperSubscriber\APIGateway)
+2025-11-05T19:45:01.402+03:00  INFO 16340 --- [APIGateway] [Test worker] c.m.a.SubscriptionControllerTest         : No active profile set, falling back to 1 default profile: "default"
+2025-11-05T19:45:02.606+03:00  INFO 16340 --- [APIGateway] [Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 0 (http)
+2025-11-05T19:45:02.629+03:00  INFO 16340 --- [APIGateway] [Test worker] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-05T19:45:02.629+03:00  INFO 16340 --- [APIGateway] [Test worker] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-11-05T19:45:02.702+03:00  INFO 16340 --- [APIGateway] [Test worker] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-11-05T19:45:02.702+03:00  INFO 16340 --- [APIGateway] [Test worker] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1291 ms
+2025-11-05T19:45:03.398+03:00  INFO 16340 --- [APIGateway] [Test worker] efaultSchemaResourceGraphQlSourceBuilder : Loaded 1 resource(s) in the GraphQL schema.
+2025-11-05T19:45:03.617+03:00  INFO 16340 --- [APIGateway] [Test worker] o.s.b.a.g.GraphQlAutoConfiguration       : GraphQL schema inspection:
+	Unmapped fields: {Subscription=[id, userId, magazineId, status]}
+	Unmapped registrations: {}
+	Unmapped arguments: {}
+	Skipped types: [User, Catalog, Subscription, User, Catalog, Subscription]
+2025-11-05T19:45:03.643+03:00  INFO 16340 --- [APIGateway] [Test worker] s.b.a.g.s.GraphQlWebMvcAutoConfiguration : GraphQL endpoint HTTP POST /graphql
+2025-11-05T19:45:03.910+03:00  INFO 16340 --- [APIGateway] [Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2025-11-05T19:45:03.976+03:00  INFO 16340 --- [APIGateway] [Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 63131 (http) with context path '/'
+2025-11-05T19:45:04.003+03:00  INFO 16340 --- [APIGateway] [Test worker] c.m.a.SubscriptionControllerTest         : Started SubscriptionControllerTest in 2.929 seconds (process running for 4.051)
+2025-11-05T19:45:05.200+03:00  INFO 16340 --- [APIGateway] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-05T19:45:05.206+03:00  INFO 16340 --- [APIGateway] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-05T19:47:52.596+03:00  INFO 20084 --- [APIGateway] [Test worker] c.ms.apigateway.CatalogControllerTest    : Starting CatalogControllerTest using Java 21.0.5 with PID 20084 (started by DOMDOM in D:\Java\NewspaperSubscriber\APIGateway)
+2025-11-05T19:47:52.598+03:00  INFO 20084 --- [APIGateway] [Test worker] c.ms.apigateway.CatalogControllerTest    : No active profile set, falling back to 1 default profile: "default"
+2025-11-05T19:47:53.784+03:00  INFO 20084 --- [APIGateway] [Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 0 (http)
+2025-11-05T19:47:53.797+03:00  INFO 20084 --- [APIGateway] [Test worker] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-05T19:47:53.799+03:00  INFO 20084 --- [APIGateway] [Test worker] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-11-05T19:47:53.859+03:00  INFO 20084 --- [APIGateway] [Test worker] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-11-05T19:47:53.859+03:00  INFO 20084 --- [APIGateway] [Test worker] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1240 ms
+2025-11-05T19:47:54.541+03:00  INFO 20084 --- [APIGateway] [Test worker] efaultSchemaResourceGraphQlSourceBuilder : Loaded 1 resource(s) in the GraphQL schema.
+2025-11-05T19:47:54.747+03:00  INFO 20084 --- [APIGateway] [Test worker] o.s.b.a.g.GraphQlAutoConfiguration       : GraphQL schema inspection:
+	Unmapped fields: {Subscription=[id, userId, magazineId, status]}
+	Unmapped registrations: {}
+	Unmapped arguments: {}
+	Skipped types: [User, Catalog, Subscription, User, Catalog, Subscription]
+2025-11-05T19:47:54.785+03:00  INFO 20084 --- [APIGateway] [Test worker] s.b.a.g.s.GraphQlWebMvcAutoConfiguration : GraphQL endpoint HTTP POST /graphql
+2025-11-05T19:47:55.042+03:00  INFO 20084 --- [APIGateway] [Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2025-11-05T19:47:55.112+03:00  INFO 20084 --- [APIGateway] [Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 61326 (http) with context path '/'
+2025-11-05T19:47:55.128+03:00  INFO 20084 --- [APIGateway] [Test worker] c.ms.apigateway.CatalogControllerTest    : Started CatalogControllerTest in 2.845 seconds (process running for 3.962)
+2025-11-05T19:47:56.259+03:00  INFO 20084 --- [APIGateway] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-05T19:47:56.277+03:00  INFO 20084 --- [APIGateway] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-05T19:50:23.368+03:00  INFO 23248 --- [APIGateway] [Test worker] com.ms.apigateway.UserControllerTest     : Starting UserControllerTest using Java 21.0.5 with PID 23248 (started by DOMDOM in D:\Java\NewspaperSubscriber\APIGateway)
+2025-11-05T19:50:23.368+03:00  INFO 23248 --- [APIGateway] [Test worker] com.ms.apigateway.UserControllerTest     : The following 1 profile is active: "test"
+2025-11-05T19:50:24.539+03:00  INFO 23248 --- [APIGateway] [Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 0 (http)
+2025-11-05T19:50:24.562+03:00  INFO 23248 --- [APIGateway] [Test worker] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-05T19:50:24.562+03:00  INFO 23248 --- [APIGateway] [Test worker] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-11-05T19:50:24.618+03:00  INFO 23248 --- [APIGateway] [Test worker] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-11-05T19:50:24.618+03:00  INFO 23248 --- [APIGateway] [Test worker] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1218 ms
+2025-11-05T19:50:25.315+03:00  INFO 23248 --- [APIGateway] [Test worker] efaultSchemaResourceGraphQlSourceBuilder : Loaded 1 resource(s) in the GraphQL schema.
+2025-11-05T19:50:25.536+03:00  INFO 23248 --- [APIGateway] [Test worker] o.s.b.a.g.GraphQlAutoConfiguration       : GraphQL schema inspection:
+	Unmapped fields: {Subscription=[id, userId, magazineId, status]}
+	Unmapped registrations: {}
+	Unmapped arguments: {}
+	Skipped types: [User, Catalog, Subscription, User, Catalog, Subscription]
+2025-11-05T19:50:25.570+03:00  INFO 23248 --- [APIGateway] [Test worker] s.b.a.g.s.GraphQlWebMvcAutoConfiguration : GraphQL endpoint HTTP POST /graphql
+2025-11-05T19:50:25.815+03:00  INFO 23248 --- [APIGateway] [Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2025-11-05T19:50:25.884+03:00  INFO 23248 --- [APIGateway] [Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 61600 (http) with context path '/'
+2025-11-05T19:50:25.900+03:00  INFO 23248 --- [APIGateway] [Test worker] com.ms.apigateway.UserControllerTest     : Started UserControllerTest in 2.828 seconds (process running for 3.928)
+2025-11-05T19:50:27.084+03:00  INFO 23248 --- [APIGateway] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-05T19:50:27.084+03:00  INFO 23248 --- [APIGateway] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-05T19:52:07.629+03:00  INFO 20836 --- [APIGateway] [Test worker] com.ms.apigateway.UserControllerTest     : Starting UserControllerTest using Java 21.0.5 with PID 20836 (started by DOMDOM in D:\Java\NewspaperSubscriber\APIGateway)
+2025-11-05T19:52:07.633+03:00  INFO 20836 --- [APIGateway] [Test worker] com.ms.apigateway.UserControllerTest     : The following 1 profile is active: "test"
+2025-11-05T19:52:09.165+03:00  INFO 20836 --- [APIGateway] [Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 0 (http)
+2025-11-05T19:52:09.184+03:00  INFO 20836 --- [APIGateway] [Test worker] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-05T19:52:09.185+03:00  INFO 20836 --- [APIGateway] [Test worker] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.46]
+2025-11-05T19:52:09.265+03:00  INFO 20836 --- [APIGateway] [Test worker] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-11-05T19:52:09.265+03:00  INFO 20836 --- [APIGateway] [Test worker] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1592 ms
+2025-11-05T19:52:10.034+03:00  INFO 20836 --- [APIGateway] [Test worker] efaultSchemaResourceGraphQlSourceBuilder : Loaded 1 resource(s) in the GraphQL schema.
+2025-11-05T19:52:10.295+03:00  INFO 20836 --- [APIGateway] [Test worker] o.s.b.a.g.GraphQlAutoConfiguration       : GraphQL schema inspection:
+	Unmapped fields: {Subscription=[id, userId, magazineId, status]}
+	Unmapped registrations: {}
+	Unmapped arguments: {}
+	Skipped types: [User, Catalog, Subscription, User, Catalog, Subscription]
+2025-11-05T19:52:10.322+03:00  INFO 20836 --- [APIGateway] [Test worker] s.b.a.g.s.GraphQlWebMvcAutoConfiguration : GraphQL endpoint HTTP POST /graphql
+2025-11-05T19:52:10.646+03:00  INFO 20836 --- [APIGateway] [Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2025-11-05T19:52:10.757+03:00  INFO 20836 --- [APIGateway] [Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 57700 (http) with context path '/'
+2025-11-05T19:52:10.775+03:00  INFO 20836 --- [APIGateway] [Test worker] com.ms.apigateway.UserControllerTest     : Started UserControllerTest in 3.496 seconds (process running for 4.683)
+2025-11-05T19:52:12.220+03:00  INFO 20836 --- [APIGateway] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-05T19:52:12.227+03:00  INFO 20836 --- [APIGateway] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
