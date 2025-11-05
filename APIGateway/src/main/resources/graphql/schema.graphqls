@@ -5,7 +5,13 @@ type User {
   thirdName: String
   age: Int!
   registrationDate: String!
-  subscriptions: [Subscription]
+}
+
+input UserInput {
+  firstName: String!
+  secondName: String!
+  thirdName: String
+  age: Int!
 }
 
 type Catalog {
@@ -13,21 +19,35 @@ type Catalog {
   title: String!
   description: String
   price: Float!
-  link: String
+}
+
+input CatalogInput {
+  title: String!
+  description: String
+  price: Float!
 }
 
 type Subscription {
   id: ID!
   userId: ID!
   magazineId: ID!
-  durationMonths: Int!
   status: String!
-  startDate: String
-  endDate: String
+}
+
+input CreateSubscriptionInput {
+  userId: ID!
+  magazineId: ID!
+  durationMonths: Int!
 }
 
 type Query {
   getUser(id: ID!): User
   getCatalogById(id: ID!): Catalog
   getUserSubscriptions(id: ID!): [Subscription]
+}
+
+type Mutation {
+  addUser(input: UserInput!): User!
+  addCatalog(input: CatalogInput!): Catalog!
+  createSubscription(input: CreateSubscriptionInput!): Subscription!
 }
