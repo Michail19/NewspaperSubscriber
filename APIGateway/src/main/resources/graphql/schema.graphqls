@@ -1,0 +1,53 @@
+type User {
+  id: ID!
+  firstName: String!
+  secondName: String!
+  thirdName: String
+  age: Int!
+  registrationDate: String!
+}
+
+input UserInput {
+  firstName: String!
+  secondName: String!
+  thirdName: String
+  age: Int!
+}
+
+type Catalog {
+  id: ID!
+  title: String!
+  description: String
+  price: Float!
+}
+
+input CatalogInput {
+  title: String!
+  description: String
+  price: Float!
+}
+
+type Subscription {
+  id: ID!
+  userId: ID!
+  magazineId: ID!
+  status: String!
+}
+
+input CreateSubscriptionInput {
+  userId: ID!
+  magazineId: ID!
+  durationMonths: Int!
+}
+
+type Query {
+  getUser(id: ID!): User
+  getCatalogById(id: ID!): Catalog
+  getUserSubscriptions(id: ID!): [Subscription]
+}
+
+type Mutation {
+  addUser(input: UserInput!): User!
+  addCatalog(input: CatalogInput!): Catalog!
+  createSubscription(input: CreateSubscriptionInput!): Subscription!
+}
