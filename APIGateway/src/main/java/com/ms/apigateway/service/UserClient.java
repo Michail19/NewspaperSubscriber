@@ -19,4 +19,33 @@ public class UserClient {
                 .bodyToMono(Object.class)
                 .block();
     }
+
+    public Object addUser(Object input) {
+        String mutation = """
+            mutation ($input: UserInput!) {
+                addUser(input: $input) {
+                    id
+                    firstName
+                    secondName
+                    thirdName
+                    age
+                    registrationDate
+                }
+            }
+            """;
+
+        return webClient.post()
+                .bodyValue("{\"query\":\"" + mutation.replace("\"", "\\\"") + "\",\"variables\":{\"input\":" + toJson(input) + "}}")
+                .retrieve()
+                .bodyToMono(Object.class)
+                .block();
+    }
+
+    private String toJson(Object obj) {
+        try {
+            return new com.fasterxml.jackson.databind.ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
