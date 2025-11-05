@@ -1,0 +1,27 @@
+type User {
+  id: ID!
+  firstName: String!
+  secondName: String!
+  subscriptions: [Subscription]
+}
+
+type Catalog {
+  id: ID!
+  title: String!
+  price: Float!
+}
+
+type Subscription {
+  id: ID!
+  user: User
+  catalog: Catalog
+  startDate: String!
+  endDate: String
+  status: String!
+}
+
+type Query {
+  getUser(id: ID!): User
+  getCatalogs: [Catalog]
+  getUserSubscriptions(userId: ID!): [Subscription]
+}
