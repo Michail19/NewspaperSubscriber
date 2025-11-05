@@ -19,25 +19,24 @@ repositories {
 }
 
 dependencies {
-    // --- Spring Boot Core ---
+    // --- Spring Core ---
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-graphql'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
-    // --- JSON (удобно для тестов и сериализации) ---
+    // --- JSON ---
     implementation 'com.fasterxml.jackson.core:jackson-databind'
 
-    // --- Lombok (для сокращения кода сущностей) ---
+    // --- Lombok ---
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
     // --- Test ---
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.amqp:spring-rabbit-test'
     testImplementation 'org.springframework.graphql:spring-graphql-test'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation 'com.squareup.okhttp3:mockwebserver:4.12.0'
 
     // --- ENV ---
     implementation 'me.paulschwarz:spring-dotenv:3.0.0'
