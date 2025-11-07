@@ -1,0 +1,137 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password1234
+      POSTGRES_DB: microservices_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - microservices_net
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - microservices_net
+
+  apigateway:
+    build:
+      context: ./APIGateway
+      dockerfile: Dockerfile
+    container_name: apigateway
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USER: guest
+      RABBITMQ_PASSWORD: guest
+      CATALOG_SERVICE_URL: http://catalog-service:8082
+      SUBSCRIPTION_SERVICE_URL: http://subscription-service:8081
+      USER_SERVICE_URL: http://user-service:8083
+    depends_on:
+      - rabbitmq
+      - catalog-service
+      - subscription-service
+      - user-service
+    networks:
+      - microservices_net
+
+  catalog-service:
+    build:
+      context: ./CatalogService
+      dockerfile: Dockerfile
+    container_name: catalog-service
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      DB_URL: jdbc:postgresql://postgres:5432/microservices_db
+      DB_USER: user
+      DB_PASSWORD: password1234
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USER: guest
+      RABBITMQ_PASSWORD: guest
+    depends_on:
+      - postgres
+      - rabbitmq
+    networks:
+      - microservices_net
+
+  subscription-service:
+    build:
+      context: ./SubscriptionService
+      dockerfile: Dockerfile
+    container_name: subscription-service
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      DB_URL: jdbc:postgresql://postgres:5432/microservices_db
+      DB_USER: user
+      DB_PASSWORD: password1234
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USER: guest
+      RABBITMQ_PASSWORD: guest
+    depends_on:
+      - postgres
+      - rabbitmq
+    networks:
+      - microservices_net
+
+  user-service:
+    build:
+      context: ./UserService
+      dockerfile: Dockerfile
+    container_name: user-service
+    ports:
+      - "8083:8083"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      DB_URL: jdbc:postgresql://postgres:5432/microservices_db
+      DB_USER: user
+      DB_PASSWORD: password1234
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USER: guest
+      RABBITMQ_PASSWORD: guest
+    depends_on:
+      - postgres
+      - rabbitmq
+    networks:
+      - microservices_net
+
+  # frontend:
+  #   build:
+  #     context: ./Frontend
+  #     dockerfile: Dockerfile
+  #   container_name: frontend
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - apigateway
+  #   networks:
+  #     - microservices_net
+
+volumes:
+  pgdata:
+
+networks:
+  microservices_net:
+    driver: bridge
