@@ -4,11 +4,11 @@ CREATE TABLE catalog (
                          description TEXT,
                          price DOUBLE PRECISION NOT NULL,
                          link VARCHAR(255),
-                         category_id BIGINT REFERENCES category(id),
+                         category_id BIGINT REFERENCES categories(id),
                          series_id BIGINT REFERENCES series(id)
 );
 
-CREATE TABLE category (
+CREATE TABLE categories (
                           id BIGSERIAL PRIMARY KEY,
                           name VARCHAR(100) UNIQUE NOT NULL
 );

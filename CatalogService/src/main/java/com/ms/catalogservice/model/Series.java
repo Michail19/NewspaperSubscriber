@@ -4,10 +4,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
-@Table(name = "series")
 @Getter
 @Setter
+@Entity
+@Table(name = "series")
 public class Series {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
