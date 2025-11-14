@@ -2,7 +2,6 @@ package com.ms.userservice.service;
 
 import com.ms.userservice.dto.UserRequestDTO;
 import com.ms.userservice.dto.UserResponseDTO;
-import com.ms.userservice.exception.UserNotFoundException;
 import com.ms.userservice.model.Users;
 import com.ms.userservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,10 +73,9 @@ public class UserService {
 
     public UserResponseDTO getUser(long id) {
         Users user = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("Пользователь с id " + id + " не найден"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь не найден"));
 
         return new UserResponseDTO(
-                user.getId(),
                 user.getFirstName(),
                 user.getSecondName(),
                 user.getThirdName(),

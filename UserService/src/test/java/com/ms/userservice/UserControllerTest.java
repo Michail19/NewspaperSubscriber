@@ -27,7 +27,7 @@ class UserControllerTest {
 
     @Test
     void getUser_shouldReturnResponse() {
-        UserResponseDTO expected = new UserResponseDTO(1, "Иван", "Иванов", "Иванович", 30, null);
+        UserResponseDTO expected = new UserResponseDTO("Иван", "Иванов", "Иванович", 30, null);
         when(userService.getUser(1L)).thenReturn(expected);
 
         UserResponseDTO result = userController.getUser(1L);
