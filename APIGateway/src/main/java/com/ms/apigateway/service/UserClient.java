@@ -1,5 +1,6 @@
 package com.ms.apigateway.service;
 
+import com.ms.apigateway.dto.UserResponseDTO;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -18,22 +19,64 @@ public class UserClient {
         this.objectMapper = objectMapper;
     }
 
-    public Object getUserById(String id) {
-        // Используем переменные вместо интерполяции строк
-        String query = "query GetUser($id: String!) { getUser(id: $id) { id firstName secondName thirdName age registrationDate } }";
+    public UserResponseDTO getUserById(String id) {
+
+        String query = """
+        query GetUser($id: String!) {
+            getUser(id: $id) {
+                id
+                firstName
+                secondName
+                thirdName
+                age
+                registrationDate
+            }
+        }
+        """;
 
         Map<String, Object> variables = Map.of("id", id);
 
-        Map<String, Object> payload = new HashMap<>();
-        payload.put("query", query);
-        payload.put("variables", variables);
+        Map<String, Object> payload = Map.of(
+                "query", query,
+                "variables", variables
+        );
 
-        return webClient.post()
+        Map response = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
-                .bodyToMono(Object.class)
+                .bodyToMono(Map.class)
                 .block();
+
+        // Если есть ошибки → возвращаем null
+        if (response.containsKey("errors")) {
+            return null;
+        }
+
+        Map<String, Object> data = (Map<String, Object>) response.get("data");
+
+        if (data == null || data.get("getUser") == null) {
+            return null;
+        }
+
+        Map<String, Object> userMap = (Map<String, Object>) data.get("getUser");
+
+        return new UserResponseDTO(
+                longValue(userMap.get("id")),
+                (String) userMap.get("firstName"),
+                (String) userMap.get("secondName"),
+                (String) userMap.get("thirdName"),
+                intValue(userMap.get("age")),
+                (String) userMap.get("registrationDate")
+        );
+    }
+
+    private Long longValue(Object val) {
+        return val == null ? null : Long.parseLong(val.toString());
+    }
+
+    private Integer intValue(Object val) {
+        return val == null ? null : Integer.parseInt(val.toString());
     }
 
     public Object addUser(Object input) {

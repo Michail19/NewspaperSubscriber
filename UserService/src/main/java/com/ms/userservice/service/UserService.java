@@ -74,7 +74,7 @@ public class UserService {
 
     public UserResponseDTO getUser(long id) {
         Users user = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("Пользователь с id " + id + " не найден"));
+                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
 
         return new UserResponseDTO(
                 user.getId(),
@@ -82,7 +82,7 @@ public class UserService {
                 user.getSecondName(),
                 user.getThirdName(),
                 user.getAge(),
-                user.getRegistrationDate()
+                user.getRegistrationDate().toString()
         );
     }
 }

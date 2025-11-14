@@ -1,10 +1,10 @@
 type User {
-  id: ID!
-  firstName: String!
-  secondName: String!
+  id: ID
+  firstName: String
+  secondName: String
   thirdName: String
-  age: Int!
-  registrationDate: String!
+  age: Int
+  registrationDate: String
 }
 
 input UserInput {
@@ -15,10 +15,10 @@ input UserInput {
 }
 
 type Catalog {
-  id: ID!
-  title: String!
+  id: ID
+  title: String
   description: String
-  price: Float!
+  price: Float
 }
 
 input CatalogInput {
@@ -28,10 +28,10 @@ input CatalogInput {
 }
 
 type Subscription {
-  id: ID!
-  userId: ID!
-  magazineId: ID!
-  status: String!
+  id: ID
+  userId: ID
+  magazineId: ID
+  status: String
 }
 
 input CreateSubscriptionInput {

@@ -20,12 +20,7 @@ public class UserController {
 
     @QueryMapping
     public Object getUser(@Argument String id) {
-        Object user = userClient.getUserById(id);
-        Object subscriptions = subscriptionClient.getSubscriptionsByUser(id);
-        return new java.util.HashMap<>() {{
-            put("user", user);
-            put("subscriptions", subscriptions);
-        }};
+        return userClient.getUserById(id);
     }
 
     @MutationMapping

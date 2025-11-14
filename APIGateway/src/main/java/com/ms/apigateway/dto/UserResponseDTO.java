@@ -1,9 +1,7 @@
-package com.ms.userservice.dto;
+package com.ms.apigateway.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-
-import java.sql.Timestamp;
 
 @Setter
 @Getter
