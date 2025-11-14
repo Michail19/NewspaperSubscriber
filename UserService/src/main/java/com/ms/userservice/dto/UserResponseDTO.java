@@ -8,13 +8,16 @@ import java.sql.Timestamp;
 @Setter
 @Getter
 public class UserResponseDTO {
+    private long id;
     private String firstName;
     private String secondName;
     private String thirdName;
     private int age;
     private Timestamp registrationDate;
 
-    public UserResponseDTO(String firstName, String secondName, String thirdName, int age, Timestamp registrationDate) {
+    public UserResponseDTO(long id, String firstName, String secondName, String thirdName,
+                           int age, Timestamp registrationDate) {
+        this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
         this.thirdName = thirdName;
