@@ -19,7 +19,7 @@ public class UserController {
     }
 
     @QueryMapping
-    public Object getUser(String id) {
+    public Object getUser(@Argument String id) {
         Object user = userClient.getUserById(id);
         Object subscriptions = subscriptionClient.getSubscriptionsByUser(id);
         return new java.util.HashMap<>() {{

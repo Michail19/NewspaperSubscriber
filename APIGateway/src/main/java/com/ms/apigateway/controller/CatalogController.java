@@ -16,7 +16,7 @@ public class CatalogController {
     }
 
     @QueryMapping
-    public Object getCatalogById(String id) {
+    public Object getCatalogById(@Argument String id) {
         return catalogClient.getCatalogById(id);
     }
 

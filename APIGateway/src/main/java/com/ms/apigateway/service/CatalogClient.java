@@ -8,7 +8,7 @@ public class CatalogClient {
     private final WebClient webClient;
 
     public CatalogClient(WebClient.Builder builder) {
-        this.webClient = builder.baseUrl("http://localhost:8083/graphql").build();
+        this.webClient = builder.baseUrl("http://catalog-service:8083/graphql").build();
     }
 
     public Object getCatalogById(String id) {

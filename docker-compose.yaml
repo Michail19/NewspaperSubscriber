@@ -40,9 +40,9 @@ services:
       RABBITMQ_PORT: 5672
       RABBITMQ_USER: guest
       RABBITMQ_PASSWORD: guest
-      CATALOG_SERVICE_URL: http://catalog-service:8082
+      CATALOG_SERVICE_URL: http://catalog-service:8083
       SUBSCRIPTION_SERVICE_URL: http://subscription-service:8081
-      USER_SERVICE_URL: http://user-service:8083
+      USER_SERVICE_URL: http://user-service:8082
     depends_on:
       - rabbitmq
       - catalog-service
@@ -57,7 +57,7 @@ services:
       dockerfile: Dockerfile
     container_name: catalog-service
     ports:
-      - "8082:8082"
+      - "8083:8083"
     environment:
       SPRING_PROFILES_ACTIVE: docker
       DB_URL: jdbc:postgresql://postgres:5432/microservices_db
@@ -101,7 +101,7 @@ services:
       dockerfile: Dockerfile
     container_name: user-service
     ports:
-      - "8083:8083"
+      - "8082:8082"
     environment:
       SPRING_PROFILES_ACTIVE: docker
       DB_URL: jdbc:postgresql://postgres:5432/microservices_db

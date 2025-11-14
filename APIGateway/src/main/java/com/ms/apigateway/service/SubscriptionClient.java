@@ -8,7 +8,7 @@ public class SubscriptionClient {
     private final WebClient webClient;
 
     public SubscriptionClient(WebClient.Builder builder) {
-        this.webClient = builder.baseUrl("http://localhost:8081/graphql").build();
+        this.webClient = builder.baseUrl("http://subscription-service:8081/graphql").build();
     }
 
     public Object getSubscriptionsByUser(String userId) {

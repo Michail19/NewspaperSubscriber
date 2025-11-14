@@ -8,7 +8,7 @@ public class UserClient {
     private final WebClient webClient;
 
     public UserClient(WebClient.Builder builder) {
-        this.webClient = builder.baseUrl("http://localhost:8082/graphql").build();
+        this.webClient = builder.baseUrl("http://user-service:8082/graphql").build();
     }
 
     public Object getUserById(String id) {
