@@ -1,7 +1,11 @@
 package com.ms.apigateway.service;
 
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class CatalogClient {
@@ -12,9 +16,25 @@ public class CatalogClient {
     }
 
     public Object getCatalogById(String id) {
-        String query = "{ getCatalogById(id: \"" + id + "\") { id title description price link } }";
+        String query = """
+            query GetCatalogById($id: String!) {
+                getCatalogById(id: $id) {
+                    id
+                    title
+                    description
+                    price
+                    link
+                }
+            }
+            """;
+
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("query", query);
+        payload.put("variables", Map.of("id", id));
+
         return webClient.post()
-                .bodyValue("{\"query\":\"" + query + "\"}")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(payload)
                 .retrieve()
                 .bodyToMono(Object.class)
                 .block();
@@ -22,18 +42,24 @@ public class CatalogClient {
 
     public Object addCatalog(Object input) {
         String mutation = """
-            mutation ($input: CatalogInput!) {
+            mutation AddCatalog($input: CatalogInput!) {
                 addCatalog(input: $input) {
                     id
                     title
                     description
                     price
+                    link
                 }
             }
             """;
 
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("query", mutation);
+        payload.put("variables", Map.of("input", input));
+
         return webClient.post()
-                .bodyValue("{\"query\":\"" + mutation.replace("\"", "\\\"") + "\",\"variables\":{\"input\":" + toJson(input) + "}}")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(payload)
                 .retrieve()
                 .bodyToMono(Object.class)
                 .block();
