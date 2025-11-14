@@ -15,15 +15,56 @@ public class CatalogClient {
         this.webClient = builder.baseUrl("http://catalog-service:8083/graphql").build();
     }
 
+    // Каталог
+    public Object getCatalogs() {
+        String query = """
+            query GetCatalogs {
+                getCatalogs {
+                    id
+                    title
+                    description
+                    price
+                    link
+                    category {
+                        id
+                        name
+                    }
+                    series {
+                        id
+                        name
+                    }
+                }
+            }
+            """;
+
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("query", query);
+
+        return webClient.post()
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(payload)
+                .retrieve()
+                .bodyToMono(Object.class)
+                .block();
+    }
+
     public Object getCatalogById(String id) {
         String query = """
-            query GetCatalogById($id: String!) {
+            query GetCatalogById($id: ID!) {
                 getCatalogById(id: $id) {
                     id
                     title
                     description
                     price
                     link
+                    category {
+                        id
+                        name
+                    }
+                    series {
+                        id
+                        name
+                    }
                 }
             }
             """;
@@ -49,6 +90,14 @@ public class CatalogClient {
                     description
                     price
                     link
+                    category {
+                        id
+                        name
+                    }
+                    series {
+                        id
+                        name
+                    }
                 }
             }
             """;
@@ -65,11 +114,287 @@ public class CatalogClient {
                 .block();
     }
 
-    private String toJson(Object obj) {
-        try {
-            return new com.fasterxml.jackson.databind.ObjectMapper().writeValueAsString(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public Object updateCatalog(String id, Object input) {
+        String mutation = """
+            mutation UpdateCatalog($id: ID!, $input: CatalogInput!) {
+                updateCatalog(id: $id, input: $input) {
+                    id
+                    title
+                    description
+                    price
+                    link
+                    category {
+                        id
+                        name
+                    }
+                    series {
+                        id
+                        name
+                    }
+                }
+            }
+            """;
+
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("query", mutation);
+        payload.put("variables", Map.of("id", id, "input", input));
+
+        return webClient.post()
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(payload)
+                .retrieve()
+                .bodyToMono(Object.class)
+                .block();
+    }
+
+    public Object deleteCatalog(String id) {
+        String mutation = """
+            mutation DeleteCatalog($id: ID!) {
+                deleteCatalog(id: $id)
+            }
+            """;
+
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("query", mutation);
+        payload.put("variables", Map.of("id", id));
+
+        return webClient.post()
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(payload)
+                .retrieve()
+                .bodyToMono(Object.class)
+                .block();
+    }
+
+    // Категории
+    public Object getCategories() {
+        String query = """
+            query GetCategories {
+                getCategories {
+                    id
+                    name
+                    catalogs {
+                        id
+                        title
+                    }
+                }
+            }
+            """;
+
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("query", query);
+
+        return webClient.post()
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(payload)
+                .retrieve()
+                .bodyToMono(Object.class)
+                .block();
+    }
+
+    public Object getCategoryById(String id) {
+        String query = """
+            query GetCategoryById($id: ID!) {
+                getCategoryById(id: $id) {
+                    id
+                    name
+                    catalogs {
+                        id
+                        title
+                        price
+                    }
+                }
+            }
+            """;
+
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("query", query);
+        payload.put("variables", Map.of("id", id));
+
+        return webClient.post()
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(payload)
+                .retrieve()
+                .bodyToMono(Object.class)
+                .block();
+    }
+
+    public Object addCategory(Object input) {
+        String mutation = """
+            mutation AddCategory($input: CategoryInput!) {
+                addCategory(input: $input) {
+                    id
+                    name
+                }
+            }
+            """;
+
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("query", mutation);
+        payload.put("variables", Map.of("input", input));
+
+        return webClient.post()
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(payload)
+                .retrieve()
+                .bodyToMono(Object.class)
+                .block();
+    }
+
+    public Object updateCategory(String id, Object input) {
+        String mutation = """
+            mutation UpdateCategory($id: ID!, $input: CategoryInput!) {
+                updateCategory(id: $id, input: $input) {
+                    id
+                    name
+                }
+            }
+            """;
+
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("query", mutation);
+        payload.put("variables", Map.of("id", id, "input", input));
+
+        return webClient.post()
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(payload)
+                .retrieve()
+                .bodyToMono(Object.class)
+                .block();
+    }
+
+    public Object deleteCategory(String id) {
+        String mutation = """
+            mutation DeleteCategory($id: ID!) {
+                deleteCategory(id: $id)
+            }
+            """;
+
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("query", mutation);
+        payload.put("variables", Map.of("id", id));
+
+        return webClient.post()
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(payload)
+                .retrieve()
+                .bodyToMono(Object.class)
+                .block();
+    }
+
+    // Серии
+    public Object getSeries() {
+        String query = """
+            query GetSeries {
+                getSeries {
+                    id
+                    name
+                    catalogs {
+                        id
+                        title
+                    }
+                }
+            }
+            """;
+
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("query", query);
+
+        return webClient.post()
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(payload)
+                .retrieve()
+                .bodyToMono(Object.class)
+                .block();
+    }
+
+    public Object getSeriesById(String id) {
+        String query = """
+            query GetSeriesById($id: ID!) {
+                getSeriesById(id: $id) {
+                    id
+                    name
+                    catalogs {
+                        id
+                        title
+                        price
+                    }
+                }
+            }
+            """;
+
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("query", query);
+        payload.put("variables", Map.of("id", id));
+
+        return webClient.post()
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(payload)
+                .retrieve()
+                .bodyToMono(Object.class)
+                .block();
+    }
+
+    public Object addSeries(Object input) {
+        String mutation = """
+            mutation AddSeries($input: SeriesInput!) {
+                addSeries(input: $input) {
+                    id
+                    name
+                }
+            }
+            """;
+
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("query", mutation);
+        payload.put("variables", Map.of("input", input));
+
+        return webClient.post()
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(payload)
+                .retrieve()
+                .bodyToMono(Object.class)
+                .block();
+    }
+
+    public Object updateSeries(String id, Object input) {
+        String mutation = """
+            mutation UpdateSeries($id: ID!, $input: SeriesInput!) {
+                updateSeries(id: $id, input: $input) {
+                    id
+                    name
+                }
+            }
+            """;
+
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("query", mutation);
+        payload.put("variables", Map.of("id", id, "input", input));
+
+        return webClient.post()
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(payload)
+                .retrieve()
+                .bodyToMono(Object.class)
+                .block();
+    }
+
+    public Object deleteSeries(String id) {
+        String mutation = """
+            mutation DeleteSeries($id: ID!) {
+                deleteSeries(id: $id)
+            }
+            """;
+
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("query", mutation);
+        payload.put("variables", Map.of("id", id));
+
+        return webClient.post()
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(payload)
+                .retrieve()
+                .bodyToMono(Object.class)
+                .block();
     }
 }

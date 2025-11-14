@@ -1,3 +1,25 @@
+type Catalog {
+  id: ID!
+  title: String!
+  description: String
+  price: Float!
+  link: String
+  category: Category
+  series: Series
+}
+
+type Category {
+  id: ID!
+  name: String!
+  catalogs: [Catalog]
+}
+
+type Series {
+  id: ID!
+  name: String!
+  catalogs: [Catalog]
+}
+
 type User {
   id: ID
   firstName: String
@@ -14,17 +36,27 @@ input UserInput {
   age: Int!
 }
 
-type Catalog {
-  id: ID
-  title: String
-  description: String
-  price: Float
-}
-
 input CatalogInput {
   title: String!
   description: String
   price: Float!
+  link: String
+  categoryId: ID
+  seriesId: ID
+}
+
+input CategoryInput {
+  name: String!
+}
+
+input SeriesInput {
+  name: String!
+}
+
+input CreateSubscriptionInput {
+  userId: ID!
+  magazineId: ID!
+  durationMonths: Int!
 }
 
 type Subscription {
@@ -34,20 +66,43 @@ type Subscription {
   status: String
 }
 
-input CreateSubscriptionInput {
-  userId: ID!
-  magazineId: ID!
-  durationMonths: Int!
-}
-
 type Query {
-  getUser(id: ID!): User
+  # Каталог
+  getCatalogs: [Catalog]
   getCatalogById(id: ID!): Catalog
+
+  # Категории
+  getCategories: [Category]
+  getCategoryById(id: ID!): Category
+
+  # Серии
+  getSeries: [Series]
+  getSeriesById(id: ID!): Series
+
+  # Пользователи
+  getUser(id: ID!): User
   getUserSubscriptions(id: ID!): [Subscription]
 }
 
 type Mutation {
+  # Каталог
+  addCatalog(input: CatalogInput!): Catalog
+  updateCatalog(id: ID!, input: CatalogInput!): Catalog
+  deleteCatalog(id: ID!): Boolean
+
+  # Категории
+  addCategory(input: CategoryInput!): Category
+  updateCategory(id: ID!, input: CategoryInput!): Category
+  deleteCategory(id: ID!): Boolean
+
+  # Серии
+  addSeries(input: SeriesInput!): Series
+  updateSeries(id: ID!, input: SeriesInput!): Series
+  deleteSeries(id: ID!): Boolean
+
+  # Пользователи
   addUser(input: UserInput!): User!
-  addCatalog(input: CatalogInput!): Catalog!
+
+  # Подписки
   createSubscription(input: CreateSubscriptionInput!): Subscription!
 }
