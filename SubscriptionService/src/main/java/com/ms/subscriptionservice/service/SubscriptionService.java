@@ -2,6 +2,7 @@ package com.ms.subscriptionservice.service;
 
 import com.ms.subscriptionservice.dto.SubscriptionRequestDTO;
 import com.ms.subscriptionservice.dto.SubscriptionRequestDeleteDTO;
+import com.ms.subscriptionservice.exception.SubscriptionNotFoundException;
 import com.ms.subscriptionservice.model.Subscription;
 import com.ms.subscriptionservice.model.SubscriptionStatus;
 import com.ms.subscriptionservice.repository.SubscriptionRepository;
@@ -50,7 +51,7 @@ public class SubscriptionService {
 
     public Subscription update(Long id, SubscriptionRequestDTO dto) {
         Subscription subscription = subscriptionRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Подписка не найдена"));
+                .orElseThrow(() -> new SubscriptionNotFoundException("Subscription not found with id: " + id));
 
         subscription.setDuration_months(dto.getDurationMonths());
         subscription.setUpdated_at(Timestamp.valueOf(LocalDateTime.now()));
@@ -67,12 +68,13 @@ public class SubscriptionService {
 
     public Subscription getById(Long id) {
         return subscriptionRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Подписка не найдена"));
+                .orElseThrow(() -> new SubscriptionNotFoundException("Subscription not found with id: " + id));
     }
 
     public void cancel(SubscriptionRequestDeleteDTO dto) {
         Subscription subscription = subscriptionRepository.findById(dto.getSubscriptionId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Подписка не найдена"));
+                .orElseThrow(() -> new SubscriptionNotFoundException("Subscription not found with id: "
+                        + dto.getSubscriptionId()));
 
         subscription.setStatus(SubscriptionStatus.CANCELLED);
         subscription.setUpdated_at(Timestamp.valueOf(LocalDateTime.now()));

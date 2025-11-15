@@ -45,7 +45,7 @@ public class UserService {
 
     public Users updateUser(long id, UserRequestDTO dto) {
         Users user = userRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь не найден"));
+                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
 
         user.setFirstName(dto.getFirstName());
         user.setSecondName(dto.getSecondName());
@@ -63,7 +63,7 @@ public class UserService {
 
     public void removeUser(long id) {
         Users user = userRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь не найден"));
+                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
 
         userRepository.delete(user);
 

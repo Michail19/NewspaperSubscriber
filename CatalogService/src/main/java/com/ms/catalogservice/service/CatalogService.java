@@ -1,5 +1,8 @@
 package com.ms.catalogservice.service;
 
+import com.ms.catalogservice.exception.CatalogNotFoundException;
+import com.ms.catalogservice.exception.CategoryNotFoundException;
+import com.ms.catalogservice.exception.SeriesNotFoundException;
 import com.ms.catalogservice.model.Catalog;
 import com.ms.catalogservice.model.Category;
 import com.ms.catalogservice.model.Series;
@@ -37,19 +40,19 @@ public class CatalogService {
 
     public Catalog getCatalogById(Long id) {
         return catalogRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Каталог не найден"));
+                .orElseThrow(() -> new CatalogNotFoundException("Catalog not found with id: " + id));
     }
 
     public Catalog addCatalog(Catalog catalog, Long categoryId, Long seriesId) {
         if (categoryId != null) {
             Category category = categoryRepository.findById(categoryId)
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Категория не найдена"));
+                    .orElseThrow(() -> new CategoryNotFoundException("Category not found with id: " + categoryId));
             catalog.setCategory(category);
         }
 
         if (seriesId != null) {
             Series series = seriesRepository.findById(seriesId)
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Серия не найдена"));
+                    .orElseThrow(() -> new SeriesNotFoundException("Series not found with id: " + seriesId));
             catalog.setSeries(series);
         }
 
@@ -66,13 +69,13 @@ public class CatalogService {
 
         if (categoryId != null) {
             Category category = categoryRepository.findById(categoryId)
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Категория не найдена"));
+                    .orElseThrow(() -> new CategoryNotFoundException("Category not found with id: " + categoryId));
             catalog.setCategory(category);
         }
 
         if (seriesId != null) {
             Series series = seriesRepository.findById(seriesId)
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Серия не найдена"));
+                    .orElseThrow(() -> new SeriesNotFoundException("Series not found with id: " + seriesId));
             catalog.setSeries(series);
         }
 
@@ -81,7 +84,7 @@ public class CatalogService {
 
     public boolean deleteCatalog(Long id) {
         if (!catalogRepository.existsById(id)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Каталог не найден");
+            throw new CatalogNotFoundException("Catalog not found with id: " + id);
         }
         catalogRepository.deleteById(id);
         return true;
@@ -101,14 +104,14 @@ public class CatalogService {
 
     public Category updateCategory(Long id, String newName) {
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Категория не найдена"));
+                .orElseThrow(() -> new CategoryNotFoundException("Category not found with id: " + id));
         category.setName(newName);
         return categoryRepository.save(category);
     }
 
     public boolean deleteCategory(Long id) {
         if (!categoryRepository.existsById(id)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Категория не найдена");
+            throw new CategoryNotFoundException("Category not found with id: " + id);
         }
         categoryRepository.deleteById(id);
         return true;
@@ -128,14 +131,14 @@ public class CatalogService {
 
     public Series updateSeries(Long id, String newName) {
         Series series = seriesRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Серия не найдена"));
+                .orElseThrow(() -> new SeriesNotFoundException("Series not found with id: " + id));
         series.setName(newName);
         return seriesRepository.save(series);
     }
 
     public boolean deleteSeries(Long id) {
         if (!seriesRepository.existsById(id)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Серия не найдена");
+            throw new SeriesNotFoundException("Series not found with id: " + id);
         }
         seriesRepository.deleteById(id);
         return true;
