@@ -17,9 +17,10 @@ public class SubscriptionClient {
 
     public Object getSubscriptionsByUser(String userId) {
         String query = """
-            query GetUserSubscriptions($userId: String!) {
+            query GetUserSubscriptions($userId: ID!) {
                 getUserSubscriptions(id: $userId) {
                     id
+                    userId
                     magazineId
                     durationMonths
                     status
@@ -68,11 +69,49 @@ public class SubscriptionClient {
                 .block();
     }
 
-    private String toJson(Object obj) {
-        try {
-            return new com.fasterxml.jackson.databind.ObjectMapper().writeValueAsString(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public Object cancelSubscription(String subscriptionId) {
+        String mutation = """
+            mutation CancelSubscription($subscriptionId: ID!) {
+                cancelSubscription(subscriptionId: $subscriptionId)
+            }
+            """;
+
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("query", mutation);
+        payload.put("variables", Map.of("subscriptionId", subscriptionId));
+
+        return webClient.post()
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(payload)
+                .retrieve()
+                .bodyToMono(Object.class)
+                .block();
+    }
+
+    public Object updateSubscription(String id, Object input) {
+        String mutation = """
+            mutation UpdateSubscription($id: ID!, $input: UpdateSubscriptionInput!) {
+                updateSubscription(id: $id, input: $input) {
+                    id
+                    userId
+                    magazineId
+                    durationMonths
+                    status
+                    startDate
+                    endDate
+                }
+            }
+            """;
+
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("query", mutation);
+        payload.put("variables", Map.of("id", id, "input", input));
+
+        return webClient.post()
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(payload)
+                .retrieve()
+                .bodyToMono(Object.class)
+                .block();
     }
 }

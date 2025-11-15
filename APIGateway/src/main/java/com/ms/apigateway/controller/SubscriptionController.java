@@ -24,4 +24,14 @@ public class SubscriptionController {
     public Object createSubscription(@Argument("input") Object input) {
         return subscriptionClient.createSubscription(input);
     }
+
+    @MutationMapping
+    public Object cancelSubscription(@Argument String subscriptionId) {
+        return subscriptionClient.cancelSubscription(subscriptionId);
+    }
+
+    @MutationMapping
+    public Object updateSubscription(@Argument String id, @Argument("input") Object input) {
+        return subscriptionClient.updateSubscription(id, input);
+    }
 }

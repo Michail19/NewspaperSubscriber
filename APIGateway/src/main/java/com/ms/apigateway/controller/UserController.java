@@ -1,6 +1,5 @@
 package com.ms.apigateway.controller;
 
-import com.ms.apigateway.service.SubscriptionClient;
 import com.ms.apigateway.service.UserClient;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -11,11 +10,9 @@ import org.springframework.stereotype.Controller;
 public class UserController {
 
     private final UserClient userClient;
-    private final SubscriptionClient subscriptionClient;
 
-    public UserController(UserClient userClient, SubscriptionClient subscriptionClient) {
+    public UserController(UserClient userClient) {
         this.userClient = userClient;
-        this.subscriptionClient = subscriptionClient;
     }
 
     @QueryMapping
@@ -26,5 +23,15 @@ public class UserController {
     @MutationMapping
     public Object addUser(@Argument("input") Object input) {
         return userClient.addUser(input);
+    }
+
+    @MutationMapping
+    public Object updateUser(@Argument String id, @Argument("input") Object input) {
+        return userClient.updateUser(id, input);
+    }
+
+    @MutationMapping
+    public Object removeUser(@Argument String id) {
+        return userClient.removeUser(id);
     }
 }

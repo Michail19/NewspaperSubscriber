@@ -1,22 +1,22 @@
 type Catalog {
-  id: ID!
-  title: String!
+  id: ID
+  title: String
   description: String
-  price: Float!
+  price: Float
   link: String
   category: Category
   series: Series
 }
 
 type Category {
-  id: ID!
-  name: String!
+  id: ID
+  name: String
   catalogs: [Catalog]
 }
 
 type Series {
-  id: ID!
-  name: String!
+  id: ID
+  name: String
   catalogs: [Catalog]
 }
 
@@ -27,6 +27,22 @@ type User {
   thirdName: String
   age: Int
   registrationDate: String
+}
+
+type Subscription {
+  id: ID
+  userId: ID
+  magazineId: ID
+  startDate: String
+  endDate: String
+  durationMonths: Int
+  status: SubscriptionStatus
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELLED
+  EXPIRED
 }
 
 input UserInput {
@@ -59,11 +75,9 @@ input CreateSubscriptionInput {
   durationMonths: Int!
 }
 
-type Subscription {
-  id: ID
-  userId: ID
-  magazineId: ID
-  status: String
+input UpdateSubscriptionInput {
+  durationMonths: Int
+  status: SubscriptionStatus
 }
 
 type Query {
@@ -81,6 +95,8 @@ type Query {
 
   # Пользователи
   getUser(id: ID!): User
+
+  # Подписки
   getUserSubscriptions(id: ID!): [Subscription]
 }
 
@@ -102,7 +118,11 @@ type Mutation {
 
   # Пользователи
   addUser(input: UserInput!): User!
+  updateUser(id: ID!, input: UserInput!): User!
+  removeUser(id: ID!): Boolean!
 
   # Подписки
   createSubscription(input: CreateSubscriptionInput!): Subscription!
+  cancelSubscription(subscriptionId: ID!): Boolean!
+  updateSubscription(id: ID!, input: UpdateSubscriptionInput!): Subscription!
 }
