@@ -1,6 +1,6 @@
 package com.ms.apigateway.service;
 
-import com.ms.apigateway.util.GraphQLHelper;
+import com.ms.apigateway.dto.GraphQLResponseDTO;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -35,14 +35,14 @@ public class SubscriptionClient {
         payload.put("query", query);
         payload.put("variables", Map.of("userId", userId));
 
-        Map<String, Object> response = webClient.post()
+        GraphQLResponseDTO response = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
-                .bodyToMono(Map.class)
+                .bodyToMono(GraphQLResponseDTO.class)
                 .block();
 
-        return GraphQLHelper.extractSingle(response, "getUserSubscriptions");
+        return extractData(response, "getUserSubscriptions");
     }
 
     public Object createSubscription(Object input) {
@@ -64,15 +64,17 @@ public class SubscriptionClient {
         payload.put("query", mutation);
         payload.put("variables", Map.of("input", input));
 
-        return webClient.post()
+        GraphQLResponseDTO response = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
-                .bodyToMono(Object.class)
+                .bodyToMono(GraphQLResponseDTO.class)
                 .block();
+
+        return extractData(response, "createSubscription");
     }
 
-    public Object cancelSubscription(String subscriptionId) {
+    public Boolean cancelSubscription(String subscriptionId) {
         String mutation = """
             mutation CancelSubscription($subscriptionId: ID!) {
                 cancelSubscription(subscriptionId: $subscriptionId)
@@ -83,12 +85,14 @@ public class SubscriptionClient {
         payload.put("query", mutation);
         payload.put("variables", Map.of("subscriptionId", subscriptionId));
 
-        return webClient.post()
+        GraphQLResponseDTO response = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
-                .bodyToMono(Object.class)
+                .bodyToMono(GraphQLResponseDTO.class)
                 .block();
+
+        return extractBooleanData(response, "cancelSubscription");
     }
 
     public Object updateSubscription(String id, Object input) {
@@ -110,11 +114,32 @@ public class SubscriptionClient {
         payload.put("query", mutation);
         payload.put("variables", Map.of("id", id, "input", input));
 
-        return webClient.post()
+        GraphQLResponseDTO response = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
-                .bodyToMono(Object.class)
+                .bodyToMono(GraphQLResponseDTO.class)
                 .block();
+
+        return extractData(response, "updateSubscription");
+    }
+
+    private Object extractData(GraphQLResponseDTO response, String fieldName) {
+        if (response == null || response.hasErrors()) {
+            // Обработка ошибок
+            return null;
+        }
+
+        if (response.getData() instanceof Map) {
+            Map<String, Object> data = (Map<String, Object>) response.getData();
+            return data.get(fieldName);
+        }
+
+        return null;
+    }
+
+    private Boolean extractBooleanData(GraphQLResponseDTO response, String fieldName) {
+        Object data = extractData(response, fieldName);
+        return data instanceof Boolean ? (Boolean) data : false;
     }
 }
