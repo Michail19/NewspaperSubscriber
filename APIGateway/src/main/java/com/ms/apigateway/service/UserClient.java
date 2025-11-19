@@ -1,5 +1,6 @@
 package com.ms.apigateway.service;
 
+import com.ms.apigateway.dto.GraphQLResponseDTO;
 import com.ms.apigateway.util.GraphQLHelper;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -34,14 +35,14 @@ public class UserClient {
         payload.put("query", query);
         payload.put("variables", Map.of("id", id));
 
-        Map<String, Object> response = webClient.post()
+        GraphQLResponseDTO response = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
-                .bodyToMono(Map.class)
+                .bodyToMono(GraphQLResponseDTO.class)
                 .block();
 
-        return GraphQLHelper.extractSingle(response, "getUser");
+        return extractData(response, "getUser");
     }
 
     public Object addUser(Object input) {
@@ -62,12 +63,14 @@ public class UserClient {
         payload.put("query", mutation);
         payload.put("variables", Map.of("input", input));
 
-        return webClient.post()
+        GraphQLResponseDTO response = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
-                .bodyToMono(Object.class)
+                .bodyToMono(GraphQLResponseDTO.class)
                 .block();
+
+        return extractData(response, "addUser");
     }
 
     public Object updateUser(String id, Object input) {
@@ -88,15 +91,17 @@ public class UserClient {
         payload.put("query", mutation);
         payload.put("variables", Map.of("id", id, "input", input));
 
-        return webClient.post()
+        GraphQLResponseDTO response = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
-                .bodyToMono(Object.class)
+                .bodyToMono(GraphQLResponseDTO.class)
                 .block();
+
+        return extractData(response, "updateUser");
     }
 
-    public Object removeUser(String id) {
+    public Boolean removeUser(String id) {
         String mutation = """
             mutation RemoveUser($id: ID!) {
                 removeUser(id: $id)
@@ -107,11 +112,32 @@ public class UserClient {
         payload.put("query", mutation);
         payload.put("variables", Map.of("id", id));
 
-        return webClient.post()
+        GraphQLResponseDTO response = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
-                .bodyToMono(Object.class)
+                .bodyToMono(GraphQLResponseDTO.class)
                 .block();
+
+        return extractBooleanData(response, "removeUser");
+    }
+
+    private Object extractData(GraphQLResponseDTO response, String fieldName) {
+        if (response == null || response.hasErrors()) {
+            // Обработка ошибок
+            return null;
+        }
+
+        if (response.getData() instanceof Map) {
+            Map<String, Object> data = (Map<String, Object>) response.getData();
+            return data.get(fieldName);
+        }
+
+        return null;
+    }
+
+    private Boolean extractBooleanData(GraphQLResponseDTO response, String fieldName) {
+        Object data = extractData(response, fieldName);
+        return data instanceof Boolean ? (Boolean) data : false;
     }
 }
