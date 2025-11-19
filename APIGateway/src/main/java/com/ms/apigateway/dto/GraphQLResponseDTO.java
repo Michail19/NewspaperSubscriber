@@ -4,14 +4,14 @@ import java.util.List;
 import java.util.Map;
 
 public class GraphQLResponseDTO {
-    private Object data;
+    private Map<String, Object> data;
     private List<GraphQLError> errors;
 
-    public Object getData() {
+    public Map<String, Object> getData() {
         return data;
     }
 
-    public void setData(Object data) {
+    public void setData(Map<String, Object> data) {
         this.data = data;
     }
 

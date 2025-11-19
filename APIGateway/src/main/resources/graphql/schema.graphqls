@@ -117,12 +117,12 @@ type Mutation {
   deleteSeries(id: ID!): Boolean
 
   # Пользователи
-  addUser(input: UserInput!): User!
-  updateUser(id: ID!, input: UserInput!): User!
-  removeUser(id: ID!): Boolean!
+  addUser(input: UserInput!): User
+  updateUser(id: ID!, input: UserInput!): User
+  removeUser(id: ID!): Boolean
 
   # Подписки
-  createSubscription(input: CreateSubscriptionInput!): Subscription!
-  cancelSubscription(subscriptionId: ID!): Boolean!
-  updateSubscription(id: ID!, input: UpdateSubscriptionInput!): Subscription!
+  createSubscription(input: CreateSubscriptionInput!): Subscription
+  cancelSubscription(subscriptionId: ID!): Boolean
+  updateSubscription(id: ID!, input: UpdateSubscriptionInput!): Subscription
 }
