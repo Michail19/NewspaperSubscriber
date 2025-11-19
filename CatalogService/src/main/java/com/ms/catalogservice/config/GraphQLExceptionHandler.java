@@ -5,7 +5,9 @@ import com.ms.catalogservice.exception.CategoryNotFoundException;
 import com.ms.catalogservice.exception.SeriesNotFoundException;
 import graphql.GraphQLError;
 import graphql.GraphqlErrorBuilder;
+import graphql.schema.DataFetchingEnvironment;
 import org.springframework.graphql.data.method.annotation.GraphQlExceptionHandler;
+import org.springframework.graphql.execution.DataFetcherExceptionResolverAdapter;
 import org.springframework.graphql.execution.ErrorType;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
@@ -13,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice
-public class GraphQLExceptionHandler {
+public class GraphQLExceptionHandler extends DataFetcherExceptionResolverAdapter {
 
     @GraphQlExceptionHandler
     public GraphQLError handleUserNotFoundException(CatalogNotFoundException ex) {
@@ -52,5 +54,19 @@ public class GraphQLExceptionHandler {
                 .errorType(ErrorType.NOT_FOUND)
                 .extensions(extensions)
                 .build();
+    }
+
+    @Override
+    protected GraphQLError resolveToSingleError(Throwable ex, DataFetchingEnvironment env) {
+        if (ex instanceof CatalogNotFoundException ||
+                ex instanceof CategoryNotFoundException ||
+                ex instanceof SeriesNotFoundException) {
+
+            return GraphqlErrorBuilder.newError()
+                    .message(ex.getMessage())
+                    .path(env.getExecutionStepInfo().getPath())
+                    .build();
+        }
+        return null;
     }
 }

@@ -1,6 +1,7 @@
 package com.ms.catalogservice.controller;
 
 import com.ms.catalogservice.dto.CatalogInputDTO;
+import com.ms.catalogservice.exception.CatalogNotFoundException;
 import com.ms.catalogservice.model.Catalog;
 import com.ms.catalogservice.model.Category;
 import com.ms.catalogservice.model.Series;
@@ -32,27 +33,42 @@ public class CatalogController {
 
     @QueryMapping
     public Catalog getCatalogById(@Argument Long id) {
-        return catalogService.getCatalogById(id);
+        try {
+            return catalogService.getCatalogById(id);
+        }
+        catch (CatalogNotFoundException e) {
+            return null;
+        }
     }
 
     @MutationMapping
-    public Catalog addCatalog(@Argument CatalogInputDTO input) {
-        Catalog catalog = new Catalog();
-        catalog.setTitle(input.getTitle());
-        catalog.setDescription(input.getDescription());
-        catalog.setPrice(input.getPrice());
-        catalog.setLink(input.getLink());
-        return catalogService.addCatalog(catalog, input.getCategoryId(), input.getSeriesId());
+    public Catalog addCatalog(@Argument("input") CatalogInputDTO input) {
+        try {
+            Catalog catalog = new Catalog();
+            catalog.setTitle(input.getTitle());
+            catalog.setDescription(input.getDescription());
+            catalog.setPrice(input.getPrice());
+            catalog.setLink(input.getLink());
+            return catalogService.addCatalog(catalog, input.getCategoryId(), input.getSeriesId());
+        }
+        catch (CatalogNotFoundException e) {
+            return null;
+        }
     }
 
     @MutationMapping
-    public Catalog updateCatalog(@Argument Long id, @Argument CatalogInputDTO input) {
-        Catalog updated = new Catalog();
-        updated.setTitle(input.getTitle());
-        updated.setDescription(input.getDescription());
-        updated.setPrice(input.getPrice());
-        updated.setLink(input.getLink());
-        return catalogService.updateCatalog(id, updated, input.getCategoryId(), input.getSeriesId());
+    public Catalog updateCatalog(@Argument Long id, @Argument("input") CatalogInputDTO input) {
+        try {
+            Catalog updated = new Catalog();
+            updated.setTitle(input.getTitle());
+            updated.setDescription(input.getDescription());
+            updated.setPrice(input.getPrice());
+            updated.setLink(input.getLink());
+            return catalogService.updateCatalog(id, updated, input.getCategoryId(), input.getSeriesId());
+        }
+        catch (CatalogNotFoundException e) {
+            return null;
+        }
     }
 
     @MutationMapping

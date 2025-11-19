@@ -1,22 +1,22 @@
 type Catalog {
-  id: ID!
-  title: String!
+  id: ID
+  title: String
   description: String
-  price: Float!
+  price: Float
   link: String
   category: Category
   series: Series
 }
 
 type Category {
-  id: ID!
-  name: String!
+  id: ID
+  name: String
   catalogs: [Catalog]
 }
 
 type Series {
-  id: ID!
-  name: String!
+  id: ID
+  name: String
   catalogs: [Catalog]
 }
 
