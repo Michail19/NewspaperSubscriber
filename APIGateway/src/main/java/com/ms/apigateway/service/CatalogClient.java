@@ -1,6 +1,6 @@
 package com.ms.apigateway.service;
 
-import com.ms.apigateway.util.GraphQLHelper;
+import com.ms.apigateway.dto.GraphQLResponseDTO;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -41,14 +41,14 @@ public class CatalogClient {
         Map<String, Object> payload = new HashMap<>();
         payload.put("query", query);
 
-        Map<String, Object> response = webClient.post()
+        GraphQLResponseDTO response = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
-                .bodyToMono(Map.class)
+                .bodyToMono(GraphQLResponseDTO.class)
                 .block();
 
-        return GraphQLHelper.extractSingle(response, "getCatalogs");
+        return extractData(response, "getCatalogs");
     }
 
     public Object getCatalogById(String id) {
@@ -76,14 +76,14 @@ public class CatalogClient {
         payload.put("query", query);
         payload.put("variables", Map.of("id", id));
 
-        Map<String, Object> response = webClient.post()
+        GraphQLResponseDTO response = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
-                .bodyToMono(Map.class)
+                .bodyToMono(GraphQLResponseDTO.class)
                 .block();
 
-        return GraphQLHelper.extractSingle(response, "getCatalogById");
+        return extractData(response, "getCatalogById");
     }
 
     public Object addCatalog(Object input) {
@@ -111,12 +111,14 @@ public class CatalogClient {
         payload.put("query", mutation);
         payload.put("variables", Map.of("input", input));
 
-        return webClient.post()
+        GraphQLResponseDTO response = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
-                .bodyToMono(Object.class)
+                .bodyToMono(GraphQLResponseDTO.class)
                 .block();
+
+        return extractData(response, "addCatalog");
     }
 
     public Object updateCatalog(String id, Object input) {
@@ -144,15 +146,17 @@ public class CatalogClient {
         payload.put("query", mutation);
         payload.put("variables", Map.of("id", id, "input", input));
 
-        return webClient.post()
+        GraphQLResponseDTO response = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
-                .bodyToMono(Object.class)
+                .bodyToMono(GraphQLResponseDTO.class)
                 .block();
+
+        return extractData(response, "updateCatalog");
     }
 
-    public Object deleteCatalog(String id) {
+    public Boolean deleteCatalog(String id) {
         String mutation = """
             mutation DeleteCatalog($id: ID!) {
                 deleteCatalog(id: $id)
@@ -163,12 +167,14 @@ public class CatalogClient {
         payload.put("query", mutation);
         payload.put("variables", Map.of("id", id));
 
-        return webClient.post()
+        GraphQLResponseDTO response = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
-                .bodyToMono(Object.class)
+                .bodyToMono(GraphQLResponseDTO.class)
                 .block();
+
+        return extractBooleanData(response, "deleteCatalog");
     }
 
     // Категории
@@ -189,14 +195,14 @@ public class CatalogClient {
         Map<String, Object> payload = new HashMap<>();
         payload.put("query", query);
 
-        Map<String, Object> response = webClient.post()
+        GraphQLResponseDTO response = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
-                .bodyToMono(Map.class)
+                .bodyToMono(GraphQLResponseDTO.class)
                 .block();
 
-        return GraphQLHelper.extractSingle(response, "getCategories");
+        return extractData(response, "getCategories");
     }
 
     public Object getCategoryById(String id) {
@@ -218,14 +224,14 @@ public class CatalogClient {
         payload.put("query", query);
         payload.put("variables", Map.of("id", id));
 
-        Map<String, Object> response = webClient.post()
+        GraphQLResponseDTO response = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
-                .bodyToMono(Map.class)
+                .bodyToMono(GraphQLResponseDTO.class)
                 .block();
 
-        return GraphQLHelper.extractSingle(response, "getCategoryById");
+        return extractData(response, "getCategoryById");
     }
 
     public Object addCategory(Object input) {
@@ -242,12 +248,14 @@ public class CatalogClient {
         payload.put("query", mutation);
         payload.put("variables", Map.of("input", input));
 
-        return webClient.post()
+        GraphQLResponseDTO response = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
-                .bodyToMono(Object.class)
+                .bodyToMono(GraphQLResponseDTO.class)
                 .block();
+
+        return extractData(response, "addCategory");
     }
 
     public Object updateCategory(String id, Object input) {
@@ -264,15 +272,17 @@ public class CatalogClient {
         payload.put("query", mutation);
         payload.put("variables", Map.of("id", id, "input", input));
 
-        return webClient.post()
+        GraphQLResponseDTO response = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
-                .bodyToMono(Object.class)
+                .bodyToMono(GraphQLResponseDTO.class)
                 .block();
+
+        return extractData(response, "updateCategory");
     }
 
-    public Object deleteCategory(String id) {
+    public Boolean deleteCategory(String id) {
         String mutation = """
             mutation DeleteCategory($id: ID!) {
                 deleteCategory(id: $id)
@@ -283,12 +293,14 @@ public class CatalogClient {
         payload.put("query", mutation);
         payload.put("variables", Map.of("id", id));
 
-        return webClient.post()
+        GraphQLResponseDTO response = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
-                .bodyToMono(Object.class)
+                .bodyToMono(GraphQLResponseDTO.class)
                 .block();
+
+        return extractBooleanData(response, "deleteCategory");
     }
 
     // Серии
@@ -309,14 +321,14 @@ public class CatalogClient {
         Map<String, Object> payload = new HashMap<>();
         payload.put("query", query);
 
-        Map<String, Object> response = webClient.post()
+        GraphQLResponseDTO response = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
-                .bodyToMono(Map.class)
+                .bodyToMono(GraphQLResponseDTO.class)
                 .block();
 
-        return GraphQLHelper.extractSingle(response, "getSeries");
+        return extractData(response, "getSeries");
     }
 
     public Object getSeriesById(String id) {
@@ -338,14 +350,14 @@ public class CatalogClient {
         payload.put("query", query);
         payload.put("variables", Map.of("id", id));
 
-        Map<String, Object> response = webClient.post()
+        GraphQLResponseDTO response = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
-                .bodyToMono(Map.class)
+                .bodyToMono(GraphQLResponseDTO.class)
                 .block();
 
-        return GraphQLHelper.extractSingle(response, "getSeriesById");
+        return extractData(response, "getSeriesById");
     }
 
     public Object addSeries(Object input) {
@@ -362,12 +374,14 @@ public class CatalogClient {
         payload.put("query", mutation);
         payload.put("variables", Map.of("input", input));
 
-        return webClient.post()
+        GraphQLResponseDTO response = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
-                .bodyToMono(Object.class)
+                .bodyToMono(GraphQLResponseDTO.class)
                 .block();
+
+        return extractData(response, "addSeries");
     }
 
     public Object updateSeries(String id, Object input) {
@@ -384,15 +398,17 @@ public class CatalogClient {
         payload.put("query", mutation);
         payload.put("variables", Map.of("id", id, "input", input));
 
-        return webClient.post()
+        GraphQLResponseDTO response = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
-                .bodyToMono(Object.class)
+                .bodyToMono(GraphQLResponseDTO.class)
                 .block();
+
+        return extractData(response, "updateSeries");
     }
 
-    public Object deleteSeries(String id) {
+    public Boolean deleteSeries(String id) {
         String mutation = """
             mutation DeleteSeries($id: ID!) {
                 deleteSeries(id: $id)
@@ -403,11 +419,43 @@ public class CatalogClient {
         payload.put("query", mutation);
         payload.put("variables", Map.of("id", id));
 
-        return webClient.post()
+        GraphQLResponseDTO response = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
-                .bodyToMono(Object.class)
+                .bodyToMono(GraphQLResponseDTO.class)
                 .block();
+
+        return extractBooleanData(response, "deleteSeries");
+    }
+
+    // Вспомогательные методы
+    private Object extractData(GraphQLResponseDTO response, String fieldName) {
+        if (response == null) {
+            throw new RuntimeException("GraphQL response is null");
+        }
+
+        if (response.hasErrors()) {
+            StringBuilder errorMessage = new StringBuilder("GraphQL errors: ");
+            for (GraphQLResponseDTO.GraphQLError error : response.getErrors()) {
+                errorMessage.append(error.getMessage()).append("; ");
+            }
+            throw new RuntimeException(errorMessage.toString());
+        }
+
+        if (response.getData() instanceof Map) {
+            Map<String, Object> data = (Map<String, Object>) response.getData();
+            return data.get(fieldName);
+        }
+
+        throw new RuntimeException("Invalid GraphQL response format");
+    }
+
+    private Boolean extractBooleanData(GraphQLResponseDTO response, String fieldName) {
+        Object data = extractData(response, fieldName);
+        if (data instanceof Boolean) {
+            return (Boolean) data;
+        }
+        throw new RuntimeException("Expected Boolean but got: " + (data != null ? data.getClass().getSimpleName() : "null"));
     }
 }
