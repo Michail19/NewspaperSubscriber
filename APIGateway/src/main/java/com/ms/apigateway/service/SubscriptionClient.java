@@ -1,5 +1,6 @@
 package com.ms.apigateway.service;
 
+import com.ms.apigateway.util.GraphQLHelper;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -34,12 +35,14 @@ public class SubscriptionClient {
         payload.put("query", query);
         payload.put("variables", Map.of("userId", userId));
 
-        return webClient.post()
+        Map<String, Object> response = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
-                .bodyToMono(Object.class)
+                .bodyToMono(Map.class)
                 .block();
+
+        return GraphQLHelper.extractSingle(response, "getUserSubscriptions");
     }
 
     public Object createSubscription(Object input) {

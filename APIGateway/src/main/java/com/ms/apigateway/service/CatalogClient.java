@@ -1,5 +1,6 @@
 package com.ms.apigateway.service;
 
+import com.ms.apigateway.util.GraphQLHelper;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -40,12 +41,14 @@ public class CatalogClient {
         Map<String, Object> payload = new HashMap<>();
         payload.put("query", query);
 
-        return webClient.post()
+        Map<String, Object> response = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
-                .bodyToMono(Object.class)
+                .bodyToMono(Map.class)
                 .block();
+
+        return GraphQLHelper.extractSingle(response, "getCatalogs");
     }
 
     public Object getCatalogById(String id) {
@@ -73,12 +76,14 @@ public class CatalogClient {
         payload.put("query", query);
         payload.put("variables", Map.of("id", id));
 
-        return webClient.post()
+        Map<String, Object> response = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
-                .bodyToMono(Object.class)
+                .bodyToMono(Map.class)
                 .block();
+
+        return GraphQLHelper.extractSingle(response, "getCatalogById");
     }
 
     public Object addCatalog(Object input) {
@@ -184,12 +189,14 @@ public class CatalogClient {
         Map<String, Object> payload = new HashMap<>();
         payload.put("query", query);
 
-        return webClient.post()
+        Map<String, Object> response = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
-                .bodyToMono(Object.class)
+                .bodyToMono(Map.class)
                 .block();
+
+        return GraphQLHelper.extractSingle(response, "getCategories");
     }
 
     public Object getCategoryById(String id) {
@@ -211,12 +218,14 @@ public class CatalogClient {
         payload.put("query", query);
         payload.put("variables", Map.of("id", id));
 
-        return webClient.post()
+        Map<String, Object> response = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
-                .bodyToMono(Object.class)
+                .bodyToMono(Map.class)
                 .block();
+
+        return GraphQLHelper.extractSingle(response, "getCategoryById");
     }
 
     public Object addCategory(Object input) {
@@ -300,12 +309,14 @@ public class CatalogClient {
         Map<String, Object> payload = new HashMap<>();
         payload.put("query", query);
 
-        return webClient.post()
+        Map<String, Object> response = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
-                .bodyToMono(Object.class)
+                .bodyToMono(Map.class)
                 .block();
+
+        return GraphQLHelper.extractSingle(response, "getSeries");
     }
 
     public Object getSeriesById(String id) {
@@ -327,12 +338,14 @@ public class CatalogClient {
         payload.put("query", query);
         payload.put("variables", Map.of("id", id));
 
-        return webClient.post()
+        Map<String, Object> response = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
-                .bodyToMono(Object.class)
+                .bodyToMono(Map.class)
                 .block();
+
+        return GraphQLHelper.extractSingle(response, "getSeriesById");
     }
 
     public Object addSeries(Object input) {
