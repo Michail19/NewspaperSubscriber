@@ -16,6 +16,11 @@ public class SubscriptionController {
     }
 
     @QueryMapping
+    public Object getUserSubscription(@Argument String id) {
+        return subscriptionClient.getSubscriptionByUser(id);
+    }
+
+    @QueryMapping
     public Object getUserSubscriptions(@Argument String id) {
         return subscriptionClient.getSubscriptionsByUser(id);
     }

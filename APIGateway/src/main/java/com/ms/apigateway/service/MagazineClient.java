@@ -13,7 +13,7 @@ public class MagazineClient {
     private final WebClient webClient;
 
     public MagazineClient(WebClient.Builder builder) {
-        this.webClient = builder.baseUrl("http://catalog-service:8083/graphql").build();
+        this.webClient = builder.baseUrl("http://magazine-service:8083/graphql").build();
     }
 
     // Каталог

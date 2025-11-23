@@ -40,22 +40,22 @@ services:
       RABBITMQ_PORT: 5672
       RABBITMQ_USER: guest
       RABBITMQ_PASSWORD: guest
-      CATALOG_SERVICE_URL: http://catalog-service:8083
+      CATALOG_SERVICE_URL: http://magazine-service:8083
       SUBSCRIPTION_SERVICE_URL: http://subscription-service:8081
       USER_SERVICE_URL: http://user-service:8082
     depends_on:
       - rabbitmq
-      - catalog-service
+      - magazine-service
       - subscription-service
       - user-service
     networks:
       - microservices_net
 
-  catalog-service:
+  magazine-service:
     build:
-      context: ./CatalogService
+      context: ./MagazineService
       dockerfile: Dockerfile
-    container_name: catalog-service
+    container_name: magazine-service
     ports:
       - "8083:8083"
     environment:

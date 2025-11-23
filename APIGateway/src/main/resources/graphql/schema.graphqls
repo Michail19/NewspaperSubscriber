@@ -97,6 +97,7 @@ type Query {
   getUser(id: ID!): User
 
   # Подписки
+  getUserSubscription(id: ID!): Subscription
   getUserSubscriptions(id: ID!): [Subscription]
 }
 

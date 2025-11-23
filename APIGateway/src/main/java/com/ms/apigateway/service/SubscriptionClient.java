@@ -16,6 +16,35 @@ public class SubscriptionClient {
         this.webClient = builder.baseUrl("http://subscription-service:8081/graphql").build();
     }
 
+    public Object getSubscriptionByUser(String userId) {
+        String query = """
+            query GetUserSubscription($userId: ID!) {
+                getUserSubscription(id: $userId) {
+                    id
+                    userId
+                    magazineId
+                    durationMonths
+                    status
+                    startDate
+                    endDate
+                }
+            }
+            """;
+
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("query", query);
+        payload.put("variables", Map.of("userId", userId));
+
+        GraphQLResponseDTO response = webClient.post()
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(payload)
+                .retrieve()
+                .bodyToMono(GraphQLResponseDTO.class)
+                .block();
+
+        return extractData(response, "getUserSubscription");
+    }
+
     public Object getSubscriptionsByUser(String userId) {
         String query = """
             query GetUserSubscriptions($userId: ID!) {

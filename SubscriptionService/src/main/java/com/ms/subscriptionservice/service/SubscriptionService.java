@@ -68,6 +68,10 @@ public class SubscriptionService {
                 .orElseThrow(() -> new SubscriptionNotFoundException("Subscription not found with id: " + id));
     }
 
+    public List<Subscription> getByUserId(Long userId) {
+        return subscriptionRepository.findByUserId(userId);
+    }
+
     public void cancel(Long subscriptionId) {
         Subscription subscription = subscriptionRepository.findById(subscriptionId)
                 .orElseThrow(() -> new SubscriptionNotFoundException("Subscription not found with id: "
