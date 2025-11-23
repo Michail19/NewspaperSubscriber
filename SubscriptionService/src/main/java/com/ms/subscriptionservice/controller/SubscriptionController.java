@@ -40,19 +40,9 @@ public class SubscriptionController {
         );
     }
 
-    @QueryMapping
-    public List<SubscriptionResponseDTO> getUserSubscriptions(@Argument Long id) {
-        Subscription subscription = subscriptionService.getById(id);
-        return new SubscriptionResponseDTO(
-                subscription.getId(),
-                subscription.getUserId(),
-                subscription.getMagazineId(),
-                subscription.getStart_date(),
-                subscription.getEnd_date(),
-                subscription.getDuration_months(),
-                subscription.getStatus()
-        );
-    }
+//    @QueryMapping
+//    public List<SubscriptionResponseDTO> getUserSubscriptions(@Argument Long id) {
+//    }
 
     @MutationMapping
     public SubscriptionResponseDTO createSubscription(@Argument SubscriptionRequestDTO input) {
