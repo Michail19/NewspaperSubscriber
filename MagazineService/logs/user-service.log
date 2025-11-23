@@ -1024,3 +1024,12 @@ Consider defining a bean of type 'com.ms.catalogservice.repository.CatalogReposi
 2025-11-09T19:29:06.164+03:00  INFO 14424 --- [CatalogService] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2025-11-09T19:29:06.165+03:00  INFO 14424 --- [CatalogService] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2025-11-09T19:29:06.170+03:00  INFO 14424 --- [CatalogService] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-11-23T17:29:26.825+03:00  INFO 2248 --- [CatalogService] [Test worker] c.m.c.MagazineControllerTest             : Starting MagazineControllerTest using Java 21.0.5 with PID 2248 (started by DOMDOM in D:\Java\NewspaperSubscriber\MagazineService)
+2025-11-23T17:29:26.825+03:00  INFO 2248 --- [CatalogService] [Test worker] c.m.c.MagazineControllerTest             : No active profile set, falling back to 1 default profile: "default"
+2025-11-23T17:29:28.698+03:00  INFO 2248 --- [CatalogService] [Test worker] efaultSchemaResourceGraphQlSourceBuilder : Loaded 1 resource(s) in the GraphQL schema.
+2025-11-23T17:29:29.050+03:00  INFO 2248 --- [CatalogService] [Test worker] o.s.b.a.g.GraphQlAutoConfiguration       : GraphQL schema inspection:
+	Unmapped fields: {Category=[catalogs], Series=[catalogs]}
+	Unmapped registrations: {}
+	Unmapped arguments: {}
+	Skipped types: []
+2025-11-23T17:29:29.122+03:00  INFO 2248 --- [CatalogService] [Test worker] c.m.c.MagazineControllerTest             : Started MagazineControllerTest in 2.776 seconds (process running for 5.012)
