@@ -45,7 +45,7 @@ class UserControllerTest {
 
         when(userService.addUser(dto)).thenReturn(user);
 
-        Users result = userController.addUser(dto);
+        UserResponseDTO result = userController.addUser(dto);
 
         assertEquals("Анна", result.getFirstName());
         verify(userService).addUser(dto);
@@ -60,7 +60,7 @@ class UserControllerTest {
 
         when(userService.updateUser(2L, dto)).thenReturn(updated);
 
-        Users result = userController.updateUser(2L, dto);
+        UserResponseDTO result = userController.updateUser(2L, dto);
 
         assertEquals("Николай", result.getFirstName());
         verify(userService).updateUser(2L, dto);

@@ -33,7 +33,7 @@ class SubscriptionServiceApplicationTests {
 
         when(subscriptionService.getById(1L)).thenReturn(subscription);
 
-        SubscriptionResponseDTO result = subscriptionController.getUserSubscriptions(1L);
+        SubscriptionResponseDTO result = subscriptionController.getUserSubscription(1L);
 
         assertNotNull(result);
         assertEquals(1L, result.getId());
