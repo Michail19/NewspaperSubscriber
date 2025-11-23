@@ -27,7 +27,7 @@ class UserControllerTest {
 
     @Test
     void getUser_shouldReturnResponse() {
-        UserResponseDTO expected = new UserResponseDTO("Иван", "Иванов", "Иванович", 30, null);
+        UserResponseDTO expected = new UserResponseDTO(1, "Иван", "Иванов", "Иванович", 30, null);
         when(userService.getUser(1L)).thenReturn(expected);
 
         UserResponseDTO result = userController.getUser(1L);
@@ -45,7 +45,7 @@ class UserControllerTest {
 
         when(userService.addUser(dto)).thenReturn(user);
 
-        Users result = userController.addUser(dto);
+        UserResponseDTO result = userController.addUser(dto);
 
         assertEquals("Анна", result.getFirstName());
         verify(userService).addUser(dto);
@@ -60,7 +60,7 @@ class UserControllerTest {
 
         when(userService.updateUser(2L, dto)).thenReturn(updated);
 
-        Users result = userController.updateUser(2L, dto);
+        UserResponseDTO result = userController.updateUser(2L, dto);
 
         assertEquals("Николай", result.getFirstName());
         verify(userService).updateUser(2L, dto);

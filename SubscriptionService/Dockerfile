@@ -1,5 +1,12 @@
-FROM openjdk:21-jdk-slim
+# Stage 1: Build
+FROM gradle:8.8-jdk21 AS builder
 WORKDIR /app
-COPY build/libs/subscription-service-0.0.1-SNAPSHOT.jar app.jar
-EXPOSE 8080
+COPY . .
+RUN gradle clean bootJar --no-daemon
+
+# Stage 2: Run
+FROM eclipse-temurin:21-jdk
+WORKDIR /app
+COPY --from=builder /app/build/libs/*.jar app.jar
+EXPOSE 8081
 ENTRYPOINT ["java", "-jar", "app.jar"]

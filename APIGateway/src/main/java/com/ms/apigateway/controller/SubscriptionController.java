@@ -16,6 +16,11 @@ public class SubscriptionController {
     }
 
     @QueryMapping
+    public Object getUserSubscription(@Argument String id) {
+        return subscriptionClient.getSubscriptionByUser(id);
+    }
+
+    @QueryMapping
     public Object getUserSubscriptions(@Argument String id) {
         return subscriptionClient.getSubscriptionsByUser(id);
     }
@@ -23,5 +28,15 @@ public class SubscriptionController {
     @MutationMapping
     public Object createSubscription(@Argument("input") Object input) {
         return subscriptionClient.createSubscription(input);
+    }
+
+    @MutationMapping
+    public Object cancelSubscription(@Argument String subscriptionId) {
+        return subscriptionClient.cancelSubscription(subscriptionId);
+    }
+
+    @MutationMapping
+    public Object updateSubscription(@Argument String id, @Argument("input") Object input) {
+        return subscriptionClient.updateSubscription(id, input);
     }
 }
