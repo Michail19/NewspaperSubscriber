@@ -43,3 +43,45 @@
 .list-item:last-child {
     margin-bottom: 0;
 }
+
+.back-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #4f46e5;
+    font-weight: 600;
+}
+.back-link:hover {
+    text-decoration: underline;
+}
+
+/*-----*/
+.sub-list-title {
+    margin-top: 1.5rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #334155;
+}
+
+.sub-list {
+    margin-top: 1rem;
+    background: #ffffff;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    border: 1px solid #e2e8f0;
+}
+
+.sub-list-item {
+    padding: 0.75rem 1rem;
+    background: #f8fafc;
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-left: 4px solid #6366f1;
+    color: #334155;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.sub-list-item:hover {
+    background: #f1f5f9;
+    transform: translateX(4px);
+}
