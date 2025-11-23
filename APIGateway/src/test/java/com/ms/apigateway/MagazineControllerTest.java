@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class CatalogControllerTest {
+public class MagazineControllerTest {
 
     private MockWebServer catalogServer;
     private HttpGraphQlTester graphQlTester;

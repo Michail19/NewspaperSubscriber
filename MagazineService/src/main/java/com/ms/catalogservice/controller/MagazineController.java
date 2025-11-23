@@ -1,13 +1,14 @@
 package com.ms.catalogservice.controller;
 
 import com.ms.catalogservice.dto.CatalogInputDTO;
+import com.ms.catalogservice.dto.CatalogResponseDTO;
 import com.ms.catalogservice.dto.CategoryInputDTO;
 import com.ms.catalogservice.dto.SeriesInputDTO;
 import com.ms.catalogservice.exception.CatalogNotFoundException;
 import com.ms.catalogservice.model.Catalog;
 import com.ms.catalogservice.model.Category;
 import com.ms.catalogservice.model.Series;
-import com.ms.catalogservice.service.CatalogService;
+import com.ms.catalogservice.service.MagazineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -17,26 +18,26 @@ import org.springframework.stereotype.Controller;
 import java.util.List;
 
 @Controller
-public class CatalogController {
+public class MagazineController {
 
-    private final CatalogService catalogService;
+    private final MagazineService magazineService;
 
     @Autowired
-    public CatalogController(CatalogService catalogService) {
-        this.catalogService = catalogService;
+    public MagazineController(MagazineService magazineService) {
+        this.magazineService = magazineService;
     }
 
     /* ---------- Catalog ---------- */
 
     @QueryMapping
     public List<Catalog> getCatalogs() {
-        return catalogService.getAllCatalogs();
+        return magazineService.getAllCatalogs();
     }
 
     @QueryMapping
-    public Catalog getCatalogById(@Argument Long id) {
+    public CatalogResponseDTO getCatalogById(@Argument Long id) {
         try {
-            return catalogService.getCatalogById(id);
+            return magazineService.getCatalogById(id);
         }
         catch (CatalogNotFoundException e) {
             return null;
@@ -51,7 +52,7 @@ public class CatalogController {
             catalog.setDescription(input.getDescription());
             catalog.setPrice(input.getPrice());
             catalog.setLink(input.getLink());
-            return catalogService.addCatalog(catalog, input.getCategoryId(), input.getSeriesId());
+            return magazineService.addCatalog(catalog, input.getCategoryId(), input.getSeriesId());
         }
         catch (CatalogNotFoundException e) {
             return null;
@@ -66,7 +67,7 @@ public class CatalogController {
             updated.setDescription(input.getDescription());
             updated.setPrice(input.getPrice());
             updated.setLink(input.getLink());
-            return catalogService.updateCatalog(id, updated, input.getCategoryId(), input.getSeriesId());
+            return magazineService.updateCatalog(id, updated, input.getCategoryId(), input.getSeriesId());
         }
         catch (CatalogNotFoundException e) {
             return null;
@@ -75,50 +76,50 @@ public class CatalogController {
 
     @MutationMapping
     public boolean deleteCatalog(@Argument Long id) {
-        return catalogService.deleteCatalog(id);
+        return magazineService.deleteCatalog(id);
     }
 
     /* ---------- Category ---------- */
 
     @QueryMapping
     public List<Category> getCategories() {
-        return catalogService.getAllCategories();
+        return magazineService.getAllCategories();
     }
 
     @MutationMapping
     public Category addCategory(@Argument("input") CategoryInputDTO input) {
-        return catalogService.addCategory(input.getName());
+        return magazineService.addCategory(input.getName());
     }
 
     @MutationMapping
     public Category updateCategory(@Argument Long id, @Argument("input") CategoryInputDTO input) {
-        return catalogService.updateCategory(id, input.getName());
+        return magazineService.updateCategory(id, input.getName());
     }
 
     @MutationMapping
     public Boolean deleteCategory(@Argument Long id) {
-        return catalogService.deleteCategory(id);
+        return magazineService.deleteCategory(id);
     }
 
     /* ---------- Series ---------- */
 
     @QueryMapping
     public List<Series> getSeries() {
-        return catalogService.getAllSeries();
+        return magazineService.getAllSeries();
     }
 
     @MutationMapping
     public Series addSeries(@Argument("input") SeriesInputDTO input) {
-        return catalogService.addSeries(input.getName());
+        return magazineService.addSeries(input.getName());
     }
 
     @MutationMapping
     public Series updateSeries(@Argument Long id, @Argument("input") SeriesInputDTO input) {
-        return catalogService.updateSeries(id, input.getName());
+        return magazineService.updateSeries(id, input.getName());
     }
 
     @MutationMapping
     public Boolean deleteSeries(@Argument Long id) {
-        return catalogService.deleteSeries(id);
+        return magazineService.deleteSeries(id);
     }
 }

@@ -6,7 +6,7 @@ import com.ms.catalogservice.model.Series;
 import com.ms.catalogservice.repository.CatalogRepository;
 import com.ms.catalogservice.repository.CategoryRepository;
 import com.ms.catalogservice.repository.SeriesRepository;
-import com.ms.catalogservice.service.CatalogService;
+import com.ms.catalogservice.service.MagazineService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -20,7 +20,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class CatalogServiceTest {
+class MagazineServiceTest {
 
     @Mock
     private CatalogRepository catalogRepository;
@@ -30,7 +30,7 @@ class CatalogServiceTest {
     private SeriesRepository seriesRepository;
 
     @InjectMocks
-    private CatalogService catalogService;
+    private MagazineService magazineService;
 
     private Catalog catalog;
     private Category category;
@@ -58,7 +58,7 @@ class CatalogServiceTest {
     @Test
     void getAllCatalogs_shouldReturnList() {
         when(catalogRepository.findAll()).thenReturn(List.of(catalog));
-        var result = catalogService.getAllCatalogs();
+        var result = magazineService.getAllCatalogs();
         assertThat(result).hasSize(1);
         verify(catalogRepository).findAll();
     }
@@ -66,14 +66,14 @@ class CatalogServiceTest {
     @Test
     void getCatalogById_shouldReturnCatalog() {
         when(catalogRepository.findById(1L)).thenReturn(Optional.of(catalog));
-        var result = catalogService.getCatalogById(1L);
+        var result = magazineService.getCatalogById(1L);
         assertThat(result).isEqualTo(catalog);
     }
 
     @Test
     void getCatalogById_notFound_shouldThrow() {
         when(catalogRepository.findById(1L)).thenReturn(Optional.empty());
-        assertThatThrownBy(() -> catalogService.getCatalogById(1L))
+        assertThatThrownBy(() -> magazineService.getCatalogById(1L))
                 .isInstanceOf(ResponseStatusException.class)
                 .hasMessageContaining("Каталог не найден");
     }
@@ -84,7 +84,7 @@ class CatalogServiceTest {
         when(seriesRepository.findById(1L)).thenReturn(Optional.of(series));
         when(catalogRepository.save(any())).thenReturn(catalog);
 
-        var result = catalogService.addCatalog(new Catalog(), 1L, 1L);
+        var result = magazineService.addCatalog(new Catalog(), 1L, 1L);
 
         assertThat(result).isNotNull();
         verify(catalogRepository).save(any(Catalog.class));
@@ -93,7 +93,7 @@ class CatalogServiceTest {
     @Test
     void addCatalog_categoryNotFound_shouldThrow() {
         when(categoryRepository.findById(1L)).thenReturn(Optional.empty());
-        assertThatThrownBy(() -> catalogService.addCatalog(new Catalog(), 1L, null))
+        assertThatThrownBy(() -> magazineService.addCatalog(new Catalog(), 1L, null))
                 .isInstanceOf(ResponseStatusException.class)
                 .hasMessageContaining("Категория не найдена");
     }
@@ -111,7 +111,7 @@ class CatalogServiceTest {
         update.setPrice(200.0);
         update.setLink("newlink");
 
-        var result = catalogService.updateCatalog(1L, update, 1L, 1L);
+        var result = magazineService.updateCatalog(1L, update, 1L, 1L);
 
         assertThat(result.getTitle()).isEqualTo("Updated");
         verify(catalogRepository).save(any(Catalog.class));
@@ -120,7 +120,7 @@ class CatalogServiceTest {
     @Test
     void deleteCatalog_shouldReturnTrue() {
         when(catalogRepository.existsById(1L)).thenReturn(true);
-        boolean result = catalogService.deleteCatalog(1L);
+        boolean result = magazineService.deleteCatalog(1L);
         assertThat(result).isTrue();
         verify(catalogRepository).deleteById(1L);
     }
@@ -128,7 +128,7 @@ class CatalogServiceTest {
     @Test
     void deleteCatalog_notFound_shouldThrow() {
         when(catalogRepository.existsById(1L)).thenReturn(false);
-        assertThatThrownBy(() -> catalogService.deleteCatalog(1L))
+        assertThatThrownBy(() -> magazineService.deleteCatalog(1L))
                 .isInstanceOf(ResponseStatusException.class)
                 .hasMessageContaining("Каталог не найден");
     }
@@ -138,14 +138,14 @@ class CatalogServiceTest {
     @Test
     void getAllCategories_shouldReturnList() {
         when(categoryRepository.findAll()).thenReturn(List.of(category));
-        var result = catalogService.getAllCategories();
+        var result = magazineService.getAllCategories();
         assertThat(result).hasSize(1);
     }
 
     @Test
     void addCategory_shouldSave() {
         when(categoryRepository.save(any())).thenReturn(category);
-        var result = catalogService.addCategory("New");
+        var result = magazineService.addCategory("New");
         assertThat(result.getName()).isEqualTo("Category1");
     }
 
@@ -153,14 +153,14 @@ class CatalogServiceTest {
     void updateCategory_shouldUpdate() {
         when(categoryRepository.findById(1L)).thenReturn(Optional.of(category));
         when(categoryRepository.save(any())).thenReturn(category);
-        var result = catalogService.updateCategory(1L, "UpdatedName");
+        var result = magazineService.updateCategory(1L, "UpdatedName");
         assertThat(result.getName()).isEqualTo("UpdatedName");
     }
 
     @Test
     void deleteCategory_shouldReturnTrue() {
         when(categoryRepository.existsById(1L)).thenReturn(true);
-        boolean result = catalogService.deleteCategory(1L);
+        boolean result = magazineService.deleteCategory(1L);
         assertThat(result).isTrue();
         verify(categoryRepository).deleteById(1L);
     }
@@ -170,14 +170,14 @@ class CatalogServiceTest {
     @Test
     void getAllSeries_shouldReturnList() {
         when(seriesRepository.findAll()).thenReturn(List.of(series));
-        var result = catalogService.getAllSeries();
+        var result = magazineService.getAllSeries();
         assertThat(result).hasSize(1);
     }
 
     @Test
     void addSeries_shouldSave() {
         when(seriesRepository.save(any())).thenReturn(series);
-        var result = catalogService.addSeries("Series1");
+        var result = magazineService.addSeries("Series1");
         assertThat(result).isNotNull();
     }
 
@@ -185,14 +185,14 @@ class CatalogServiceTest {
     void updateSeries_shouldUpdate() {
         when(seriesRepository.findById(1L)).thenReturn(Optional.of(series));
         when(seriesRepository.save(any())).thenReturn(series);
-        var result = catalogService.updateSeries(1L, "UpdatedSeries");
+        var result = magazineService.updateSeries(1L, "UpdatedSeries");
         assertThat(result.getName()).isEqualTo("UpdatedSeries");
     }
 
     @Test
     void deleteSeries_shouldReturnTrue() {
         when(seriesRepository.existsById(1L)).thenReturn(true);
-        boolean result = catalogService.deleteSeries(1L);
+        boolean result = magazineService.deleteSeries(1L);
         assertThat(result).isTrue();
         verify(seriesRepository).deleteById(1L);
     }

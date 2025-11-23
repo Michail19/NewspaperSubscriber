@@ -425,7 +425,7 @@ APPLICATION FAILED TO START
 
 Description:
 
-Parameter 0 of constructor in com.ms.catalogservice.service.CatalogService required a bean of type 'com.ms.catalogservice.repository.CatalogRepository' that could not be found.
+Parameter 0 of constructor in com.ms.catalogservice.service.MagazineService required a bean of type 'com.ms.catalogservice.repository.CatalogRepository' that could not be found.
 
 
 Action:
@@ -475,7 +475,7 @@ APPLICATION FAILED TO START
 
 Description:
 
-Parameter 0 of constructor in com.ms.catalogservice.service.CatalogService required a bean of type 'com.ms.catalogservice.repository.CatalogRepository' that could not be found.
+Parameter 0 of constructor in com.ms.catalogservice.service.MagazineService required a bean of type 'com.ms.catalogservice.repository.CatalogRepository' that could not be found.
 
 
 Action:
@@ -525,7 +525,7 @@ APPLICATION FAILED TO START
 
 Description:
 
-Parameter 0 of constructor in com.ms.catalogservice.service.CatalogService required a bean of type 'com.ms.catalogservice.repository.CatalogRepository' that could not be found.
+Parameter 0 of constructor in com.ms.catalogservice.service.MagazineService required a bean of type 'com.ms.catalogservice.repository.CatalogRepository' that could not be found.
 
 
 Action:
@@ -575,7 +575,7 @@ APPLICATION FAILED TO START
 
 Description:
 
-Parameter 0 of constructor in com.ms.catalogservice.service.CatalogService required a bean of type 'com.ms.catalogservice.repository.CatalogRepository' that could not be found.
+Parameter 0 of constructor in com.ms.catalogservice.service.MagazineService required a bean of type 'com.ms.catalogservice.repository.CatalogRepository' that could not be found.
 
 
 Action:
@@ -625,7 +625,7 @@ APPLICATION FAILED TO START
 
 Description:
 
-Parameter 0 of constructor in com.ms.catalogservice.service.CatalogService required a bean of type 'com.ms.catalogservice.repository.CatalogRepository' that could not be found.
+Parameter 0 of constructor in com.ms.catalogservice.service.MagazineService required a bean of type 'com.ms.catalogservice.repository.CatalogRepository' that could not be found.
 
 
 Action:
@@ -675,7 +675,7 @@ APPLICATION FAILED TO START
 
 Description:
 
-Parameter 0 of constructor in com.ms.catalogservice.service.CatalogService required a bean of type 'com.ms.catalogservice.repository.CatalogRepository' that could not be found.
+Parameter 0 of constructor in com.ms.catalogservice.service.MagazineService required a bean of type 'com.ms.catalogservice.repository.CatalogRepository' that could not be found.
 
 
 Action:
@@ -725,7 +725,7 @@ APPLICATION FAILED TO START
 
 Description:
 
-Parameter 0 of constructor in com.ms.catalogservice.service.CatalogService required a bean of type 'com.ms.catalogservice.repository.CatalogRepository' that could not be found.
+Parameter 0 of constructor in com.ms.catalogservice.service.MagazineService required a bean of type 'com.ms.catalogservice.repository.CatalogRepository' that could not be found.
 
 
 Action:
@@ -775,7 +775,7 @@ APPLICATION FAILED TO START
 
 Description:
 
-Parameter 0 of constructor in com.ms.catalogservice.service.CatalogService required a bean of type 'com.ms.catalogservice.repository.CatalogRepository' that could not be found.
+Parameter 0 of constructor in com.ms.catalogservice.service.MagazineService required a bean of type 'com.ms.catalogservice.repository.CatalogRepository' that could not be found.
 
 
 Action:
@@ -825,7 +825,7 @@ APPLICATION FAILED TO START
 
 Description:
 
-Parameter 0 of constructor in com.ms.catalogservice.service.CatalogService required a bean of type 'com.ms.catalogservice.repository.CatalogRepository' that could not be found.
+Parameter 0 of constructor in com.ms.catalogservice.service.MagazineService required a bean of type 'com.ms.catalogservice.repository.CatalogRepository' that could not be found.
 
 
 Action:
@@ -922,7 +922,7 @@ APPLICATION FAILED TO START
 
 Description:
 
-Parameter 0 of constructor in com.ms.catalogservice.service.CatalogService required a bean of type 'com.ms.catalogservice.repository.CatalogRepository' that could not be found.
+Parameter 0 of constructor in com.ms.catalogservice.service.MagazineService required a bean of type 'com.ms.catalogservice.repository.CatalogRepository' that could not be found.
 
 
 Action:
@@ -972,7 +972,7 @@ APPLICATION FAILED TO START
 
 Description:
 
-Parameter 0 of constructor in com.ms.catalogservice.service.CatalogService required a bean of type 'com.ms.catalogservice.repository.CatalogRepository' that could not be found.
+Parameter 0 of constructor in com.ms.catalogservice.service.MagazineService required a bean of type 'com.ms.catalogservice.repository.CatalogRepository' that could not be found.
 
 
 Action:

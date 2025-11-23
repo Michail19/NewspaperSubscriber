@@ -1,11 +1,9 @@
 package com.ms.catalogservice;
 
-import com.ms.catalogservice.controller.CatalogController;
-import com.ms.catalogservice.dto.CatalogInputDTO;
+import com.ms.catalogservice.controller.MagazineController;
 import com.ms.catalogservice.model.Catalog;
-import com.ms.catalogservice.service.CatalogService;
+import com.ms.catalogservice.service.MagazineService;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.graphql.GraphQlTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -17,14 +15,14 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
-@GraphQlTest(CatalogController.class)
-class CatalogControllerTest {
+@GraphQlTest(MagazineController.class)
+class MagazineControllerTest {
 
     @Autowired
     private GraphQlTester graphQlTester;
 
     @MockBean
-    private CatalogService catalogService;
+    private MagazineService magazineService;
 
     @Test
     void getCatalogs_shouldReturnList() {
@@ -32,7 +30,7 @@ class CatalogControllerTest {
         catalog.setId(1L);
         catalog.setTitle("Catalog1");
 
-        when(catalogService.getAllCatalogs()).thenReturn(List.of(catalog));
+        when(magazineService.getAllCatalogs()).thenReturn(List.of(catalog));
 
         String query = """
             query {
@@ -56,7 +54,7 @@ class CatalogControllerTest {
         catalog.setId(1L);
         catalog.setTitle("NewCatalog");
 
-        when(catalogService.addCatalog(any(Catalog.class), eq(1L), eq(2L))).thenReturn(catalog);
+        when(magazineService.addCatalog(any(Catalog.class), eq(1L), eq(2L))).thenReturn(catalog);
 
         String mutation = """
             mutation {

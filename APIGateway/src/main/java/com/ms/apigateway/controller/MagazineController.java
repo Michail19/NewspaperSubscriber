@@ -1,95 +1,95 @@
 package com.ms.apigateway.controller;
 
-import com.ms.apigateway.service.CatalogClient;
+import com.ms.apigateway.service.MagazineClient;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class CatalogController {
+public class MagazineController {
 
-    private final CatalogClient catalogClient;
+    private final MagazineClient magazineClient;
 
-    public CatalogController(CatalogClient catalogClient) {
-        this.catalogClient = catalogClient;
+    public MagazineController(MagazineClient magazineClient) {
+        this.magazineClient = magazineClient;
     }
 
     // Каталог
     @QueryMapping
     public Object getCatalogs() {
-        return catalogClient.getCatalogs();
+        return magazineClient.getCatalogs();
     }
 
     @QueryMapping
     public Object getCatalogById(@Argument String id) {
-        return catalogClient.getCatalogById(id);
+        return magazineClient.getCatalogById(id);
     }
 
     @MutationMapping
     public Object addCatalog(@Argument("input") Object input) {
-        return catalogClient.addCatalog(input);
+        return magazineClient.addCatalog(input);
     }
 
     @MutationMapping
     public Object updateCatalog(@Argument String id, @Argument("input") Object input) {
-        return catalogClient.updateCatalog(id, input);
+        return magazineClient.updateCatalog(id, input);
     }
 
     @MutationMapping
     public Object deleteCatalog(@Argument String id) {
-        return catalogClient.deleteCatalog(id);
+        return magazineClient.deleteCatalog(id);
     }
 
     // Категории
     @QueryMapping
     public Object getCategories() {
-        return catalogClient.getCategories();
+        return magazineClient.getCategories();
     }
 
     @QueryMapping
     public Object getCategoryById(@Argument String id) {
-        return catalogClient.getCategoryById(id);
+        return magazineClient.getCategoryById(id);
     }
 
     @MutationMapping
     public Object addCategory(@Argument("input") Object input) {
-        return catalogClient.addCategory(input);
+        return magazineClient.addCategory(input);
     }
 
     @MutationMapping
     public Object updateCategory(@Argument String id, @Argument("input") Object input) {
-        return catalogClient.updateCategory(id, input);
+        return magazineClient.updateCategory(id, input);
     }
 
     @MutationMapping
     public Object deleteCategory(@Argument String id) {
-        return catalogClient.deleteCategory(id);
+        return magazineClient.deleteCategory(id);
     }
 
     // Серии
     @QueryMapping
     public Object getSeries() {
-        return catalogClient.getSeries();
+        return magazineClient.getSeries();
     }
 
     @QueryMapping
     public Object getSeriesById(@Argument String id) {
-        return catalogClient.getSeriesById(id);
+        return magazineClient.getSeriesById(id);
     }
 
     @MutationMapping
     public Object addSeries(@Argument("input") Object input) {
-        return catalogClient.addSeries(input);
+        return magazineClient.addSeries(input);
     }
 
     @MutationMapping
     public Object updateSeries(@Argument String id, @Argument("input") Object input) {
-        return catalogClient.updateSeries(id, input);
+        return magazineClient.updateSeries(id, input);
     }
 
     @MutationMapping
     public Object deleteSeries(@Argument String id) {
-        return catalogClient.deleteSeries(id);
+        return magazineClient.deleteSeries(id);
     }
 }

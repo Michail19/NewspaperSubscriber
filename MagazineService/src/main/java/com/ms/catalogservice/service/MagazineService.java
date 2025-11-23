@@ -10,23 +10,21 @@ import com.ms.catalogservice.repository.CatalogRepository;
 import com.ms.catalogservice.repository.CategoryRepository;
 import com.ms.catalogservice.repository.SeriesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
 @Service
-public class CatalogService {
+public class MagazineService {
 
     private final CatalogRepository catalogRepository;
     private final CategoryRepository categoryRepository;
     private final SeriesRepository seriesRepository;
 
     @Autowired
-    public CatalogService(CatalogRepository catalogRepository,
-                          CategoryRepository categoryRepository,
-                          SeriesRepository seriesRepository) {
+    public MagazineService(CatalogRepository catalogRepository,
+                           CategoryRepository categoryRepository,
+                           SeriesRepository seriesRepository) {
         this.catalogRepository = catalogRepository;
         this.categoryRepository = categoryRepository;
         this.seriesRepository = seriesRepository;

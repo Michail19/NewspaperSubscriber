@@ -6,14 +6,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
-public class CatalogClient {
+public class MagazineClient {
     private final WebClient webClient;
 
-    public CatalogClient(WebClient.Builder builder) {
+    public MagazineClient(WebClient.Builder builder) {
         this.webClient = builder.baseUrl("http://catalog-service:8083/graphql").build();
     }
 
