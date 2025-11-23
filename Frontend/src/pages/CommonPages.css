@@ -15,15 +15,26 @@
     text-align: center;
 }
 
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #f1f5f9;
+}
+
 .items-list {
     background: white;
     border-radius: 1rem;
     padding: 2rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     border: 1px solid #e2e8f0;
+    margin-bottom: 2rem;
 }
 
 .list-item {
+    display: block;
     padding: 1rem 1.5rem;
     margin-bottom: 0.75rem;
     background: #f8fafc;
@@ -32,56 +43,38 @@
     transition: all 0.2s ease;
     font-weight: 500;
     color: #334155;
+    text-decoration: none;
 }
 
 .list-item:hover {
     background: #f1f5f9;
     transform: translateX(5px);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: #1e293b;
 }
 
 .list-item:last-child {
     margin-bottom: 0;
 }
 
-.back-link {
-    display: inline-block;
-    margin-top: 20px;
-    color: #4f46e5;
-    font-weight: 600;
-}
-.back-link:hover {
-    text-decoration: underline;
-}
-
-/*-----*/
-.sub-list-title {
-    margin-top: 1.5rem;
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #334155;
+/* Стили для детальных страниц категорий и серий */
+.category-detail .items-list,
+.series-detail .items-list {
+    background: transparent;
+    box-shadow: none;
+    border: none;
+    padding: 0;
 }
 
-.sub-list {
-    margin-top: 1rem;
-    background: #ffffff;
-    border-radius: 0.75rem;
-    padding: 1rem;
+.category-detail .list-item,
+.series-detail .list-item {
+    background: white;
     border: 1px solid #e2e8f0;
+    border-left: 4px solid #10b981;
 }
 
-.sub-list-item {
-    padding: 0.75rem 1rem;
-    background: #f8fafc;
-    border-radius: 0.5rem;
-    margin-bottom: 0.5rem;
-    border-left: 4px solid #6366f1;
-    color: #334155;
-    font-weight: 500;
-    transition: all 0.2s ease;
-}
-
-.sub-list-item:hover {
-    background: #f1f5f9;
-    transform: translateX(4px);
+.category-detail .list-item:hover,
+.series-detail .list-item:hover {
+    border-color: #10b981;
+    background: #f0fdf4;
 }
