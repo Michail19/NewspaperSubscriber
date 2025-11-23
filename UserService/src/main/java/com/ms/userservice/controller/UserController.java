@@ -26,13 +26,29 @@ public class UserController {
     }
 
     @MutationMapping
-    public Users addUser(@Argument UserRequestDTO input) {
-        return userService.addUser(input);
+    public UserResponseDTO addUser(@Argument UserRequestDTO input) {
+        Users user = userService.addUser(input);
+        return new UserResponseDTO(
+            user.getId(),
+            user.getFirstName(),
+            user.getSecondName(),
+            user.getThirdName(),
+            user.getAge(),
+            user.getRegistrationDate().toString()
+        );
     }
 
     @MutationMapping
-    public Users updateUser(@Argument long id, @Argument UserRequestDTO input) {
-        return userService.updateUser(id, input);
+    public UserResponseDTO updateUser(@Argument long id, @Argument UserRequestDTO input) {
+        Users user = userService.updateUser(id, input);
+        return new UserResponseDTO(
+                user.getId(),
+                user.getFirstName(),
+                user.getSecondName(),
+                user.getThirdName(),
+                user.getAge(),
+                user.getRegistrationDate().toString()
+        );
     }
 
     @MutationMapping

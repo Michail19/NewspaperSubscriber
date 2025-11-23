@@ -19,7 +19,7 @@ type Query {
 }
 
 type Mutation {
-  addUser(input: UserInput!): User!
-  updateUser(id: ID!, input: UserInput!): User!
-  removeUser(id: ID!): Boolean!
+  addUser(input: UserInput!): User
+  updateUser(id: ID!, input: UserInput!): User
+  removeUser(id: ID!): Boolean
 }

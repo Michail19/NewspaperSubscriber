@@ -2,6 +2,7 @@ package com.ms.userservice.service;
 
 import com.ms.userservice.dto.UserRequestDTO;
 import com.ms.userservice.dto.UserResponseDTO;
+import com.ms.userservice.exception.UserNotFoundException;
 import com.ms.userservice.model.Users;
 import com.ms.userservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class UserService {
 
     public Users updateUser(long id, UserRequestDTO dto) {
         Users user = userRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь не найден"));
+                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
 
         user.setFirstName(dto.getFirstName());
         user.setSecondName(dto.getSecondName());
@@ -62,7 +63,7 @@ public class UserService {
 
     public void removeUser(long id) {
         Users user = userRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь не найден"));
+                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
 
         userRepository.delete(user);
 
@@ -73,14 +74,15 @@ public class UserService {
 
     public UserResponseDTO getUser(long id) {
         Users user = userRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь не найден"));
+                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
 
         return new UserResponseDTO(
+                user.getId(),
                 user.getFirstName(),
                 user.getSecondName(),
                 user.getThirdName(),
                 user.getAge(),
-                user.getRegistrationDate()
+                user.getRegistrationDate().toString()
         );
     }
 }

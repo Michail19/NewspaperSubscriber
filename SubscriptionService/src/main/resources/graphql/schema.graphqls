@@ -15,13 +15,14 @@ type Subscription {
 }
 
 type Query {
+  getUserSubscription(id: ID!): Subscription
   getUserSubscriptions(id: ID!): [Subscription]
 }
 
 type Mutation {
-  createSubscription(input: CreateSubscriptionInput!): Subscription!
-  cancelSubscription(subscriptionId: ID!): Boolean!
-  updateSubscription(id: ID!, input: UpdateSubscriptionInput!): Subscription!
+  createSubscription(input: CreateSubscriptionInput!): Subscription
+  cancelSubscription(subscriptionId: ID!): Boolean
+  updateSubscription(id: ID!, input: UpdateSubscriptionInput!): Subscription
 }
 
 input CreateSubscriptionInput {

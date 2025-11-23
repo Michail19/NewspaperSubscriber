@@ -1,15 +1,13 @@
 package com.ms.subscriptionservice.service;
 
 import com.ms.subscriptionservice.dto.SubscriptionRequestDTO;
-import com.ms.subscriptionservice.dto.SubscriptionRequestDeleteDTO;
+import com.ms.subscriptionservice.exception.SubscriptionNotFoundException;
 import com.ms.subscriptionservice.model.Subscription;
 import com.ms.subscriptionservice.model.SubscriptionStatus;
 import com.ms.subscriptionservice.repository.SubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -50,7 +48,7 @@ public class SubscriptionService {
 
     public Subscription update(Long id, SubscriptionRequestDTO dto) {
         Subscription subscription = subscriptionRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Подписка не найдена"));
+                .orElseThrow(() -> new SubscriptionNotFoundException("Subscription not found with id: " + id));
 
         subscription.setDuration_months(dto.getDurationMonths());
         subscription.setUpdated_at(Timestamp.valueOf(LocalDateTime.now()));
@@ -67,12 +65,17 @@ public class SubscriptionService {
 
     public Subscription getById(Long id) {
         return subscriptionRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Подписка не найдена"));
+                .orElseThrow(() -> new SubscriptionNotFoundException("Subscription not found with id: " + id));
     }
 
-    public void cancel(SubscriptionRequestDeleteDTO dto) {
-        Subscription subscription = subscriptionRepository.findById(dto.getSubscriptionId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Подписка не найдена"));
+    public List<Subscription> getByUserId(Long userId) {
+        return subscriptionRepository.findByUserId(userId);
+    }
+
+    public void cancel(Long subscriptionId) {
+        Subscription subscription = subscriptionRepository.findById(subscriptionId)
+                .orElseThrow(() -> new SubscriptionNotFoundException("Subscription not found with id: "
+                        + subscriptionId));
 
         subscription.setStatus(SubscriptionStatus.CANCELLED);
         subscription.setUpdated_at(Timestamp.valueOf(LocalDateTime.now()));

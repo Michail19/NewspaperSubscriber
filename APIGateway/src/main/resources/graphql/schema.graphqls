@@ -1,10 +1,48 @@
+type Catalog {
+  id: ID
+  title: String
+  description: String
+  price: Float
+  link: String
+  category: Category
+  series: Series
+}
+
+type Category {
+  id: ID
+  name: String
+  catalogs: [Catalog]
+}
+
+type Series {
+  id: ID
+  name: String
+  catalogs: [Catalog]
+}
+
 type User {
-  id: ID!
-  firstName: String!
-  secondName: String!
+  id: ID
+  firstName: String
+  secondName: String
   thirdName: String
-  age: Int!
-  registrationDate: String!
+  age: Int
+  registrationDate: String
+}
+
+type Subscription {
+  id: ID
+  userId: ID
+  magazineId: ID
+  startDate: String
+  endDate: String
+  durationMonths: Int
+  status: SubscriptionStatus
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELLED
+  EXPIRED
 }
 
 input UserInput {
@@ -14,24 +52,21 @@ input UserInput {
   age: Int!
 }
 
-type Catalog {
-  id: ID!
-  title: String!
-  description: String
-  price: Float!
-}
-
 input CatalogInput {
   title: String!
   description: String
   price: Float!
+  link: String
+  categoryId: ID
+  seriesId: ID
 }
 
-type Subscription {
-  id: ID!
-  userId: ID!
-  magazineId: ID!
-  status: String!
+input CategoryInput {
+  name: String!
+}
+
+input SeriesInput {
+  name: String!
 }
 
 input CreateSubscriptionInput {
@@ -40,14 +75,55 @@ input CreateSubscriptionInput {
   durationMonths: Int!
 }
 
+input UpdateSubscriptionInput {
+  durationMonths: Int
+  status: SubscriptionStatus
+}
+
 type Query {
-  getUser(id: ID!): User
+  # Каталог
+  getCatalogs: [Catalog]
   getCatalogById(id: ID!): Catalog
+
+  # Категории
+  getCategories: [Category]
+  getCategoryById(id: ID!): Category
+
+  # Серии
+  getSeries: [Series]
+  getSeriesById(id: ID!): Series
+
+  # Пользователи
+  getUser(id: ID!): User
+
+  # Подписки
+  getUserSubscription(id: ID!): Subscription
   getUserSubscriptions(id: ID!): [Subscription]
 }
 
 type Mutation {
-  addUser(input: UserInput!): User!
-  addCatalog(input: CatalogInput!): Catalog!
-  createSubscription(input: CreateSubscriptionInput!): Subscription!
+  # Каталог
+  addCatalog(input: CatalogInput!): Catalog
+  updateCatalog(id: ID!, input: CatalogInput!): Catalog
+  deleteCatalog(id: ID!): Boolean
+
+  # Категории
+  addCategory(input: CategoryInput!): Category
+  updateCategory(id: ID!, input: CategoryInput!): Category
+  deleteCategory(id: ID!): Boolean
+
+  # Серии
+  addSeries(input: SeriesInput!): Series
+  updateSeries(id: ID!, input: SeriesInput!): Series
+  deleteSeries(id: ID!): Boolean
+
+  # Пользователи
+  addUser(input: UserInput!): User
+  updateUser(id: ID!, input: UserInput!): User
+  removeUser(id: ID!): Boolean
+
+  # Подписки
+  createSubscription(input: CreateSubscriptionInput!): Subscription
+  cancelSubscription(subscriptionId: ID!): Boolean
+  updateSubscription(id: ID!, input: UpdateSubscriptionInput!): Subscription
 }

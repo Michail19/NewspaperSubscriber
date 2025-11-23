@@ -1,28 +1,53 @@
 package com.ms.apigateway.service;
 
+import com.ms.apigateway.dto.GraphQLResponseDTO;
+import com.ms.apigateway.util.GraphQLHelper;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class UserClient {
     private final WebClient webClient;
 
     public UserClient(WebClient.Builder builder) {
-        this.webClient = builder.baseUrl("http://localhost:8082/graphql").build();
+        this.webClient = builder.baseUrl("http://user-service:8082/graphql").build();
     }
 
     public Object getUserById(String id) {
-        String query = "{ getUser(id: \"" + id + "\") { id firstName secondName thirdName age registrationDate } }";
-        return webClient.post()
-                .bodyValue("{\"query\":\"" + query + "\"}")
+        String query = """
+            query GetUser($id: ID!) {
+                getUser(id: $id) {
+                    id
+                    firstName
+                    secondName
+                    thirdName
+                    age
+                    registrationDate
+                }
+            }
+            """;
+
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("query", query);
+        payload.put("variables", Map.of("id", id));
+
+        GraphQLResponseDTO response = webClient.post()
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(payload)
                 .retrieve()
-                .bodyToMono(Object.class)
+                .bodyToMono(GraphQLResponseDTO.class)
                 .block();
+
+        return extractData(response, "getUser");
     }
 
     public Object addUser(Object input) {
         String mutation = """
-            mutation ($input: UserInput!) {
+            mutation AddUser($input: UserInput!) {
                 addUser(input: $input) {
                     id
                     firstName
@@ -34,18 +59,90 @@ public class UserClient {
             }
             """;
 
-        return webClient.post()
-                .bodyValue("{\"query\":\"" + mutation.replace("\"", "\\\"") + "\",\"variables\":{\"input\":" + toJson(input) + "}}")
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("query", mutation);
+        payload.put("variables", Map.of("input", input));
+
+        GraphQLResponseDTO response = webClient.post()
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(payload)
                 .retrieve()
-                .bodyToMono(Object.class)
+                .bodyToMono(GraphQLResponseDTO.class)
                 .block();
+
+        return extractData(response, "addUser");
     }
 
-    private String toJson(Object obj) {
-        try {
-            return new com.fasterxml.jackson.databind.ObjectMapper().writeValueAsString(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+    public Object updateUser(String id, Object input) {
+        String mutation = """
+            mutation UpdateUser($id: ID!, $input: UserInput!) {
+                updateUser(id: $id, input: $input) {
+                    id
+                    firstName
+                    secondName
+                    thirdName
+                    age
+                    registrationDate
+                }
+            }
+            """;
+
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("query", mutation);
+        payload.put("variables", Map.of("id", id, "input", input));
+
+        GraphQLResponseDTO response = webClient.post()
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(payload)
+                .retrieve()
+                .bodyToMono(GraphQLResponseDTO.class)
+                .block();
+
+        return extractData(response, "updateUser");
+    }
+
+    public Boolean removeUser(String id) {
+        String mutation = """
+            mutation RemoveUser($id: ID!) {
+                removeUser(id: $id)
+            }
+            """;
+
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("query", mutation);
+        payload.put("variables", Map.of("id", id));
+
+        GraphQLResponseDTO response = webClient.post()
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(payload)
+                .retrieve()
+                .bodyToMono(GraphQLResponseDTO.class)
+                .block();
+
+        return extractBooleanData(response, "removeUser");
+    }
+
+    private Object extractData(GraphQLResponseDTO response, String fieldName) {
+        if (response == null) {
+            return null;
         }
+
+        if (response.hasErrors()) {
+            return null;
+        }
+
+        if (response.getData() instanceof Map<?, ?> data) {
+            return data.getOrDefault(fieldName, null);
+        }
+
+        return null;
+    }
+
+    private Boolean extractBooleanData(GraphQLResponseDTO response, String fieldName) {
+        Object data = extractData(response, fieldName);
+        if (data instanceof Boolean b) {
+            return b;
+        }
+        return null;
     }
 }

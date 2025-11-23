@@ -2,7 +2,7 @@ package com.ms.subscriptionservice;
 
 import com.ms.subscriptionservice.controller.SubscriptionController;
 import com.ms.subscriptionservice.dto.SubscriptionRequestDTO;
-import com.ms.subscriptionservice.dto.SubscriptionRequestDeleteDTO;
+import com.ms.subscriptionservice.dto.SubscriptionResponseDTO;
 import com.ms.subscriptionservice.model.Subscription;
 import com.ms.subscriptionservice.service.MessagePublisher;
 import com.ms.subscriptionservice.service.SubscriptionService;
@@ -33,7 +33,7 @@ class SubscriptionServiceApplicationTests {
 
         when(subscriptionService.getById(1L)).thenReturn(subscription);
 
-        Subscription result = subscriptionController.getUserSubscriptions(1L);
+        SubscriptionResponseDTO result = subscriptionController.getUserSubscription(1L);
 
         assertNotNull(result);
         assertEquals(1L, result.getId());
@@ -52,7 +52,7 @@ class SubscriptionServiceApplicationTests {
 
         when(subscriptionService.create(dto)).thenReturn(subscription);
 
-        Subscription result = subscriptionController.createSubscription(dto);
+        SubscriptionResponseDTO result = subscriptionController.createSubscription(dto);
 
         assertNotNull(result);
         assertEquals(1L, result.getId());
@@ -77,7 +77,7 @@ class SubscriptionServiceApplicationTests {
 
         when(subscriptionService.update(1L, dto)).thenReturn(subscription);
 
-        Subscription result = subscriptionController.updateSubscription(1L, dto);
+        SubscriptionResponseDTO result = subscriptionController.updateSubscription(1L, dto);
 
         assertNotNull(result);
         assertEquals(1L, result.getId());
@@ -93,10 +93,7 @@ class SubscriptionServiceApplicationTests {
 
     @Test
     void testCancelSubscription() {
-        SubscriptionRequestDeleteDTO dto = new SubscriptionRequestDeleteDTO();
-        dto.setSubscriptionId(1L);
-        dto.setUserId(10L);
-        dto.setMagazineId(20L);
+        Long dto = 1L;
 
         doNothing().when(subscriptionService).cancel(dto);
 
@@ -109,7 +106,5 @@ class SubscriptionServiceApplicationTests {
 
         String message = messageCaptor.getValue();
         assertTrue(message.contains("Subscription cancelled id=1"));
-        assertTrue(message.contains("for user id=10"));
-        assertTrue(message.contains("for magazine id=20"));
     }
 }
