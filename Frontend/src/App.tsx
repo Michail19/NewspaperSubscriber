@@ -1,26 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { NavBar } from "./components/NavBar";
+import { CatalogsPage } from "./pages/CatalogsPage";
+import { CategoriesPage } from "./pages/CategoriesPage";
+import { SeriesPage } from "./pages/SeriesPage";
+import { UserPage } from "./pages/UserPage";
+import { SubscriptionsPage } from "./pages/SubscriptionsPage";
 
-function App() {
+
+export default function App() {
+  const route = window.location.hash;
+
+
+  let Page = CatalogsPage;
+  if (route.startsWith("#/categories")) Page = CategoriesPage;
+  if (route.startsWith("#/series")) Page = SeriesPage;
+  if (route.startsWith("#/user")) Page = UserPage;
+  if (route.startsWith("#/subscriptions")) Page = SubscriptionsPage;
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div className="min-h-screen bg-gray-100">
+        <NavBar />
+        <Page />
+      </div>
   );
 }
-
-export default App;
