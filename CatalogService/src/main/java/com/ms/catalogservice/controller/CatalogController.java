@@ -1,6 +1,8 @@
 package com.ms.catalogservice.controller;
 
 import com.ms.catalogservice.dto.CatalogInputDTO;
+import com.ms.catalogservice.dto.CategoryInputDTO;
+import com.ms.catalogservice.dto.SeriesInputDTO;
 import com.ms.catalogservice.exception.CatalogNotFoundException;
 import com.ms.catalogservice.model.Catalog;
 import com.ms.catalogservice.model.Category;
@@ -84,17 +86,17 @@ public class CatalogController {
     }
 
     @MutationMapping
-    public Category addCategory(@Argument String name) {
-        return catalogService.addCategory(name);
+    public Category addCategory(@Argument("input") CategoryInputDTO input) {
+        return catalogService.addCategory(input.getName());
     }
 
     @MutationMapping
-    public Category updateCategory(@Argument Long id, @Argument String newName) {
-        return catalogService.updateCategory(id, newName);
+    public Category updateCategory(@Argument Long id, @Argument("input") CategoryInputDTO input) {
+        return catalogService.updateCategory(id, input.getName());
     }
 
     @MutationMapping
-    public boolean deleteCategory(@Argument Long id) {
+    public Boolean deleteCategory(@Argument Long id) {
         return catalogService.deleteCategory(id);
     }
 
@@ -106,17 +108,17 @@ public class CatalogController {
     }
 
     @MutationMapping
-    public Series addSeries(@Argument String name) {
-        return catalogService.addSeries(name);
+    public Series addSeries(@Argument("input") SeriesInputDTO input) {
+        return catalogService.addSeries(input.getName());
     }
 
     @MutationMapping
-    public Series updateSeries(@Argument Long id, @Argument String newName) {
-        return catalogService.updateSeries(id, newName);
+    public Series updateSeries(@Argument Long id, @Argument("input") SeriesInputDTO input) {
+        return catalogService.updateSeries(id, input.getName());
     }
 
     @MutationMapping
-    public boolean deleteSeries(@Argument Long id) {
+    public Boolean deleteSeries(@Argument Long id) {
         return catalogService.deleteSeries(id);
     }
 }
