@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -429,33 +430,27 @@ public class CatalogClient {
         return extractBooleanData(response, "deleteSeries");
     }
 
-    // Вспомогательные методы
     private Object extractData(GraphQLResponseDTO response, String fieldName) {
         if (response == null) {
-            throw new RuntimeException("GraphQL response is null");
+            return null;
         }
 
         if (response.hasErrors()) {
-            StringBuilder errorMessage = new StringBuilder("GraphQL errors: ");
-            for (GraphQLResponseDTO.GraphQLError error : response.getErrors()) {
-                errorMessage.append(error.getMessage()).append("; ");
-            }
-            throw new RuntimeException(errorMessage.toString());
+            return null;
         }
 
-        if (response.getData() instanceof Map) {
-            Map<String, Object> data = (Map<String, Object>) response.getData();
-            return data.get(fieldName);
+        if (response.getData() instanceof Map<?, ?> data) {
+            return data.getOrDefault(fieldName, null);
         }
 
-        throw new RuntimeException("Invalid GraphQL response format");
+        return null;
     }
 
     private Boolean extractBooleanData(GraphQLResponseDTO response, String fieldName) {
         Object data = extractData(response, fieldName);
-        if (data instanceof Boolean) {
-            return (Boolean) data;
+        if (data instanceof Boolean b) {
+            return b;
         }
-        throw new RuntimeException("Expected Boolean but got: " + (data != null ? data.getClass().getSimpleName() : "null"));
+        return null;
     }
 }

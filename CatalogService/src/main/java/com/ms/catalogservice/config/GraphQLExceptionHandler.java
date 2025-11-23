@@ -15,58 +15,34 @@ import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice
-public class GraphQLExceptionHandler extends DataFetcherExceptionResolverAdapter {
+public class GraphQLExceptionHandler {
 
     @GraphQlExceptionHandler
-    public GraphQLError handleUserNotFoundException(CatalogNotFoundException ex) {
+    public GraphQLError handleCatalogNotFound(CatalogNotFoundException ex, DataFetchingEnvironment env) {
+        return buildNotFoundError(ex, env, "CATALOG_NOT_FOUND");
+    }
+
+    @GraphQlExceptionHandler
+    public GraphQLError handleCategoryNotFound(CategoryNotFoundException ex, DataFetchingEnvironment env) {
+        return buildNotFoundError(ex, env, "CATEGORY_NOT_FOUND");
+    }
+
+    @GraphQlExceptionHandler
+    public GraphQLError handleSeriesNotFound(SeriesNotFoundException ex, DataFetchingEnvironment env) {
+        return buildNotFoundError(ex, env, "SERIES_NOT_FOUND");
+    }
+
+    private GraphQLError buildNotFoundError(RuntimeException ex,
+                                            DataFetchingEnvironment env,
+                                            String code) {
         Map<String, Object> extensions = new HashMap<>();
         extensions.put("statusCode", 404);
-        extensions.put("code", "USER_NOT_FOUND");
+        extensions.put("code", code);
 
-        return GraphqlErrorBuilder.newError()
+        return GraphqlErrorBuilder.newError(env)
                 .message(ex.getMessage())
                 .errorType(ErrorType.NOT_FOUND)
                 .extensions(extensions)
                 .build();
-    }
-
-    @GraphQlExceptionHandler
-    public GraphQLError handleUserNotFoundException(CategoryNotFoundException ex) {
-        Map<String, Object> extensions = new HashMap<>();
-        extensions.put("statusCode", 404);
-        extensions.put("code", "USER_NOT_FOUND");
-
-        return GraphqlErrorBuilder.newError()
-                .message(ex.getMessage())
-                .errorType(ErrorType.NOT_FOUND)
-                .extensions(extensions)
-                .build();
-    }
-
-    @GraphQlExceptionHandler
-    public GraphQLError handleUserNotFoundException(SeriesNotFoundException ex) {
-        Map<String, Object> extensions = new HashMap<>();
-        extensions.put("statusCode", 404);
-        extensions.put("code", "USER_NOT_FOUND");
-
-        return GraphqlErrorBuilder.newError()
-                .message(ex.getMessage())
-                .errorType(ErrorType.NOT_FOUND)
-                .extensions(extensions)
-                .build();
-    }
-
-    @Override
-    protected GraphQLError resolveToSingleError(Throwable ex, DataFetchingEnvironment env) {
-        if (ex instanceof CatalogNotFoundException ||
-                ex instanceof CategoryNotFoundException ||
-                ex instanceof SeriesNotFoundException) {
-
-            return GraphqlErrorBuilder.newError()
-                    .message(ex.getMessage())
-                    .path(env.getExecutionStepInfo().getPath())
-                    .build();
-        }
-        return null;
     }
 }

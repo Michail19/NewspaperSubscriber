@@ -123,14 +123,16 @@ public class UserClient {
     }
 
     private Object extractData(GraphQLResponseDTO response, String fieldName) {
-        if (response == null || response.hasErrors()) {
-            // Обработка ошибок
+        if (response == null) {
             return null;
         }
 
-        if (response.getData() instanceof Map) {
-            Map<String, Object> data = (Map<String, Object>) response.getData();
-            return data.get(fieldName);
+        if (response.hasErrors()) {
+            return null;
+        }
+
+        if (response.getData() instanceof Map<?, ?> data) {
+            return data.getOrDefault(fieldName, null);
         }
 
         return null;
@@ -138,6 +140,9 @@ public class UserClient {
 
     private Boolean extractBooleanData(GraphQLResponseDTO response, String fieldName) {
         Object data = extractData(response, fieldName);
-        return data instanceof Boolean ? (Boolean) data : false;
+        if (data instanceof Boolean b) {
+            return b;
+        }
+        return null;
     }
 }
