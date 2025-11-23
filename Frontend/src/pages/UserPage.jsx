@@ -2,52 +2,81 @@ import { useState } from "react";
 import { graphqlRequest } from "../graphql/client";
 import { GET_USER } from "../graphql/queries";
 import { ADD_USER } from "../graphql/mutations";
-
+import './UserPage.css';
 
 export function UserPage() {
     const [input, setInput] = useState({ firstName: "", secondName: "", age: 18 });
     const [searchId, setSearchId] = useState("");
     const [user, setUser] = useState(null);
 
-
     async function register() {
         const r = await graphqlRequest(ADD_USER, { input });
         alert("Пользователь зарегистрирован: " + r.addUser.firstName);
     }
-
 
     async function loadUser() {
         const r = await graphqlRequest(GET_USER, { id: searchId });
         setUser(r.getUser);
     }
 
-
     return (
-        <div className="p-6 max-w-lg mx-auto">
-            <h1 className="text-3xl font-bold mb-4">Пользователь</h1>
+        <div className="user-container">
+            <h1 className="user-title">Пользователь</h1>
 
-
-            <h2 className="text-xl font-semibold mb-2">Регистрация</h2>
-            <div className="flex flex-col gap-2 mb-6">
-                <input className="p-2 border rounded" placeholder="Имя" onChange={e => setInput({ ...input, firstName: e.target.value })} />
-                <input className="p-2 border rounded" placeholder="Фамилия" onChange={e => setInput({ ...input, secondName: e.target.value })} />
-                <input className="p-2 border rounded" type="number" placeholder="Возраст" onChange={e => setInput({ ...input, age: Number(e.target.value) })} />
-                <button className="p-2 bg-blue-600 text-white rounded" onClick={register}>Создать</button>
+            <div className="form-section">
+                <h2 className="section-title">Регистрация</h2>
+                <div className="form-grid">
+                    <input
+                        className="form-input"
+                        placeholder="Имя"
+                        onChange={e => setInput({ ...input, firstName: e.target.value })}
+                    />
+                    <input
+                        className="form-input"
+                        placeholder="Фамилия"
+                        onChange={e => setInput({ ...input, secondName: e.target.value })}
+                    />
+                    <input
+                        className="form-input"
+                        type="number"
+                        placeholder="Возраст"
+                        onChange={e => setInput({ ...input, age: Number(e.target.value) })}
+                    />
+                    <button className="btn btn-primary" onClick={register}>Создать</button>
+                </div>
             </div>
 
-
-            <h2 className="text-xl font-semibold mb-2">Поиск пользователя</h2>
-            <input className="p-2 border rounded mb-2 w-full" placeholder="ID пользователя" onChange={e => setSearchId(e.target.value)} />
-            <button className="p-2 bg-green-600 text-white rounded" onClick={loadUser}>Загрузить</button>
-
-
-            {user && (
-                <div className="mt-4 p-4 border rounded bg-gray-50">
-                    <p>ID: {user.id}</p>
-                    <p>Имя: {user.firstName} {user.secondName}</p>
-                    <p>Возраст: {user.age}</p>
+            <div className="form-section">
+                <h2 className="section-title">Поиск пользователя</h2>
+                <div className="search-form">
+                    <input
+                        className="form-input"
+                        placeholder="ID пользователя"
+                        value={searchId}
+                        onChange={e => setSearchId(e.target.value)}
+                    />
+                    <button className="btn btn-success" onClick={loadUser}>Загрузить</button>
                 </div>
-            )}
+
+                {user && (
+                    <div className="user-card">
+                        <div className="user-info">
+                            <div className="info-item">
+                                <span className="info-label">ID</span>
+                                <span className="info-value">{user.id}</span>
+                            </div>
+                            <div className="info-item">
+                                <span className="info-label">Имя</span>
+                                <span className="info-value">{user.firstName} {user.secondName}</span>
+                            </div>
+                            <div className="info-item">
+                                <span className="info-label">Возраст</span>
+                                <span className="info-value">{user.age}</span>
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

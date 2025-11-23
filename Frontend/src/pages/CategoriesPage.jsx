@@ -1,23 +1,21 @@
 import { useEffect, useState } from "react";
 import { GET_CATEGORIES } from "../graphql/queries";
 import { graphqlRequest } from "../graphql/client";
-
+import './CommonPages.css';
 
 export function CategoriesPage() {
     const [data, setData] = useState([]);
-
 
     useEffect(() => {
         graphqlRequest(GET_CATEGORIES).then(r => setData(r.getCategories));
     }, []);
 
-
     return (
-        <div className="p-6">
-            <h1 className="text-3xl font-bold mb-4">Категории</h1>
-            <ul className="list-disc ml-6 text-lg">
-                {data.map(c => <li key={c.id}>{c.name}</li>)}
-            </ul>
+        <div className="page-container">
+            <h1 className="page-title">Категории</h1>
+            <div className="items-list">
+                {data.map(c => <div key={c.id} className="list-item">{c.name}</div>)}
+            </div>
         </div>
     );
 }

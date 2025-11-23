@@ -1,11 +1,18 @@
+import './NavBar.css';
+
 export function NavBar() {
     return (
-        <nav className="w-full bg-gray-900 text-white p-4 flex gap-6 text-lg">
-            <a href="#/" className="hover:text-blue-300">Каталоги</a>
-            <a href="#/categories" className="hover:text-blue-300">Категории</a>
-            <a href="#/series" className="hover:text-blue-300">Серии</a>
-            <a href="#/user" className="hover:text-blue-300">Пользователь</a>
-            <a href="#/subscriptions" className="hover:text-blue-300">Подписки</a>
+        <nav className="navbar">
+            <div className="navbar-container">
+                <div className="navbar-brand">Library Admin</div>
+                <div className="flex gap-4">
+                    <a href="#/" className="nav-link">Каталоги</a>
+                    <a href="#/categories" className="nav-link">Категории</a>
+                    <a href="#/series" className="nav-link">Серии</a>
+                    <a href="#/subscriptions" className="nav-link">Подписки</a>
+                    <a href="#/user" className="nav-link">Пользователь</a>
+                </div>
+            </div>
         </nav>
     );
 }
