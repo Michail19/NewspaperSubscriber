@@ -11,6 +11,8 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
+import java.util.List;
+
 
 @Controller
 public class SubscriptionController {
@@ -25,7 +27,21 @@ public class SubscriptionController {
     }
 
     @QueryMapping
-    public SubscriptionResponseDTO getUserSubscriptions(@Argument Long id) {
+    public SubscriptionResponseDTO getUserSubscription(@Argument Long id) {
+        Subscription subscription = subscriptionService.getById(id);
+        return new SubscriptionResponseDTO(
+                subscription.getId(),
+                subscription.getUserId(),
+                subscription.getMagazineId(),
+                subscription.getStart_date(),
+                subscription.getEnd_date(),
+                subscription.getDuration_months(),
+                subscription.getStatus()
+        );
+    }
+
+    @QueryMapping
+    public List<SubscriptionResponseDTO> getUserSubscriptions(@Argument Long id) {
         Subscription subscription = subscriptionService.getById(id);
         return new SubscriptionResponseDTO(
                 subscription.getId(),

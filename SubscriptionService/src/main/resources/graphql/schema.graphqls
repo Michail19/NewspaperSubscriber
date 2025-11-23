@@ -15,6 +15,7 @@ type Subscription {
 }
 
 type Query {
+  getUserSubscription(id: ID!): Subscription
   getUserSubscriptions(id: ID!): [Subscription]
 }
 

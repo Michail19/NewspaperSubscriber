@@ -1,9 +1,6 @@
 package com.ms.catalogservice.controller;
 
-import com.ms.catalogservice.dto.CatalogInputDTO;
-import com.ms.catalogservice.dto.CatalogResponseDTO;
-import com.ms.catalogservice.dto.CategoryInputDTO;
-import com.ms.catalogservice.dto.SeriesInputDTO;
+import com.ms.catalogservice.dto.*;
 import com.ms.catalogservice.exception.CatalogNotFoundException;
 import com.ms.catalogservice.model.Catalog;
 import com.ms.catalogservice.model.Category;
@@ -30,46 +27,50 @@ public class MagazineController {
     /* ---------- Catalog ---------- */
 
     @QueryMapping
-    public List<Catalog> getCatalogs() {
-        return magazineService.getAllCatalogs();
+    public List<CatalogResponseDTO> getCatalogs() {
+        return magazineService.getAllCatalogs()
+                .stream()
+                .map(magazineService::toCatalogDTO)
+                .toList();
     }
 
     @QueryMapping
     public CatalogResponseDTO getCatalogById(@Argument Long id) {
         try {
-            return magazineService.getCatalogById(id);
-        }
-        catch (CatalogNotFoundException e) {
+            return magazineService.toCatalogDTO(magazineService.getCatalogById(id));
+        } catch (CatalogNotFoundException e) {
             return null;
         }
     }
 
     @MutationMapping
-    public Catalog addCatalog(@Argument("input") CatalogInputDTO input) {
+    public CatalogResponseDTO addCatalog(@Argument("input") CatalogInputDTO input) {
         try {
             Catalog catalog = new Catalog();
             catalog.setTitle(input.getTitle());
             catalog.setDescription(input.getDescription());
             catalog.setPrice(input.getPrice());
             catalog.setLink(input.getLink());
-            return magazineService.addCatalog(catalog, input.getCategoryId(), input.getSeriesId());
-        }
-        catch (CatalogNotFoundException e) {
+
+            Catalog saved = magazineService.addCatalog(catalog, input.getCategoryId(), input.getSeriesId());
+            return magazineService.toCatalogDTO(saved);
+        } catch (CatalogNotFoundException e) {
             return null;
         }
     }
 
     @MutationMapping
-    public Catalog updateCatalog(@Argument Long id, @Argument("input") CatalogInputDTO input) {
+    public CatalogResponseDTO updateCatalog(@Argument Long id, @Argument("input") CatalogInputDTO input) {
         try {
             Catalog updated = new Catalog();
             updated.setTitle(input.getTitle());
             updated.setDescription(input.getDescription());
             updated.setPrice(input.getPrice());
             updated.setLink(input.getLink());
-            return magazineService.updateCatalog(id, updated, input.getCategoryId(), input.getSeriesId());
-        }
-        catch (CatalogNotFoundException e) {
+
+            Catalog saved = magazineService.updateCatalog(id, updated, input.getCategoryId(), input.getSeriesId());
+            return magazineService.toCatalogDTO(saved);
+        } catch (CatalogNotFoundException e) {
             return null;
         }
     }
@@ -82,18 +83,34 @@ public class MagazineController {
     /* ---------- Category ---------- */
 
     @QueryMapping
-    public List<Category> getCategories() {
-        return magazineService.getAllCategories();
+    public List<CategoryResponseDTO> getCategories() {
+        return magazineService.getAllCategories()
+                .stream()
+                .map(magazineService::toCategoryDTO)
+                .toList();
+    }
+
+    @QueryMapping
+    public CategoryResponseDTO getCategoryById(@Argument Long id) {
+        try {
+            return magazineService.toCategoryDTO(magazineService.getCategoryById(id));
+        } catch (CatalogNotFoundException e) {
+            return null;
+        }
     }
 
     @MutationMapping
-    public Category addCategory(@Argument("input") CategoryInputDTO input) {
-        return magazineService.addCategory(input.getName());
+    public CategoryResponseDTO addCategory(@Argument("input") CategoryInputDTO input) {
+        return magazineService.toCategoryDTO(
+                magazineService.addCategory(input.getName())
+        );
     }
 
     @MutationMapping
-    public Category updateCategory(@Argument Long id, @Argument("input") CategoryInputDTO input) {
-        return magazineService.updateCategory(id, input.getName());
+    public CategoryResponseDTO updateCategory(@Argument Long id, @Argument("input") CategoryInputDTO input) {
+        return magazineService.toCategoryDTO(
+                magazineService.updateCategory(id, input.getName())
+        );
     }
 
     @MutationMapping
@@ -104,18 +121,34 @@ public class MagazineController {
     /* ---------- Series ---------- */
 
     @QueryMapping
-    public List<Series> getSeries() {
-        return magazineService.getAllSeries();
+    public List<SeriesResponseDTO> getSeries() {
+        return magazineService.getAllSeries()
+                .stream()
+                .map(magazineService::toSeriesDTO)
+                .toList();
+    }
+
+    @QueryMapping
+    public SeriesResponseDTO getSeriesById(@Argument Long id) {
+        try {
+            return magazineService.toSeriesDTO(magazineService.getSeriesById(id));
+        } catch (CatalogNotFoundException e) {
+            return null;
+        }
     }
 
     @MutationMapping
-    public Series addSeries(@Argument("input") SeriesInputDTO input) {
-        return magazineService.addSeries(input.getName());
+    public SeriesResponseDTO addSeries(@Argument("input") SeriesInputDTO input) {
+        return magazineService.toSeriesDTO(
+                magazineService.addSeries(input.getName())
+        );
     }
 
     @MutationMapping
-    public Series updateSeries(@Argument Long id, @Argument("input") SeriesInputDTO input) {
-        return magazineService.updateSeries(id, input.getName());
+    public SeriesResponseDTO updateSeries(@Argument Long id, @Argument("input") SeriesInputDTO input) {
+        return magazineService.toSeriesDTO(
+                magazineService.updateSeries(id, input.getName())
+        );
     }
 
     @MutationMapping

@@ -1,5 +1,8 @@
 package com.ms.catalogservice.service;
 
+import com.ms.catalogservice.dto.CatalogResponseDTO;
+import com.ms.catalogservice.dto.CategoryResponseDTO;
+import com.ms.catalogservice.dto.SeriesResponseDTO;
 import com.ms.catalogservice.exception.CatalogNotFoundException;
 import com.ms.catalogservice.exception.CategoryNotFoundException;
 import com.ms.catalogservice.exception.SeriesNotFoundException;
@@ -94,6 +97,11 @@ public class MagazineService {
         return categoryRepository.findAll();
     }
 
+    public Category getCategoryById(Long id) {
+        return categoryRepository.findById(id)
+                .orElseThrow(() -> new CategoryNotFoundException("Category not found with id: " + id));
+    }
+
     public Category addCategory(String name) {
         Category category = new Category();
         category.setName(name);
@@ -121,6 +129,11 @@ public class MagazineService {
         return seriesRepository.findAll();
     }
 
+    public Series getSeriesById(Long id) {
+        return seriesRepository.findById(id)
+                .orElseThrow(() -> new SeriesNotFoundException("Series not found with id: " + id));
+    }
+
     public Series addSeries(String name) {
         Series series = new Series();
         series.setName(name);
@@ -140,5 +153,37 @@ public class MagazineService {
         }
         seriesRepository.deleteById(id);
         return true;
+    }
+
+    /* ---------- Helpers ---------- */
+
+    public CategoryResponseDTO toCategoryDTO(Category c) {
+        if (c == null) return null;
+        CategoryResponseDTO dto = new CategoryResponseDTO();
+        dto.setId(c.getId());
+        dto.setName(c.getName());
+        return dto;
+    }
+
+    public SeriesResponseDTO toSeriesDTO(Series s) {
+        if (s == null) return null;
+        SeriesResponseDTO dto = new SeriesResponseDTO();
+        dto.setId(s.getId());
+        dto.setName(s.getName());
+        return dto;
+    }
+
+    public CatalogResponseDTO toCatalogDTO(Catalog c) {
+        CatalogResponseDTO dto = new CatalogResponseDTO();
+        dto.setId(c.getId());
+        dto.setTitle(c.getTitle());
+        dto.setDescription(c.getDescription());
+        dto.setPrice(c.getPrice());
+        dto.setLink(c.getLink());
+
+        dto.setCategory(toCategoryDTO(c.getCategory()));
+        dto.setSeries(toSeriesDTO(c.getSeries()));
+
+        return dto;
     }
 }
