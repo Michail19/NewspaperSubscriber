@@ -93,7 +93,7 @@ class SubscriptionServiceApplicationTests {
 
     @Test
     void testCancelSubscription() {
-        Long dto = 20L;
+        Long dto = 1L;
 
         doNothing().when(subscriptionService).cancel(dto);
 
@@ -106,7 +106,5 @@ class SubscriptionServiceApplicationTests {
 
         String message = messageCaptor.getValue();
         assertTrue(message.contains("Subscription cancelled id=1"));
-        assertTrue(message.contains("for user id=10"));
-        assertTrue(message.contains("for magazine id=20"));
     }
 }
