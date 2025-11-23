@@ -1,16 +1,13 @@
 package com.ms.subscriptionservice.service;
 
 import com.ms.subscriptionservice.dto.SubscriptionRequestDTO;
-import com.ms.subscriptionservice.dto.SubscriptionRequestDeleteDTO;
 import com.ms.subscriptionservice.exception.SubscriptionNotFoundException;
 import com.ms.subscriptionservice.model.Subscription;
 import com.ms.subscriptionservice.model.SubscriptionStatus;
 import com.ms.subscriptionservice.repository.SubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -71,10 +68,10 @@ public class SubscriptionService {
                 .orElseThrow(() -> new SubscriptionNotFoundException("Subscription not found with id: " + id));
     }
 
-    public void cancel(SubscriptionRequestDeleteDTO dto) {
-        Subscription subscription = subscriptionRepository.findById(dto.getSubscriptionId())
+    public void cancel(Long subscriptionId) {
+        Subscription subscription = subscriptionRepository.findById(subscriptionId)
                 .orElseThrow(() -> new SubscriptionNotFoundException("Subscription not found with id: "
-                        + dto.getSubscriptionId()));
+                        + subscriptionId));
 
         subscription.setStatus(SubscriptionStatus.CANCELLED);
         subscription.setUpdated_at(Timestamp.valueOf(LocalDateTime.now()));

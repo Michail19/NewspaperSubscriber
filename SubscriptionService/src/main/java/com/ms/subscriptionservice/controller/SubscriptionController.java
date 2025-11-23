@@ -1,7 +1,7 @@
 package com.ms.subscriptionservice.controller;
 
 import com.ms.subscriptionservice.dto.SubscriptionRequestDTO;
-import com.ms.subscriptionservice.dto.SubscriptionRequestDeleteDTO;
+import com.ms.subscriptionservice.dto.SubscriptionResponseDTO;
 import com.ms.subscriptionservice.model.Subscription;
 import com.ms.subscriptionservice.service.MessagePublisher;
 import com.ms.subscriptionservice.service.SubscriptionService;
@@ -25,39 +25,63 @@ public class SubscriptionController {
     }
 
     @QueryMapping
-    public Subscription getUserSubscriptions(@Argument Long id) {
-        return subscriptionService.getById(id);
+    public SubscriptionResponseDTO getUserSubscriptions(@Argument Long id) {
+        Subscription subscription = subscriptionService.getById(id);
+        return new SubscriptionResponseDTO(
+                subscription.getId(),
+                subscription.getUserId(),
+                subscription.getMagazineId(),
+                subscription.getStart_date(),
+                subscription.getEnd_date(),
+                subscription.getDuration_months(),
+                subscription.getStatus()
+        );
     }
 
     @MutationMapping
-    public Subscription createSubscription(@Argument SubscriptionRequestDTO input) {
+    public SubscriptionResponseDTO createSubscription(@Argument SubscriptionRequestDTO input) {
         Subscription subscription = subscriptionService.create(input);
         messagePublisher.sendSubscriptionCreatedMessage(
                 "Subscription created id=" + subscription.getId() + ", " +
                 "for user id=" + input.getUserId() + ", " +
                 "for magazine id=" + input.getMagazineId()
         );
-        return subscription;
+        return new SubscriptionResponseDTO(
+                subscription.getId(),
+                subscription.getUserId(),
+                subscription.getMagazineId(),
+                subscription.getStart_date(),
+                subscription.getEnd_date(),
+                subscription.getDuration_months(),
+                subscription.getStatus()
+        );
     }
 
     @MutationMapping
-    public Subscription updateSubscription(@Argument Long id, @Argument SubscriptionRequestDTO input) {
+    public SubscriptionResponseDTO updateSubscription(@Argument Long id, @Argument SubscriptionRequestDTO input) {
         Subscription subscription = subscriptionService.update(id, input);
         messagePublisher.sendSubscriptionCreatedMessage(
                 "Subscription updated id=" + id + ", " +
                 "for user id=" + input.getUserId() + ", " +
                 "for magazine id=" + input.getMagazineId()
         );
-        return subscription;
+        return new SubscriptionResponseDTO(
+                subscription.getId(),
+                subscription.getUserId(),
+                subscription.getMagazineId(),
+                subscription.getStart_date(),
+                subscription.getEnd_date(),
+                subscription.getDuration_months(),
+                subscription.getStatus()
+        );
     }
 
     @MutationMapping
-    public void cancelSubscription(@Argument SubscriptionRequestDeleteDTO delete) {
-        subscriptionService.cancel(delete);
+    public Boolean cancelSubscription(@Argument Long subscriptionId) {
+        subscriptionService.cancel(subscriptionId);
         messagePublisher.sendSubscriptionCreatedMessage(
-                "Subscription cancelled id=" + delete.getSubscriptionId() + ", " +
-                "for user id=" + delete.getUserId() + ", " +
-                "for magazine id=" + delete.getMagazineId()
+                "Subscription cancelled id=" + subscriptionId + ", "
         );
+        return true;
     }
 }
