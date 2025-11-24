@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        service: [ "UserService", "MagazineService", "SubscriptionService", "APIGateway", "Frontend" ]
+        service: [ "UserService", "MagazineService", "SubscriptionService", "APIGateway" ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
