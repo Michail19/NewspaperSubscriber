@@ -2,7 +2,7 @@ export async function graphqlRequest(query, variables = {}) {
     try {
         console.log("Sending GraphQL request to apigateway:8080...");
 
-        const response = await fetch("http://apigateway:8080/graphql", {
+        const response = await fetch("http://localhost:8080/graphql", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ query, variables })
