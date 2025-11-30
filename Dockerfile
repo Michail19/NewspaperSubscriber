@@ -23,6 +23,9 @@ COPY supervisor.conf /etc/supervisor/conf.d/supervisor.conf
 # 3) FRONTEND (React + NGINX)
 # =====================================================================
 
+# Удаляем старый Node.js 12, который идет в образе Ubuntu
+RUN apt-get remove -y nodejs libnode-dev && apt-get autoremove -y
+
 # Устанавливаем Node.js 18 — react-scripts работает корректно
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs
