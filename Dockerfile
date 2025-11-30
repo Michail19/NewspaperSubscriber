@@ -65,13 +65,26 @@ RUN ./gradlew clean bootJar --no-daemon
 # =====================================================================
 # 5) ОТКРЫВАЕМ ПОРТЫ
 # =====================================================================
-EXPOSE 80     # frontend
-EXPOSE 8080   # apigateway
-EXPOSE 8081   # subscription
-EXPOSE 8082   # user
-EXPOSE 8083   # magazine
-EXPOSE 5432   # postgres
-EXPOSE 5672   # rabbitmq
+# frontend
+EXPOSE 80
+
+# apigateway
+EXPOSE 8080
+
+# subscription
+EXPOSE 8081
+
+# user
+EXPOSE 8082
+
+# magazine
+EXPOSE 8083
+
+# rabbitmq
+EXPOSE 5672
+
+# postgres
+EXPOSE 5432
 
 # =====================================================================
 # 6) ЗАПУСК ЧЕРЕЗ SUPERVISOR
