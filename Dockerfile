@@ -23,6 +23,10 @@ COPY supervisor.conf /etc/supervisor/conf.d/supervisor.conf
 # 3) FRONTEND (React + NGINX)
 # =====================================================================
 
+# Устанавливаем Node.js 18 — react-scripts работает корректно
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs
+
 # — Сборка фронтенда
 WORKDIR /frontend
 COPY Frontend/package*.json ./
