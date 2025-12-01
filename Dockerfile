@@ -52,21 +52,25 @@ RUN cp -r /frontend/build/* /usr/share/nginx/html/
 # APIGATEWAY
 WORKDIR /apigateway
 COPY APIGateway .
+RUN chmod +x gradlew
 RUN ./gradlew clean bootJar --no-daemon
 
 # MAGAZINE-SERVICE
 WORKDIR /magazine
 COPY MagazineService .
+RUN chmod +x gradlew
 RUN ./gradlew clean bootJar --no-daemon
 
 # SUBSCRIPTION-SERVICE
 WORKDIR /subscription
 COPY SubscriptionService .
+RUN chmod +x gradlew
 RUN ./gradlew clean bootJar --no-daemon
 
 # USER-SERVICE
 WORKDIR /user
 COPY UserService .
+RUN chmod +x gradlew
 RUN ./gradlew clean bootJar --no-daemon
 
 # =====================================================================
