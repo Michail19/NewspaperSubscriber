@@ -1,9 +1,0 @@
-2025-11-04T19:30:41.940+03:00  INFO 22812 --- [CatalogService] [Test worker] c.m.c.CatalogControllerTest              : Starting CatalogControllerTest using Java 21.0.5 with PID 22812 (started by DOMDOM in D:\Java\NewspaperSubscriber\CatalogService)
-2025-11-04T19:30:41.940+03:00  INFO 22812 --- [CatalogService] [Test worker] c.m.c.CatalogControllerTest              : No active profile set, falling back to 1 default profile: "default"
-2025-11-04T19:30:43.480+03:00  INFO 22812 --- [CatalogService] [Test worker] efaultSchemaResourceGraphQlSourceBuilder : Loaded 1 resource(s) in the GraphQL schema.
-2025-11-04T19:30:43.821+03:00  INFO 22812 --- [CatalogService] [Test worker] o.s.b.a.g.GraphQlAutoConfiguration       : GraphQL schema inspection:
-	Unmapped fields: {Category=[catalogs], Series=[catalogs], Query=[getCategoryById, getSeriesById]}
-	Unmapped registrations: {}
-	Unmapped arguments: {CatalogController#addCategory[1 args]=[name], CatalogController#updateCategory[2 args]=[newName], CatalogController#addSeries[1 args]=[name], CatalogController#updateSeries[2 args]=[newName]}
-	Skipped types: []
-2025-11-04T19:30:43.899+03:00  INFO 22812 --- [CatalogService] [Test worker] c.m.c.CatalogControllerTest              : Started CatalogControllerTest in 2.391 seconds (process running for 3.549)
