@@ -28,6 +28,8 @@ dependencies {
 
     // --- JSON ---
     implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
 
     // --- Lombok ---
     compileOnly 'org.projectlombok:lombok'
