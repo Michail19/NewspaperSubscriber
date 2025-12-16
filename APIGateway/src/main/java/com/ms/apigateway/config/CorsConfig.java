@@ -13,14 +13,17 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/graphql")
+                registry.addMapping("/**")  // Измените с /graphql на /**
                         .allowedOrigins(
-                                "http://localhost:3000",
-                                "http://frontend:3000"
+                                "http://localhost:3000",      // Браузер
+                                "http://frontend:80",         // Docker контейнер frontend
+                                "http://localhost:80",        // Прямой доступ
+                                "http://frontend:3000"        // На всякий случай
                         )
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
                         .allowedHeaders("*")
-                        .allowCredentials(true);
+                        .allowCredentials(true)
+                        .maxAge(3600);  // Добавьте maxAge
             }
         };
     }
