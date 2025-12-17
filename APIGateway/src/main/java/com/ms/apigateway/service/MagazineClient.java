@@ -4,6 +4,7 @@ import com.ms.apigateway.dto.GraphQLResponseDTO;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +18,7 @@ public class MagazineClient {
     }
 
     // Каталог
-    public Object getCatalogs() {
+    public Mono<Object> getCatalogs() {
         String query = """
             query GetCatalogs {
                 getCatalogs {
@@ -41,17 +42,15 @@ public class MagazineClient {
         Map<String, Object> payload = new HashMap<>();
         payload.put("query", query);
 
-        GraphQLResponseDTO response = webClient.post()
+        return webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
                 .bodyToMono(GraphQLResponseDTO.class)
-                .block();
-
-        return extractData(response, "getCatalogs");
+                .map(resp -> extractData(resp, "getCatalogs"));
     }
 
-    public Object getCatalogById(String id) {
+    public Mono<Object> getCatalogById(String id) {
         String query = """
             query GetCatalogById($id: ID!) {
                 getCatalogById(id: $id) {
@@ -76,17 +75,15 @@ public class MagazineClient {
         payload.put("query", query);
         payload.put("variables", Map.of("id", id));
 
-        GraphQLResponseDTO response = webClient.post()
+        return webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
                 .bodyToMono(GraphQLResponseDTO.class)
-                .block();
-
-        return extractData(response, "getCatalogById");
+                .map(resp -> extractData(resp, "getCatalogById"));
     }
 
-    public Object addCatalog(Object input) {
+    public Mono<Object> addCatalog(Object input) {
         String mutation = """
             mutation AddCatalog($input: CatalogInput!) {
                 addCatalog(input: $input) {
@@ -111,17 +108,15 @@ public class MagazineClient {
         payload.put("query", mutation);
         payload.put("variables", Map.of("input", input));
 
-        GraphQLResponseDTO response = webClient.post()
+        return webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
                 .bodyToMono(GraphQLResponseDTO.class)
-                .block();
-
-        return extractData(response, "addCatalog");
+                .map(resp -> extractData(resp, "addCatalog"));
     }
 
-    public Object updateCatalog(String id, Object input) {
+    public Mono<Object> updateCatalog(String id, Object input) {
         String mutation = """
             mutation UpdateCatalog($id: ID!, $input: CatalogInput!) {
                 updateCatalog(id: $id, input: $input) {
@@ -146,17 +141,15 @@ public class MagazineClient {
         payload.put("query", mutation);
         payload.put("variables", Map.of("id", id, "input", input));
 
-        GraphQLResponseDTO response = webClient.post()
+        return webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
                 .bodyToMono(GraphQLResponseDTO.class)
-                .block();
-
-        return extractData(response, "updateCatalog");
+                .map(resp -> extractData(resp, "updateCatalog"));
     }
 
-    public Boolean deleteCatalog(String id) {
+    public Mono<Object> deleteCatalog(String id) {
         String mutation = """
             mutation DeleteCatalog($id: ID!) {
                 deleteCatalog(id: $id)
@@ -167,18 +160,16 @@ public class MagazineClient {
         payload.put("query", mutation);
         payload.put("variables", Map.of("id", id));
 
-        GraphQLResponseDTO response = webClient.post()
+        return webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
                 .bodyToMono(GraphQLResponseDTO.class)
-                .block();
-
-        return extractBooleanData(response, "deleteCatalog");
+                .map(resp -> extractData(resp, "deleteCatalog"));
     }
 
     // Категории
-    public Object getCategories() {
+    public Mono<Object> getCategories() {
         String query = """
             query GetCategories {
                 getCategories {
@@ -195,17 +186,15 @@ public class MagazineClient {
         Map<String, Object> payload = new HashMap<>();
         payload.put("query", query);
 
-        GraphQLResponseDTO response = webClient.post()
+        return webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
                 .bodyToMono(GraphQLResponseDTO.class)
-                .block();
-
-        return extractData(response, "getCategories");
+                .map(resp -> extractData(resp, "getCategories"));
     }
 
-    public Object getCategoryById(String id) {
+    public Mono<Object> getCategoryById(String id) {
         String query = """
             query GetCategoryById($id: ID!) {
                 getCategoryById(id: $id) {
@@ -224,17 +213,15 @@ public class MagazineClient {
         payload.put("query", query);
         payload.put("variables", Map.of("id", id));
 
-        GraphQLResponseDTO response = webClient.post()
+        return webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
                 .bodyToMono(GraphQLResponseDTO.class)
-                .block();
-
-        return extractData(response, "getCategoryById");
+                .map(resp -> extractData(resp, "getCategoryById"));
     }
 
-    public Object addCategory(Object input) {
+    public Mono<Object> addCategory(Object input) {
         String mutation = """
             mutation AddCategory($input: CategoryInput!) {
                 addCategory(input: $input) {
@@ -248,17 +235,15 @@ public class MagazineClient {
         payload.put("query", mutation);
         payload.put("variables", Map.of("input", input));
 
-        GraphQLResponseDTO response = webClient.post()
+        return webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
                 .bodyToMono(GraphQLResponseDTO.class)
-                .block();
-
-        return extractData(response, "addCategory");
+                .map(resp -> extractData(resp, "addCategory"));
     }
 
-    public Object updateCategory(String id, Object input) {
+    public Mono<Object> updateCategory(String id, Object input) {
         String mutation = """
             mutation UpdateCategory($id: ID!, $input: CategoryInput!) {
                 updateCategory(id: $id, input: $input) {
@@ -272,17 +257,15 @@ public class MagazineClient {
         payload.put("query", mutation);
         payload.put("variables", Map.of("id", id, "input", input));
 
-        GraphQLResponseDTO response = webClient.post()
+        return webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
                 .bodyToMono(GraphQLResponseDTO.class)
-                .block();
-
-        return extractData(response, "updateCategory");
+                .map(resp -> extractData(resp, "updateCategory"));
     }
 
-    public Boolean deleteCategory(String id) {
+    public Mono<Object> deleteCategory(String id) {
         String mutation = """
             mutation DeleteCategory($id: ID!) {
                 deleteCategory(id: $id)
@@ -293,18 +276,16 @@ public class MagazineClient {
         payload.put("query", mutation);
         payload.put("variables", Map.of("id", id));
 
-        GraphQLResponseDTO response = webClient.post()
+        return webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
                 .bodyToMono(GraphQLResponseDTO.class)
-                .block();
-
-        return extractBooleanData(response, "deleteCategory");
+                .map(resp -> extractData(resp, "deleteCategory"));
     }
 
     // Серии
-    public Object getSeries() {
+    public Mono<Object> getSeries() {
         String query = """
             query GetSeries {
                 getSeries {
@@ -321,17 +302,15 @@ public class MagazineClient {
         Map<String, Object> payload = new HashMap<>();
         payload.put("query", query);
 
-        GraphQLResponseDTO response = webClient.post()
+        return webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
                 .bodyToMono(GraphQLResponseDTO.class)
-                .block();
-
-        return extractData(response, "getSeries");
+                .map(resp -> extractData(resp, "getSeries"));
     }
 
-    public Object getSeriesById(String id) {
+    public Mono<Object> getSeriesById(String id) {
         String query = """
             query GetSeriesById($id: ID!) {
                 getSeriesById(id: $id) {
@@ -350,17 +329,15 @@ public class MagazineClient {
         payload.put("query", query);
         payload.put("variables", Map.of("id", id));
 
-        GraphQLResponseDTO response = webClient.post()
+        return webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
                 .bodyToMono(GraphQLResponseDTO.class)
-                .block();
-
-        return extractData(response, "getSeriesById");
+                .map(resp -> extractData(resp, "getSeriesById"));
     }
 
-    public Object addSeries(Object input) {
+    public Mono<Object> addSeries(Object input) {
         String mutation = """
             mutation AddSeries($input: SeriesInput!) {
                 addSeries(input: $input) {
@@ -374,17 +351,15 @@ public class MagazineClient {
         payload.put("query", mutation);
         payload.put("variables", Map.of("input", input));
 
-        GraphQLResponseDTO response = webClient.post()
+        return webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
                 .bodyToMono(GraphQLResponseDTO.class)
-                .block();
-
-        return extractData(response, "addSeries");
+                .map(resp -> extractData(resp, "addSeries"));
     }
 
-    public Object updateSeries(String id, Object input) {
+    public Mono<Object> updateSeries(String id, Object input) {
         String mutation = """
             mutation UpdateSeries($id: ID!, $input: SeriesInput!) {
                 updateSeries(id: $id, input: $input) {
@@ -398,17 +373,15 @@ public class MagazineClient {
         payload.put("query", mutation);
         payload.put("variables", Map.of("id", id, "input", input));
 
-        GraphQLResponseDTO response = webClient.post()
+        return webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
                 .bodyToMono(GraphQLResponseDTO.class)
-                .block();
-
-        return extractData(response, "updateSeries");
+                .map(resp -> extractData(resp, "updateSeries"));
     }
 
-    public Boolean deleteSeries(String id) {
+    public Mono<Object> deleteSeries(String id) {
         String mutation = """
             mutation DeleteSeries($id: ID!) {
                 deleteSeries(id: $id)
@@ -419,14 +392,12 @@ public class MagazineClient {
         payload.put("query", mutation);
         payload.put("variables", Map.of("id", id));
 
-        GraphQLResponseDTO response = webClient.post()
+        return webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
                 .bodyToMono(GraphQLResponseDTO.class)
-                .block();
-
-        return extractBooleanData(response, "deleteSeries");
+                .map(resp -> extractData(resp, "deleteSeries"));
     }
 
     private Object extractData(GraphQLResponseDTO response, String fieldName) {
@@ -442,14 +413,6 @@ public class MagazineClient {
             return data.getOrDefault(fieldName, null);
         }
 
-        return null;
-    }
-
-    private Boolean extractBooleanData(GraphQLResponseDTO response, String fieldName) {
-        Object data = extractData(response, fieldName);
-        if (data instanceof Boolean b) {
-            return b;
-        }
         return null;
     }
 }
