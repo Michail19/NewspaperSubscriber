@@ -4,6 +4,7 @@ import com.ms.apigateway.dto.GraphQLResponseDTO;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +17,7 @@ public class SubscriptionClient {
         this.webClient = builder.baseUrl("http://subscription-service:8081/graphql").build();
     }
 
-    public Object getSubscriptionByUser(String userId) {
+    public Mono<Object> getSubscriptionByUser(String userId) {
         String query = """
             query GetUserSubscription($userId: ID!) {
                 getUserSubscription(id: $userId) {
@@ -35,17 +36,15 @@ public class SubscriptionClient {
         payload.put("query", query);
         payload.put("variables", Map.of("userId", userId));
 
-        GraphQLResponseDTO response = webClient.post()
+        return webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
                 .bodyToMono(GraphQLResponseDTO.class)
-                .block();
-
-        return extractData(response, "getUserSubscription");
+                .map(resp -> extractData(resp, "getUserSubscription"));
     }
 
-    public Object getSubscriptionsByUser(String userId) {
+    public Mono<Object> getSubscriptionsByUser(String userId) {
         String query = """
             query GetUserSubscriptions($userId: ID!) {
                 getUserSubscriptions(id: $userId) {
@@ -64,17 +63,15 @@ public class SubscriptionClient {
         payload.put("query", query);
         payload.put("variables", Map.of("userId", userId));
 
-        GraphQLResponseDTO response = webClient.post()
+        return webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
                 .bodyToMono(GraphQLResponseDTO.class)
-                .block();
-
-        return extractData(response, "getUserSubscriptions");
+                .map(resp -> extractData(resp, "getUserSubscriptions"));
     }
 
-    public Object createSubscription(Object input) {
+    public Mono<Object> createSubscription(Object input) {
         String mutation = """
             mutation CreateSubscription($input: CreateSubscriptionInput!) {
                 createSubscription(input: $input) {
@@ -93,17 +90,15 @@ public class SubscriptionClient {
         payload.put("query", mutation);
         payload.put("variables", Map.of("input", input));
 
-        GraphQLResponseDTO response = webClient.post()
+        return webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
                 .bodyToMono(GraphQLResponseDTO.class)
-                .block();
-
-        return extractData(response, "createSubscription");
+                .map(resp -> extractData(resp, "createSubscription"));
     }
 
-    public Boolean cancelSubscription(String subscriptionId) {
+    public Mono<Object> cancelSubscription(String subscriptionId) {
         String mutation = """
             mutation CancelSubscription($subscriptionId: ID!) {
                 cancelSubscription(subscriptionId: $subscriptionId)
@@ -114,17 +109,15 @@ public class SubscriptionClient {
         payload.put("query", mutation);
         payload.put("variables", Map.of("subscriptionId", subscriptionId));
 
-        GraphQLResponseDTO response = webClient.post()
+        return webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
                 .bodyToMono(GraphQLResponseDTO.class)
-                .block();
-
-        return extractBooleanData(response, "cancelSubscription");
+                .map(resp -> extractData(resp, "cancelSubscription"));
     }
 
-    public Object updateSubscription(String id, Object input) {
+    public Mono<Object> updateSubscription(String id, Object input) {
         String mutation = """
             mutation UpdateSubscription($id: ID!, $input: UpdateSubscriptionInput!) {
                 updateSubscription(id: $id, input: $input) {
@@ -143,14 +136,12 @@ public class SubscriptionClient {
         payload.put("query", mutation);
         payload.put("variables", Map.of("id", id, "input", input));
 
-        GraphQLResponseDTO response = webClient.post()
+        return webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
                 .bodyToMono(GraphQLResponseDTO.class)
-                .block();
-
-        return extractData(response, "updateSubscription");
+                .map(resp -> extractData(resp, "updateSubscription"));
     }
 
     private Object extractData(GraphQLResponseDTO response, String fieldName) {
@@ -166,14 +157,6 @@ public class SubscriptionClient {
             return data.getOrDefault(fieldName, null);
         }
 
-        return null;
-    }
-
-    private Boolean extractBooleanData(GraphQLResponseDTO response, String fieldName) {
-        Object data = extractData(response, fieldName);
-        if (data instanceof Boolean b) {
-            return b;
-        }
         return null;
     }
 }
