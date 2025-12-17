@@ -5,6 +5,7 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
+import reactor.core.publisher.Mono;
 
 @Controller
 public class UserController {
@@ -16,22 +17,22 @@ public class UserController {
     }
 
     @QueryMapping
-    public Object getUser(@Argument String id) {
+    public Mono<Object> getUser(@Argument String id) {
         return userClient.getUserById(id);
     }
 
     @MutationMapping
-    public Object addUser(@Argument("input") Object input) {
+    public Mono<Object> addUser(@Argument("input") Object input) {
         return userClient.addUser(input);
     }
 
     @MutationMapping
-    public Object updateUser(@Argument String id, @Argument("input") Object input) {
+    public Mono<Object> updateUser(@Argument String id, @Argument("input") Object input) {
         return userClient.updateUser(id, input);
     }
 
     @MutationMapping
-    public Object removeUser(@Argument String id) {
+    public Mono<Object> removeUser(@Argument String id) {
         return userClient.removeUser(id);
     }
 }
