@@ -5,6 +5,7 @@ import com.ms.apigateway.util.GraphQLHelper;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +18,7 @@ public class UserClient {
         this.webClient = builder.baseUrl("http://user-service:8082/graphql").build();
     }
 
-    public Object getUserById(String id) {
+    public Mono<Object> getUserById(String id) {
         String query = """
             query GetUser($id: ID!) {
                 getUser(id: $id) {
@@ -35,17 +36,15 @@ public class UserClient {
         payload.put("query", query);
         payload.put("variables", Map.of("id", id));
 
-        GraphQLResponseDTO response = webClient.post()
+        return webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
                 .bodyToMono(GraphQLResponseDTO.class)
-                .block();
-
-        return extractData(response, "getUser");
+                .map(resp -> extractData(resp, "getUser"));
     }
 
-    public Object addUser(Object input) {
+    public Mono<Object> addUser(Object input) {
         String mutation = """
             mutation AddUser($input: UserInput!) {
                 addUser(input: $input) {
@@ -63,17 +62,15 @@ public class UserClient {
         payload.put("query", mutation);
         payload.put("variables", Map.of("input", input));
 
-        GraphQLResponseDTO response = webClient.post()
+        return webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
                 .bodyToMono(GraphQLResponseDTO.class)
-                .block();
-
-        return extractData(response, "addUser");
+                .map(resp -> extractData(resp, "addUser"));
     }
 
-    public Object updateUser(String id, Object input) {
+    public Mono<Object> updateUser(String id, Object input) {
         String mutation = """
             mutation UpdateUser($id: ID!, $input: UserInput!) {
                 updateUser(id: $id, input: $input) {
@@ -91,17 +88,15 @@ public class UserClient {
         payload.put("query", mutation);
         payload.put("variables", Map.of("id", id, "input", input));
 
-        GraphQLResponseDTO response = webClient.post()
+        return webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
                 .bodyToMono(GraphQLResponseDTO.class)
-                .block();
-
-        return extractData(response, "updateUser");
+                .map(resp -> extractData(resp, "updateUser"));
     }
 
-    public Boolean removeUser(String id) {
+    public Mono<Object> removeUser(String id) {
         String mutation = """
             mutation RemoveUser($id: ID!) {
                 removeUser(id: $id)
@@ -112,14 +107,12 @@ public class UserClient {
         payload.put("query", mutation);
         payload.put("variables", Map.of("id", id));
 
-        GraphQLResponseDTO response = webClient.post()
+        return webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
                 .retrieve()
                 .bodyToMono(GraphQLResponseDTO.class)
-                .block();
-
-        return extractBooleanData(response, "removeUser");
+                .map(resp -> extractData(resp, "removeUser"));
     }
 
     private Object extractData(GraphQLResponseDTO response, String fieldName) {
@@ -135,14 +128,6 @@ public class UserClient {
             return data.getOrDefault(fieldName, null);
         }
 
-        return null;
-    }
-
-    private Boolean extractBooleanData(GraphQLResponseDTO response, String fieldName) {
-        Object data = extractData(response, fieldName);
-        if (data instanceof Boolean b) {
-            return b;
-        }
         return null;
     }
 }
